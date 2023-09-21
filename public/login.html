@@ -1,12 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Login</title>
+
+   <!-- Font Awesome -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+
+   <!-- Bootrap -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+   <!-- Style -->
+   <link rel="stylesheet" href="css/main.css">
+   <link rel="stylesheet" href="css/footer.css">
+
+   <style>
+      .bg-light {
+         background-color: rgba(172, 172, 172, 0) !important;
+      }
+
+      .navbar-light .navbar-nav .nav-link {
+         color: white !important;
+         font-weight: bolder;
+      }
+
+      .navbar-light .navbar-toggler {
+         color: white !important;
+         border-color: white !important;
+      }
+
+      .btn-login {
+         background-color: #b29f82;
+         color: white;
+      }
+
+      .btn-login:hover {
+         background-color: #b29f82;
+      }
+
+      .form-control {
+         border: 1px solid #b29f82;
+      }
+
+      .w3-bar {
+         background-color: #272829;
+         color: white;
+      }
+
+      .backgound-hero {
+         background-image: url('img/hero.png');
+         background-repeat: no-repeat;
+         background-position: center bottom 220px;
+         background-size: cover;
+      }
+   </style>
 </head>
+
 <body>
-   <h1>Login</h1>
-   <a href="index.html">Home</a>
+   <!-- !Navbar -->
+   <navbar-component></navbar-component>
+
+   <!-- !Form Login -->
+   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 400px; margin-top: -250px;">
+      <form id="loginForm">
+         <div class="d-flex justify-content-center align-items-center mb-5">
+            <h1 style="font-weight: 500;">LOGIN</h1>
+         </div>
+
+         <!-- Row 1 -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="form-outline mb-4">
+                  <label class="mb-2" for="typeEmail">Email</label>
+                  <input type="text" id="typeEmail" class="form-control form-control-lg" name="email" required />
+               </div>
+            </div>
+         </div>
+
+         <!-- Row 2 -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="form-outline mb-4">
+                  <label class="mb-2" for="typePassword">Password</label>
+                  <input type="password" id="typePassword" class="form-control form-control-lg" name="password"
+                     required />
+               </div>
+               <!-- Button -->
+               <div class="d-grid gap-2 col-md-12 mx-auto">
+                  <button type="submit" class="btn btn-lg btn-login">SIGN IN</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+   <!-- !Form Login -->
+
+
+   <!-- !Footer -->
+   <footer-component></footer-component>
+
+   <!-- Script -->
+   <script src="js/script.js"></script>
+
+   <!-- Component -->
+   <script src="component/component.js"></script>
+
+   <!-- Bootrap -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+
+   <!-- MDB -->
+   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
+
 </body>
+
 </html>

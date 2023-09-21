@@ -1,0 +1,28 @@
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+.btn-link {
+   text-decoration: none;
+   color: white;
+   font-weight: bolder;
+}
+
+.btn {
+   font-weight: bolder;
+}
+
+.font-robotomono {
+   font-family: 'Roboto Mono', monospace !important;
+   font-weight: bold;
+}
+
+.font-poppin {
+   font-family: 'Poppins', sans-serif !important;
+}
+
+.font-kanit {
+   font-family: 'Kanit', sans-serif !important;
+}
