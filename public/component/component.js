@@ -7,55 +7,37 @@ class NavBar extends HTMLElement {
    connectedCallback() {
       this.innerHTML = `
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-         <!-- Container wrapper -->
-         <div class="container">
-            <!-- Navbar brand -->
-            <a class="navbar-brand me-2" href="https://mdbgo.com/">
-               <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="16" alt="MDB Logo"
-                  loading="lazy" style="margin-top: -1px;" />
-            </a>
-
-            <!-- Toggle button -->
-            <button class="navbar-toggler" type="button" data-mdb-toggle="collapse" data-mdb-target="#navbarButtonsExample"
-               aria-controls="navbarButtonsExample" aria-expanded="false" aria-label="Toggle navigation">
-               <i class="fas fa-bars"></i>
-            </button>
-
-            <!-- Collapsible wrapper -->
-            <div class="collapse navbar-collapse" id="navbarButtonsExample">
-               <!-- Left links -->
-               <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                     <a class="nav-link font-poppin" href="index.html">Home</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link font-poppin" href="#">Classroom</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link font-poppin" href="#">About</a>
-                  </li>
-               </ul>
-               <!-- Left links -->
-
-               <div class="d-flex align-items-center">
-                  <button type="button" class="btn btn-link px-3 me-2 font-poppin">
-                     Login
-                  </button>
-                  <button type="button" class="btn btn-primary me-3 font-poppin">
-                     Sign up for free
-                  </button>
-               </div>
-            </div>
-            <!-- Collapsible wrapper -->
+      <nav class="navbar navbar-expand-lg sticky-top font-poppin navbar-dark bg-dark">
+      <div class="container">
+         <a class="navbar-brand" href="index.html">PyFlash</a>
+         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
+            aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+         </button>
+         <div class="collapse navbar-collapse" id="navbarColor01">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+               <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="classroom.html">Classroom</a>
+               </li>
+               <li class="nav-item">
+                  <a class="nav-link" href="#">About</a>
+               </li>
+            </ul>
+            <form class="d-flex gap-2">
+               <a name="" id="" class="btn btn-primary btn-login" href="login.html" role="button">Login</a>
+               <a name="" id="" class="btn btn-primary" href="register.html" role="button">Register</a>
+            </form>
          </div>
-         <!-- Container wrapper -->
-      </nav>
-      <!-- Navbar -->`
+      </div>
+   </nav>
+   <!-- Navbar -->`;
    }
 }
 
-customElements.define('navbar-component', NavBar);
+customElements.define("navbar-component", NavBar);
 
 // Footer
 class Footer extends HTMLElement {
@@ -86,8 +68,8 @@ class Footer extends HTMLElement {
                </div>
             </div>
          </div>
-      </footer>`
+      </footer>`;
    }
 }
 
-customElements.define('footer-component', Footer);
+customElements.define("footer-component", Footer);

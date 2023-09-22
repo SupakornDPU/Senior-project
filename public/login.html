@@ -26,26 +26,12 @@
    <link rel="stylesheet" href="css/footer.css">
 
    <style>
-      .bg-light {
-         background-color: rgba(172, 172, 172, 0) !important;
-      }
-
-      .navbar-light .navbar-nav .nav-link {
-         color: white !important;
-         font-weight: bolder;
-      }
-
-      .navbar-light .navbar-toggler {
-         color: white !important;
-         border-color: white !important;
-      }
-
-      .btn-login {
+      .btn-loginform {
          background-color: #b29f82;
          color: white;
       }
 
-      .btn-login:hover {
+      .btn-loginform:hover {
          background-color: #b29f82;
       }
 
@@ -64,6 +50,47 @@
          background-position: center bottom 220px;
          background-size: cover;
       }
+
+      /* ? Input */
+      .inputGroup {
+         font-family: 'Segoe UI', sans-serif;
+         margin: 1em 0 1em 0;
+         max-width: 100%;
+         position: relative;
+      }
+
+      .inputGroup input {
+         font-size: 100%;
+         padding: 0.8em;
+         outline: none;
+         border: 2px solid rgb(200, 200, 200);
+         background-color: transparent;
+         border-radius: 20px;
+         width: 100%;
+      }
+
+      .inputGroup label {
+         font-size: 100%;
+         position: absolute;
+         left: 0;
+         padding: 0.8em;
+         margin-left: 0.5em;
+         pointer-events: none;
+         transition: all 0.3s ease;
+         color: rgb(100, 100, 100);
+      }
+
+      .inputGroup :is(input:focus, input:valid)~label {
+         transform: translateY(-50%) scale(.9);
+         margin: 0em;
+         margin-left: 1.3em;
+         padding: 0.4em;
+         background-color: #ffffff;
+      }
+
+      .inputGroup :is(input:focus, input:valid) {
+         border-color: rgb(150, 150, 200);
+      }
    </style>
 </head>
 
@@ -73,17 +100,17 @@
 
    <!-- !Form Login -->
    <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 400px; margin-top: -250px;">
-      <form id="loginForm">
+      <form id="loginForm" style="margin-top: 10rem;">
          <div class="d-flex justify-content-center align-items-center mb-5">
-            <h1 style="font-weight: 500;">LOGIN</h1>
+            <h1 style="font-weight: bold;" class="font-poppin">LOGIN</h1>
          </div>
 
          <!-- Row 1 -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="form-outline mb-4">
-                  <label class="mb-2" for="typeEmail">Email</label>
-                  <input type="text" id="typeEmail" class="form-control form-control-lg" name="email" required />
+               <div class="inputGroup">
+                  <input type="text" required="" autocomplete="off">
+                  <label for="name" class="font-poppin">Email</label>
                </div>
             </div>
          </div>
@@ -91,21 +118,19 @@
          <!-- Row 2 -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="form-outline mb-4">
-                  <label class="mb-2" for="typePassword">Password</label>
-                  <input type="password" id="typePassword" class="form-control form-control-lg" name="password"
-                     required />
+               <div class="inputGroup">
+                  <input type="text" required="" autocomplete="off">
+                  <label for="name" class="font-poppin">Password</label>
                </div>
                <!-- Button -->
-               <div class="d-grid gap-2 col-md-12 mx-auto">
-                  <button type="submit" class="btn btn-lg btn-login">SIGN IN</button>
+               <div class="d-grid gap-2 col-md-12">
+                  <button type="submit" class="btn btn-lg btn-loginform">SIGN IN</button>
                </div>
             </div>
          </div>
       </form>
    </div>
    <!-- !Form Login -->
-
 
    <!-- !Footer -->
    <footer-component></footer-component>
@@ -120,10 +145,6 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
-
-   <!-- MDB -->
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
-
 </body>
 
 </html>

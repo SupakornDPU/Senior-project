@@ -26,26 +26,12 @@
    <link rel="stylesheet" href="css/footer.css">
 
    <style>
-      .bg-light {
-         background-color: rgba(172, 172, 172, 0) !important;
-      }
-
-      .navbar-light .navbar-nav .nav-link {
-         color: white !important;
-         font-weight: bolder;
-      }
-
-      .navbar-light .navbar-toggler {
-         color: white !important;
-         border-color: white !important;
-      }
-
-      .btn-login {
+      .btn-loginform {
          background-color: #b29f82;
          color: white;
       }
 
-      .btn-login:hover {
+      .btn-loginform:hover {
          background-color: #b29f82;
       }
 
@@ -53,16 +39,53 @@
          border: 1px solid #b29f82;
       }
 
-      .w3-bar {
-         background-color: #272829;
-         color: white;
-      }
-
       .backgound-hero {
          background-image: url('img/hero.png');
          background-repeat: no-repeat;
          background-position: center bottom 500px;
          background-size: cover;
+      }
+
+            /* ? Input */
+            .inputGroup {
+         font-family: 'Segoe UI', sans-serif;
+         margin: 1em 0 1em 0;
+         max-width: 100%;
+         position: relative;
+      }
+
+      .inputGroup input {
+         font-size: 100%;
+         padding: 0.8em;
+         outline: none;
+         border: 2px solid rgb(200, 200, 200);
+         background-color: transparent;
+         border-radius: 20px;
+         width: 100%;
+      }
+
+      .inputGroup label {
+         font-size: 100%;
+         position: absolute;
+         left: 0;
+         padding: 0.8em;
+         margin-left: 0.5em;
+         pointer-events: none;
+         transition: all 0.3s ease;
+         color: rgb(100, 100, 100);
+         font-family: 'Poppins', sans-serif !important;
+      }
+
+      .inputGroup :is(input:focus, input:valid)~label {
+         transform: translateY(-50%) scale(.9);
+         margin: 0em;
+         margin-left: 1.3em;
+         padding: 0.4em;
+         background-color: #ffffff;
+      }
+
+      .inputGroup :is(input:focus, input:valid) {
+         border-color: rgb(150, 150, 200);
       }
    </style>
 
@@ -76,15 +99,15 @@
 <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 400px; margin-top: -250px;" id="form-area">
    <form id="registerForm">
       <div class="d-flex justify-content-center align-items-center mb-5">
-         <h1 style="font-weight: 500;">CREATE ACCOUNT</h1>
+         <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
       </div>
 
       <!-- Row EMAIL -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
-            <div class="form-outline mb-4">
-               <label class="mb-2" for="typeEmail">EMAIL</label>
-               <input type="email" id="typeEmail" class="form-control form-control-lg" name="email" required />
+            <div class="inputGroup">
+               <input type="email" required="" autocomplete="off">
+               <label for="name">EMAIL</label>
             </div>
          </div>
       </div>
@@ -92,10 +115,9 @@
       <!-- Row PASSWORD -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
-            <div class="form-outline mb-4">
-               <label class="mb-2" for="typePassword">PASSWORD</label>
-               <input type="password" id="typePassword" class="form-control form-control-lg" name="password"
-                  required />
+            <div class="inputGroup">
+               <input type="password" required="" autocomplete="off">
+               <label for="name">PASSWORD</label>
             </div>
          </div>
       </div>
@@ -103,10 +125,9 @@
       <!-- Row First Name -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
-            <div class="form-outline mb-4">
-               <label class="mb-2" for="typeFirstName">FIRST NAME</label>
-               <input type="text" id="typeFirstName" class="form-control form-control-lg" name="firstname" required
-                  pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น" />
+            <div class="inputGroup">
+               <input type="text" required="" autocomplete="off" pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น">
+               <label for="name">FIRST NAME</label>
             </div>
          </div>
       </div>
@@ -114,10 +135,9 @@
       <!-- Row Last Name -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
-            <div class="form-outline mb-4">
-               <label class="mb-2" for="typeLastName">LAST NAME</label>
-               <input type="text" id="typeLastName" class="form-control form-control-lg" name="lastname" required
-                  pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น" />
+            <div class="inputGroup">
+               <input type="text" required="" autocomplete="off" pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น">
+               <label for="name">LAST NAME</label>
             </div>
          </div>
       </div>
@@ -125,10 +145,9 @@
       <!-- Row Phone -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
-            <div class="form-outline mb-4">
-               <label class="mb-2" for="typePhone">PHONE</label>
-               <input type="text" id="typePhone" class="form-control form-control-lg" name="phone" required
-                  pattern="^0{1}\d{2}\d{3}\d{4}$" title="กรอกเบอร์โทรไม่ถูกต้อง" />
+            <div class="inputGroup">
+               <input type="text" required="" autocomplete="off" pattern="^0{1}\d{2}\d{3}\d{4}$" title="กรอกเบอร์โทรไม่ถูกต้อง"">
+               <label for="name">PHONE</label>
             </div>
          </div>
       </div>
@@ -137,7 +156,7 @@
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
             <div class="d-grid gap-2 col-md-12 mx-auto">
-               <button class="btn btn-lg btn-block btn-login" type="submit">CREATE</button>
+               <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
             </div>
          </div>
       </div>
@@ -162,9 +181,6 @@
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
-
-   <!-- MDB -->
-   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
 </body>
 
 </html>
