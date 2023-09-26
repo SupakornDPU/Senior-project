@@ -184,7 +184,7 @@ a {
 }
 
 /* ? Card */
-.card {
+.card_code {
    width: 100%;
    margin: 0 auto;
    background-color: #023252;
@@ -193,7 +193,11 @@ a {
    color: white;
    font-family: 'Poppins', sans-serif !important;
    font-weight: bold;
-   text-align: center;
+   /* text-align: center; */
+}
+
+.card__content {
+   padding: 1rem;
 }
 
 .tools {
