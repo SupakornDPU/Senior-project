@@ -10,7 +10,7 @@
   --first-color: #6923D0;
   --first-color-light: #F4F0FA;
   --title-color: #19181B;
-  --text-color: #58555E;
+  --text-color: #FFFFFF;
   --text-color-light: #A5A1AA;
   --body-color: #F9F6FD;
   --container-color: #FFFFFF;
@@ -45,6 +45,7 @@
 }
 
 body {
+  
   margin: var(--header-height) 0 0 0;
   padding: 1rem 1rem 0;
   font-family: var(--body-font);
@@ -72,7 +73,7 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--container-color);
+  background-color: #2D4D8B;
   box-shadow: 0 1px 0 rgba(22, 8, 43, 0.1);
   padding: 0 1rem;
   z-index: var(--z-fixed);
@@ -133,7 +134,7 @@ img {
   left: -100%;
   height: 100vh;
   padding: 1rem 1rem 0;
-  background-color: var(--container-color);
+  background-color: #071F4E;
   box-shadow: 1px 0 0 rgba(22, 8, 43, 0.1);
   z-index: var(--z-fixed);
   transition: .4s;
@@ -186,6 +187,12 @@ img {
   color: var(--text-color);
 }
 
+.nav__links {
+  
+  align-items: center;
+  color: var(--text-color);
+}
+
 .nav__link:hover {
   color: var(--first-color);
 }
@@ -202,7 +209,8 @@ img {
 }
 
 .nav__logout {
-  margin-top: 5rem;
+  margin-top: 25rem;
+  color: red;
 }
 
 /* Dropdown */
@@ -256,7 +264,10 @@ img {
 
 /*===== Active link =====*/
 .active {
-  color: var(--first-color);
+  background-color: #40C7C0;
+  color: rgb(255, 255, 255); 
+  padding: 8px;
+  border-radius: 10px;
 }
 
 /* ========== MEDIA QUERIES ==========*/
@@ -269,7 +280,7 @@ img {
 
 @media screen and (min-width: 768px) {
   body {
-    padding: 1rem 3rem 0 6rem;
+    padding: 1rem 3rem 0 219px;
   }
 
   .header {
@@ -344,4 +355,50 @@ img {
   .nav:hover .nav__dropdown-icon {
     opacity: 1;
   } */
+
+  .admin-user {
+    display: flex;
+    align-items: center;
+  }
+  
+  .admin-profile {
+    white-space: nowrap;
+    max-width: 100%;
+    transition: opacity 0.3s 0.2s, max-width 0.7s 0s ease-in-out;
+    display: flex;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+  }
+  
+  .admin-user img {
+    width: 2.9rem;
+    border-radius: 50%;
+    margin: 0 0.4rem;
+  }
+  
+  .admin-info {
+    padding-left: 0.3rem;
+  }
+  
+  .admin-info h3 {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1;
+  }
+  
+  .admin-info h5 {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--text-color);
+    margin-top: 0.3rem;
+    line-height: 1;
+  }
+  
+  hr.style {
+    border-top: 5px solid #ffffff;
+    align-items: center;
+    width: 100%;
+    margin-top: 40px;
+}
 }
