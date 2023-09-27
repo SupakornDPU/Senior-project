@@ -20,7 +20,7 @@ class NavBar extends HTMLElement {
                   <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="classroomFlashcard.html">Classroom</a>
+                  <a class="nav-link" href="classroom.html">Classroom</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" href="#">About</a>

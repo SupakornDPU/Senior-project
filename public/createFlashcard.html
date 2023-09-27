@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>CreateFlashCard</title>
+
+   <!-- Font Awesome -->
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+   <!-- Google Fonts -->
+   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+
+   <!-- Bootrap 5 -->
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+   <!-- CSS -->
+   <link rel="stylesheet" href="css/classroom.css" />
+
+   <style>
+      .col-md-12 p {
+         color: greenyellow;
+      }
+   </style>
+
+</head>
+
+<body id="body-pd" class="body-pd">
+   <header class="header body-pd" id="header">
+      <div class="header_toggle">
+         <i class="bx bx-menu bx-x" id="header-toggle"></i>
+      </div>
+      <div class="header_img">
+         <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
+      </div>
+   </header>
+   <div class="l-navbar show" id="nav-bar">
+      <nav class="nav">
+         <div>
+            <a href="index.html" class="nav_logo">
+               <i class="bx bx-layer nav_logo-icon"></i>
+               <span class="nav_logo-name">Home</span>
+            </a>
+            <div class="nav_list">
+               <a href="classroom.html" class="nav_link active">
+                  <i class="bx bx-grid-alt nav_icon"></i>
+                  <span class="nav_name">Classroom</span>
+               </a>
+            </div>
+         </div>
+         <a href="#" class="nav_link">
+            <i class="bx bx-log-out nav_icon"></i>
+            <span class="nav_name">SignOut</span>
+         </a>
+      </nav>
+   </div>
+
+   <!--!Container-->
+   <div class="height-100 bg-light">
+      <h1 class="text-center font-poppin" style="font-weight: bold;">Create Flash Card</h1>
+      <div class="row my-5">
+         <label for="formFile" class="form-label" style="font-weight: bold;">Choose File</label>
+         <div class="col-md-3 my-3">
+            <input class="form-control" type="file" id="formFile">
+         </div>
+         <div class="col-md-2 my-3">
+            <button type="button" class="btn btn-primary">Confirm</button>
+         </div>
+      </div>
+      <div class="row">
+         <div class="row text-center my-4">
+            <div class="col-md-3">
+               <span style="font-weight: bold;">Question</span>
+            </div>
+            <div class="col-md-3">
+               <span style="font-weight: bold;">Answer</span>
+            </div>
+         </div>
+         <div class="row" id="formQA">
+            <div class="row">
+               <div class="col-md-3 my-2">
+                  <div class="input-group">
+                     <textarea class="form-control" aria-label="With textarea" placeholder="Question"></textarea>
+                  </div>
+               </div>
+               <div class="col-md-3 my-2">
+                  <div class="input-group">
+                     <textarea class="form-control" aria-label="With textarea" placeholder="Answer"></textarea>
+                  </div>
+               </div>
+               <div class="col-3 my-2">
+                  <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+                  <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <!--!Container-->
+
+   <script>
+      
+      function addForm() {
+         const addBtn = document.getElementById('addBtn');
+         const formQA = document.getElementById('formQA');
+         const div = document.createElement('div'); // create div
+
+         div.className = 'row'; // เป็นการเพิ่ม class ให้ div
+         div.innerHTML = `
+            <div class="col-md-3 my-2">
+               <div class="input-group">
+                  <textarea class="form-control" aria-label="With textarea" placeholder="Question"></textarea>
+               </div>
+            </div>
+            <div class="col-md-3 my-2">
+               <div class="input-group">
+                  <textarea class="form-control" aria-label="With textarea" placeholder="Answer"></textarea>
+               </div>
+            </div>
+            <div class="col-3 my-2">
+                  <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+                  <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+            </div>
+         `;
+         formQA.appendChild(div); // เป็นการเพิ่ม div ลงไปใน formQA
+      }
+
+      function delForm() {
+         const formQA = document.getElementById('formQA');
+         formQA.removeChild(formQA.lastChild);
+      }
+   </script>
+
+   <!-- SCRIPT -->
+   <script src="js/script.js"></script>
+
+   <!-- Bootrap 5 -->
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+
+</html>
