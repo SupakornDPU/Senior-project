@@ -401,4 +401,23 @@ img {
     width: 100%;
     margin-top: 40px;
 }
+.btn-delete {
+  background-color: #ff2600;
+  color: white;
+  font-size: small;
+}
+
+.btn-delete:hover {
+  background-color: #b29f82;
+}
+
+.btn-detail {
+  background-color: #17A2B8;
+  color: white;
+  font-size: small;
+}
+
+.btn-detail:hover {
+  background-color: #08a0b8;
+}
 }

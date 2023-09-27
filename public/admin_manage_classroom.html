@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Class room</title>
+    <title>Manage Classrooms</title>
 
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -46,26 +46,26 @@
                 <hr class="style">
                 <div class="nav__list">
                     <div class="nav__items">
-                        <a href="#" class="nav__link active">
+                        <a href="#" class="nav__link ">
                             <i class='bx bx-home nav__icon'></i>
                             <span class="nav__name">Home</span>
                         </a>
                         <div class="nav__items">
                             <h3 class="nav__subtitle">Menu</h3>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bell nav__icon'></i>
+                            <a href="admin_manage_teachers.html" class="nav__link ">
+                                <i class="fa-solid fa-user-graduate nav__icon"></i>
                                 <span class="nav__name">Manage Teachers</span>
                             </a>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-compass nav__icon'></i>
+                            <a href="admin_manage_students.html" class="nav__link ">
+                                <i class="fa-solid fa-user nav__icon"></i>
                                 <span class="nav__name">Manage Students</span>
                             </a>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bookmark nav__icon'></i>
+                            <a href="admin_manage_classroom.html" class="nav__link active">
+                                <i class="fa-solid fa-layer-group nav__icon"></i>
                                 <span class="nav__name">Mange Classrom</span>
                             </a>
-                            <a href="#" class="nav__link">
-                                <i class='bx bx-bookmark nav__icon'></i>
+                            <a href="admin_manage_flashcard.html" class="nav__link ">
+                                <i class="fa-solid fa-inbox nav__icon"></i>
                                 <span class="nav__name">Mange Flashcard</span>
                             </a>
                         </div>
@@ -79,14 +79,18 @@
     </div>
 
     <!--!Container-->
+    <div class="container justify-content-center align-items-center text-center inline">
+        <h2 style="margin: 40px 0px 20px 0px; color: black;">Manage Classrooms </h2>
+    </div>
     <div class="table-responsive " style="padding: 2rem;">
         <table class="table table-striped table-hover table-info">
             <thead class="table-active">
                 <tr>
                     <th>#</th>
-                    <th>First name</th>
-                    <th>Last name</th>
-                    <th>age</th>
+                    <th>Class Name</th>
+                    <th>Creater </th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -94,25 +98,29 @@
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td></td>
+                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td></td>
+                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td></td>
+                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
                 </tr>
                 <tr>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
                     <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
+                    <td></td>
+                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
                 </tr>
             </tbody>
         </table>
