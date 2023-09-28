@@ -263,11 +263,11 @@ a {
 	opacity: 1;
 }
 .wrapper {
-	margin: 70px auto;
+   margin: auto;
 	padding: 20px;
 	background: #e7e7e7;
 	border-radius: 5px;
-	width: 30%;
+	width: 65%;
 	position: relative;
 	transition: all 5s ease-in-out;
 }
