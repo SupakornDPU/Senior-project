@@ -19,6 +19,8 @@
 
    <!-- CSS -->
    <link rel="stylesheet" href="css/classroom.css" />
+   <link rel="stylesheet" href="css/main.css" />
+
    
    <style>
       p {
@@ -41,7 +43,7 @@
       <div class="header_toggle">
          <i class="bx bx-menu bx-x" id="header-toggle"></i>
       </div>
-      <button type="button" class="btn btn-success"><i class="bi bi-file-earmark-plus"></i></button>
+      <a class="button" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
    </header>
    <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -107,9 +109,31 @@
          </div>
       </div>
    </div>
+   <div class="overlay" id="divOne">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="wrapper">
+               <h2 class="font-poppin">Create Classroom</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form>
+                        <label class="font-poppin">Name room</label>
+                        <input placeholder="Your classname.." type="text" class="">
+                        <label class="font-poppin">Description</label> 
+                        <textarea iplaceholder="Write something.."></textarea>
+                        <input type="submit" value="Create">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+		</div>
+	</div>
+   
    <!--!Container-->
 
    <!-- SCRIPT -->
+   
    <script src="js/script.js"></script>
 
    <!-- Bootrap 5 -->
