@@ -43,7 +43,7 @@
       <div class="header_toggle">
          <i class="bx bx-menu bx-x" id="header-toggle"></i>
       </div>
-      <a class="button" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
+      <a class="button" id="btnnew" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
    </header>
    <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -67,7 +67,7 @@
    </div>
 
    <!--!Container-->
-   <div class="row">
+   <div class="row" id="row">
       <div class="col-md-3">
          <div class="card">
             <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p></h5>
@@ -109,6 +109,7 @@
          </div>
       </div>
    </div>
+   <!-- FORMPOP -->
    <div class="overlay" id="divOne">
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
@@ -116,12 +117,12 @@
                <h2 class="font-poppin">Create Classroom</h2><a class="close" href="#">&times;</a>
                <div class="content">
                   <div class="container">
-                     <form>
+                     <form id="createroom">
                         <label class="font-poppin">Name room</label>
-                        <input placeholder="Your classname.." type="text" class="">
+                        <input placeholder="Your classname.." type="text" class="" value=""  id="nameroom" pattern="^[a-zA-Z0-9]{1,5}$" required>
                         <label class="font-poppin">Description</label> 
-                        <textarea iplaceholder="Write something.."></textarea>
-                        <input type="submit" value="Create">
+                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,30}$" iplaceholder="Write something.." required></textarea>
+                        <input type="submit" value="Create" class="btn-add">
                      </form>
                   </div>
                </div>
@@ -133,6 +134,36 @@
    <!--!Container-->
 
    <!-- SCRIPT -->
+   <script>
+      
+      const btnnew = document.getElementById("btnnew");
+      btnnew.addEventListener("click", function(){
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+       });
+
+      const formadd = document.getElementById("createroom");
+      formadd.addEventListener("submit",Addnew);
+      function Addnew(){
+         
+         const namerooms = document.getElementById("nameroom").value;
+         const descriptions = document.getElementById("description").value;
+         const col = document.getElementById("row");
+               col.innerHTML +=`
+               <div class="col-md-3">
+                  <div class="card">
+                     <h5 class="card-header fw-bold">${namerooms} <p>Supakorn Dongkew</p></h5>
+                     <div class="card-body">
+                        <p class="card-text">${descriptions}</p>
+                        <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
+                     </div>
+                  </div>
+               </div>
+               `;
+               document.getElementById("nameroom").value = "";
+               document.getElementById("description").value = "";
+      }
+   </script>
    
    <script src="js/script.js"></script>
 
