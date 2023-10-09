@@ -21,7 +21,7 @@
    <link rel="stylesheet" href="css/classroom.css" />
    <link rel="stylesheet" href="css/main.css" />
 
-   
+
    <style>
       p {
          margin-bottom: 0;
@@ -70,7 +70,8 @@
    <div class="row" id="row">
       <div class="col-md-3">
          <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p></h5>
+            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
+            </h5>
             <div class="card-body">
                <h5 class="card-title">Special title treatment</h5>
                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -80,7 +81,8 @@
       </div>
       <div class="col-md-3">
          <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p></h5>
+            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
+            </h5>
             <div class="card-body">
                <h5 class="card-title">Special title treatment</h5>
                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -90,7 +92,8 @@
       </div>
       <div class="col-md-3">
          <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p></h5>
+            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
+            </h5>
             <div class="card-body">
                <h5 class="card-title">Special title treatment</h5>
                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -100,7 +103,8 @@
       </div>
       <div class="col-md-3">
          <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p></h5>
+            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
+            </h5>
             <div class="card-body">
                <h5 class="card-title">Special title treatment</h5>
                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
@@ -119,37 +123,39 @@
                   <div class="container">
                      <form id="createroom">
                         <label class="font-poppin">Name room</label>
-                        <input placeholder="Your classname.." type="text" class="" value=""  id="nameroom" pattern="^[a-zA-Z0-9]{1,5}$" required>
-                        <label class="font-poppin">Description</label> 
-                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,30}$" iplaceholder="Write something.." required></textarea>
+                        <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
+                           pattern="^[a-zA-Z0-9]{1,5}$" required>
+                        <label class="font-poppin">Description</label>
+                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,30}$"
+                           iplaceholder="Write something.." required></textarea>
                         <input type="submit" value="Create" class="btn-add">
                      </form>
                   </div>
                </div>
             </div>
          </div>
-		</div>
-	</div>
-   
+      </div>
+   </div>
+
    <!--!Container-->
 
    <!-- SCRIPT -->
    <script>
-      
+
       const btnnew = document.getElementById("btnnew");
-      btnnew.addEventListener("click", function(){
+      btnnew.addEventListener("click", function () {
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";
-       });
+      });
 
       const formadd = document.getElementById("createroom");
-      formadd.addEventListener("submit",Addnew);
-      function Addnew(){
-         
+      formadd.addEventListener("submit", Addnew);
+      function Addnew() {
+
          const namerooms = document.getElementById("nameroom").value;
          const descriptions = document.getElementById("description").value;
          const col = document.getElementById("row");
-               col.innerHTML +=`
+         col.innerHTML += `
                <div class="col-md-3">
                   <div class="card">
                      <h5 class="card-header fw-bold">${namerooms} <p>Supakorn Dongkew</p></h5>
@@ -160,11 +166,11 @@
                   </div>
                </div>
                `;
-               document.getElementById("nameroom").value = "";
-               document.getElementById("description").value = "";
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
       }
    </script>
-   
+
    <script src="js/script.js"></script>
 
    <!-- Bootrap 5 -->
