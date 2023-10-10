@@ -27,16 +27,28 @@
 
    <style>
       .btn-loginform {
-         background-color: #b29f82;
+         background-color: #292929;
          color: white;
       }
 
       .btn-loginform:hover {
-         background-color: #b29f82;
+         background-color: #284f2f;
+         color: white;
       }
 
-      .form-control {
-         border: 1px solid #b29f82;
+      .form-control, .form-select {
+         border: 1px solid #b29f8200;
+         background-color: #f0f0f0;
+      }
+
+      .form-outline {
+         & label {
+            font-family: 'Poppins', sans-serif !important;
+         }
+
+         & .form-control {
+            font-family: 'Poppins', sans-serif !important;
+         }
       }
 
       .backgound-hero {
@@ -44,61 +56,6 @@
          background-repeat: no-repeat;
          background-position: center bottom 500px;
          background-size: cover;
-      }
-
-      /* ? Input */
-      .inputGroup {
-         font-family: 'Segoe UI', sans-serif;
-         margin: 1em 0 1em 0;
-         max-width: 100%;
-         position: relative;
-      }
-
-      .inputGroup input {
-         font-size: 100%;
-         padding: 0.8em;
-         outline: none;
-         border: 2px solid rgb(200, 200, 200);
-         background-color: transparent;
-         border-radius: 20px;
-         width: 100%;
-      }
-
-      .inputGroup label {
-         font-size: 100%;
-         position: absolute;
-         left: 0;
-         padding: 0.8em;
-         margin-left: 0.5em;
-         pointer-events: none;
-         transition: all 0.3s ease;
-         color: rgb(100, 100, 100);
-         font-family: 'Poppins', sans-serif !important;
-      }
-
-      .inputGroup :is(input:focus, input:valid)~label {
-         transform: translateY(-50%) scale(.9);
-         margin: 0em;
-         margin-left: 1.3em;
-         padding: 0.4em;
-         background-color: #ffffff;
-      }
-
-      .inputGroup :is(input:focus, input:valid) {
-         border-color: rgb(150, 150, 200);
-      }
-
-      .form-select {
-         border-radius: 20px;
-         border: 2px solid rgb(200, 200, 200);
-
-         & option {
-            color: rgb(100, 100, 100);
-         }
-      }
-
-      .form-select-lg {
-         color: rgb(100, 100, 100);
       }
    </style>
 
@@ -109,8 +66,7 @@
    <navbar-component></navbar-component>
 
    <!-- !Form Register -->
-   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 500px; margin-top: -250px;"
-      id="form-area">
+   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;margin-top: -700px; padding-top: 60rem;">
       <form id="registerForm">
          <div class="d-flex justify-content-center align-items-center mb-5">
             <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
@@ -119,9 +75,9 @@
          <!-- Row EMAIL -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="email" id="emailForm" required="" autocomplete="off">
-                  <label for="name">EMAIL</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typeEmail">Email address*</label>
+                  <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com"/>
                </div>
             </div>
          </div>
@@ -129,9 +85,9 @@
          <!-- Row PASSWORD -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="password" id="passwordForm" required="" autocomplete="off">
-                  <label for="name">PASSWORD</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typePassword">Password*</label>
+                  <input type="password" id="typePassword" class="form-control" placeholder="Example1234"/>
                </div>
             </div>
          </div>
@@ -139,10 +95,9 @@
          <!-- Row First Name -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="text" id="firstnameForm" required="" autocomplete="off" pattern="^[a-z]{1,30}$"
-                     title="กรอกภาษาอังกฤษเท่านั้น">
-                  <label for="name">FIRST NAME</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typeFirstname">First name*</label>
+                  <input type="text" id="typeFirstname" class="form-control" placeholder="steve"/>
                </div>
             </div>
          </div>
@@ -150,19 +105,19 @@
          <!-- Row Last Name -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="text" id="lastnameForm" required="" autocomplete="off" pattern="^[a-z]{1,30}$"
-                     title="กรอกภาษาอังกฤษเท่านั้น">
-                  <label for="name">LAST NAME</label>
+               <div class="form-outline">
+                  <label class="mb-1" for="typeLastname">Last name*</label>
+                  <input type="text" id="typeLastname" class="form-control" placeholder="job"/>
                </div>
             </div>
          </div>
 
          <!-- Row Role -->
          <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3 my-3">
-               <select class="form-select form-select-lg" aria-label=".form-select-lg example" id="roleForm">
-                  <option disabled selected>SELECT ROLE</option>
+            <div class="col-md-3 my-4">
+               <label class="mb-1" for="typeLastname">Select role*</label>
+               <select class="form-select" aria-label="example" id="roleForm">
+                  <option disabled selected></option>
                   <option value="Student">Student</option>
                   <option value="Teacher">Teacher</option>
                </select>
@@ -172,10 +127,9 @@
          <!-- Row Phone -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="text" id="phoneForm" required="" autocomplete="off" pattern="^0{1}\d{2}\d{3}\d{4}$"
-                     title="กรอกเบอร์โทรไม่ถูกต้อง"">
-               <label for=" name">PHONE</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typePhone">Phone*</label>
+                  <input type="text" id="typePhone" class="form-control" placeholder="094xxxxxxx"/>
                </div>
             </div>
          </div>
@@ -204,16 +158,16 @@
       registerForm.addEventListener('submit', (e) => {
          e.preventDefault();
 
-         const user_email = document.getElementById('emailForm').value;
-         const user_password = document.getElementById('passwordForm').value;
-         const user_firstname = document.getElementById('firstnameForm').value;
-         const user_lastname = document.getElementById('lastnameForm').value;
+         const user_email = document.getElementById('typeEmail').value;
+         const user_password = document.getElementById('typePassword').value;
+         const user_firstname = document.getElementById('typeFirstname').value;
+         const user_lastname = document.getElementById('typeLastname').value;
          let roleSelect = document.getElementById("roleForm");
          const user_role = roleSelect.value;
-         const user_phone = document.getElementById('phoneForm').value;
+         const user_phone = document.getElementById('typePhone').value;
 
-         fetch(`http://localhost:5084/api/Products`, {
-            method: 'post',
+         fetch(`http://localhost:5000/projectsenior/user`, {
+            method: 'POST',
             headers: {
                'Content-Type': 'application/json',
             },
@@ -225,8 +179,11 @@
                "user_role": user_role,
                "user_phone": user_phone,
             })
-         }).then(res => res.json())
-            .then(data => console.log(data))
+         }) .then(response => response.json())
+            .then(data => {
+               console.log('Success:', data);
+               window.location.href = "login.html";
+            })
             .catch(error => console.log(error));
       })
       // registerForm.addEventListener('submit', (e) => {
