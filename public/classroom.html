@@ -32,6 +32,7 @@
       }
 
       .col-md-3 {
+         margin-top: 30px;
          margin-bottom: 30px;
       }
    </style>
@@ -79,40 +80,9 @@
             </div>
          </div>
       </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
-            </h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
-            </h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
-            </h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-            </div>
-         </div>
-      </div>
+      <div id="classroomData"></div>
    </div>
+
    <!-- FORMPOP -->
    <div class="overlay" id="divOne">
       <div class="row">
@@ -126,7 +96,7 @@
                         <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
                            pattern="^[a-zA-Z0-9]{1,5}$" required>
                         <label class="font-poppin">Description</label>
-                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,30}$"
+                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,72}$"
                            iplaceholder="Write something.." required></textarea>
                         <input type="submit" value="Create" class="btn-add">
                      </form>
@@ -169,6 +139,33 @@
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";
       }
+         const classroomdivdata = document.getElementById('row');
+         fetch('/projectsenior/classroom')
+         .then(response => response.json())
+         .then(data => {
+            data.forEach(each =>{
+               console.log(each.classroom_creator);
+               const classroomdivdata = document.getElementById('row');
+               let classroomcol = ""
+                   classroomcol += `
+                     <div class="col-md-3">
+                        <div class="card">
+                           <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
+                           <div class="card-body">
+                              <p class="card-text">${each.classroom_des}</p>
+                              <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
+                           </div>
+                        </div>
+                     </div>
+                     `;
+                  classroomdivdata.innerHTML = classroomcol
+            })
+            // แสดงข้อมูลใน div ที่มี id "userData"
+            
+         })
+         .catch(error => {
+            console.error('Error:', error);
+         });
    </script>
 
    <script src="js/script.js"></script>
