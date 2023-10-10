@@ -68,7 +68,7 @@
    </div>
 
    <!--!Container-->
-   <div class="row" id="row">
+   <div class="row" id="cardClassroom">
       <div class="col-md-3">
          <div class="card">
             <h5 class="card-header fw-bold">CE112 <p>Supakorn Dongkew</p>
@@ -80,7 +80,6 @@
             </div>
          </div>
       </div>
-      <div id="classroomData"></div>
    </div>
 
    <!-- FORMPOP -->
@@ -111,7 +110,6 @@
 
    <!-- SCRIPT -->
    <script>
-
       const btnnew = document.getElementById("btnnew");
       btnnew.addEventListener("click", function () {
          document.getElementById("nameroom").value = "";
@@ -139,29 +137,26 @@
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";
       }
-         const classroomdivdata = document.getElementById('row');
-         fetch('/projectsenior/classroom')
+
+
+      fetch('/projectsenior/classroom')
          .then(response => response.json())
          .then(data => {
-            data.forEach(each =>{
-               console.log(each.classroom_creator);
-               const classroomdivdata = document.getElementById('row');
-               let classroomcol = ""
-                   classroomcol += `
-                     <div class="col-md-3">
-                        <div class="card">
-                           <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
-                           <div class="card-body">
-                              <p class="card-text">${each.classroom_des}</p>
-                              <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-                           </div>
-                        </div>
+            const cardClassroom = document.getElementById('cardClassroom');
+            data.forEach(each => {
+               const classroomCol = document.createElement('div');
+               classroomCol.className = 'col-md-3';
+               classroomCol.innerHTML = `
+                  <div class="card">
+                     <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
+                     <div class="card-body">
+                        <p class="card-text">${each.classroom_des}</p>
+                        <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
                      </div>
-                     `;
-                  classroomdivdata.innerHTML = classroomcol
-            })
-            // แสดงข้อมูลใน div ที่มี id "userData"
-            
+                  </div>
+               `;
+               cardClassroom.appendChild(classroomCol);
+            });
          })
          .catch(error => {
             console.error('Error:', error);
