@@ -87,6 +87,19 @@
       .inputGroup :is(input:focus, input:valid) {
          border-color: rgb(150, 150, 200);
       }
+
+      .form-select {
+         border-radius: 20px;
+         border: 2px solid rgb(200, 200, 200);
+
+            & option {
+               color: rgb(100, 100, 100);
+            }
+      }
+
+      .form-select-lg {
+         color: rgb(100, 100, 100);
+      }
    </style>
 
 </head>
@@ -96,7 +109,7 @@
    <navbar-component></navbar-component>
 
 <!-- !Form Register -->
-<div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 400px; margin-top: -250px;" id="form-area">
+<div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 500px; margin-top: -250px;" id="form-area">
    <form id="registerForm">
       <div class="d-flex justify-content-center align-items-center mb-5">
          <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
@@ -142,6 +155,17 @@
          </div>
       </div>
 
+      <!-- Row Role -->
+      <div class="row d-flex justify-content-center align-items-center">
+         <div class="col-md-3 my-3">
+            <select class="form-select form-select-lg" aria-label=".form-select-lg example">
+               <option selected>SELECT ROLE</option>
+               <option value="Student">Student</option>
+               <option value="Teacher">Teacher</option>
+            </select>
+         </div>
+      </div>
+
       <!-- Row Phone -->
       <div class="row d-flex justify-content-center align-items-center">
          <div class="col-md-3">
@@ -154,7 +178,7 @@
 
       <!-- Button -->
       <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
+         <div class="col-md-3 mt-5">
             <div class="d-grid gap-2 col-md-12 mx-auto">
                <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
             </div>
@@ -182,5 +206,4 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
 </body>
-
 </html>

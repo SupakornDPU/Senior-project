@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/')
+mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/pyflash')
       .then(() => console.log('MongoDB Connected...'))
       .catch(err => console.log(err));
 
