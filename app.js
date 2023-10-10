@@ -2,12 +2,15 @@ const express = require('express');
 const path = require('path');
 const logger = require('./logger');
 const userRouter = require('./router/userRouter');
-const classroomRouter = require('./router/classroom');
+const classroomRouter = require('./router/classroomRouter');
 const mongoose = require('mongoose');
 
 // ตั้งค่าการเชื่อมต่อฐานข้อมูล
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/pyflash')
+mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/pyflash' , {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+})
       .then(() => console.log('MongoDB Connected...'))
       .catch(err => console.log(err));
 

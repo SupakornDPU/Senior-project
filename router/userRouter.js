@@ -1,44 +1,61 @@
 const express = require('express');
 const userRouter = express.Router();
-const user = require('../data/Users');
-const uuid = require('uuid');
-
+const mongoose = require('mongoose');
+const User = require('../models/Users');
 
 // สร้าง route สำหรับ get ข้อมูล user
-userRouter.get('/', (req, res) => {
-   res.json(user);
+userRouter.get('/', (req, res, next) => {
+   User.find()
+      .then((users) => {
+         res.json(users);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
+
+// สร้าง route สำหรับ post ข้อมูล user
+userRouter.post('/', (req, res, next) => {
+   User.create(req.body)
+      .then((post) => {
+         res.json(post);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method create() เพื่อสร้างข้อมูล และรับข้อมูลผ่าน req.body ที่ส่งมา
+})
 
 // สร้าง route สำหรับ get ข้อมูล user ตาม id
-userRouter.get('/:id', (req, res) => {
-
-   // ใช้ method some() ในการหาข้อมูล user ที่มี id ตามที่ระบุ
-   const found = user.some(user => user.id === parseInt(req.params.id));
-
-   if (found) {
-      // ถ้าพบข้อมูล user ที่มี id ตามที่ระบุ ให้ส่งข้อมูล user กลับไป
-      res.json(user.filter(user => user.id === parseInt(req.params.id)));
-   } else {
-      // ถ้าไม่พบข้อมูล user ที่มี id ตามที่ระบุ ให้ส่งข้อความว่า No user with the id of {id} กลับไป
-      res.status(400).json({ msg: `No user with the id of ${req.params.id}` });
-   }
+userRouter.get('/:id', (req, res, next) => {
+   User.findById(req.params.id)
+      .then((user) => {
+         res.json(user);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
 });
 
-// Post user
-userRouter.post('/', (req, res) => {
+// สร้าง route สำหรับ put ข้อมูล user ตาม id
+userRouter.put('/:id', (req, res, next) => {
+   User.findByIdAndUpdate(req.params.id, req.body)
+      .then(() => {
+         res.json({ message: 'Updated' });
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method findByIdAndUpdate() เพื่อค้นหาข้อมูลตาม id และทำการอัพเดทข้อมูล
+});
 
-   const newUser = {
-      id: uuid.v4(), // ใช้คำสั่ง uuid.v4 เพื่อสร้าง id ให้กับข้อมูลใหม่ที่เพิ่มเข้ามา
-      name: req.body.name // ข้อมูลเมื่อมีการเพิ่มจะเข้าไปอยู่ใน req.body ซึ่งเราสามารถเข้าถึงได้
-   }
-
-   // เงื่อนไขเพื่อตรวจสอบว่ามีการส่งข้อมูล name และ email มาหรือไม่
-   if (!newUser.name) {
-      return res.status(400).json({ msg: 'Please include a name and email' }); // ใช้คำสั่ง return เพื่อให้หยุดการทำงานของ function นี้
-   }
-
-   user.push(newUser); // ใช้คำสั่ง push เพื่อเพิ่มข้อมูลใหม่ลงไปใน array
-   res.json(user);  // ใช้คำสั่ง res.json เพื่อแสดงผลข้อมูลออกมาเป็น json
+// สร้าง route สำหรับ delete ข้อมูล user ตาม id
+userRouter.delete('/:id', (req, res, next) => {
+   User.findByIdAndRemove(req.params.id, req.body)
+      .then(() => {
+         res.json({ message: 'Deleted' });
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
 });
 
 module.exports = userRouter;

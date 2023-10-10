@@ -46,8 +46,8 @@
          background-size: cover;
       }
 
-            /* ? Input */
-            .inputGroup {
+      /* ? Input */
+      .inputGroup {
          font-family: 'Segoe UI', sans-serif;
          margin: 1em 0 1em 0;
          max-width: 100%;
@@ -92,9 +92,9 @@
          border-radius: 20px;
          border: 2px solid rgb(200, 200, 200);
 
-            & option {
-               color: rgb(100, 100, 100);
-            }
+         & option {
+            color: rgb(100, 100, 100);
+         }
       }
 
       .form-select-lg {
@@ -108,92 +108,149 @@
    <!-- !Navbar -->
    <navbar-component></navbar-component>
 
-<!-- !Form Register -->
-<div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 500px; margin-top: -250px;" id="form-area">
-   <form id="registerForm">
-      <div class="d-flex justify-content-center align-items-center mb-5">
-         <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
-      </div>
+   <!-- !Form Register -->
+   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 500px; margin-top: -250px;"
+      id="form-area">
+      <form id="registerForm">
+         <div class="d-flex justify-content-center align-items-center mb-5">
+            <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
+         </div>
 
-      <!-- Row EMAIL -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
-            <div class="inputGroup">
-               <input type="email" required="" autocomplete="off">
-               <label for="name">EMAIL</label>
+         <!-- Row EMAIL -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="inputGroup">
+                  <input type="email" id="emailForm" required="" autocomplete="off">
+                  <label for="name">EMAIL</label>
+               </div>
             </div>
          </div>
-      </div>
 
-      <!-- Row PASSWORD -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
-            <div class="inputGroup">
-               <input type="password" required="" autocomplete="off">
-               <label for="name">PASSWORD</label>
+         <!-- Row PASSWORD -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="inputGroup">
+                  <input type="password" id="passwordForm" required="" autocomplete="off">
+                  <label for="name">PASSWORD</label>
+               </div>
             </div>
          </div>
-      </div>
 
-      <!-- Row First Name -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
-            <div class="inputGroup">
-               <input type="text" required="" autocomplete="off" pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น">
-               <label for="name">FIRST NAME</label>
+         <!-- Row First Name -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="inputGroup">
+                  <input type="text" id="firstnameForm" required="" autocomplete="off" pattern="^[a-z]{1,30}$"
+                     title="กรอกภาษาอังกฤษเท่านั้น">
+                  <label for="name">FIRST NAME</label>
+               </div>
             </div>
          </div>
-      </div>
 
-      <!-- Row Last Name -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
-            <div class="inputGroup">
-               <input type="text" required="" autocomplete="off" pattern="^[a-z]{1,30}$" title="กรอกภาษาอังกฤษเท่านั้น">
-               <label for="name">LAST NAME</label>
+         <!-- Row Last Name -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="inputGroup">
+                  <input type="text" id="lastnameForm" required="" autocomplete="off" pattern="^[a-z]{1,30}$"
+                     title="กรอกภาษาอังกฤษเท่านั้น">
+                  <label for="name">LAST NAME</label>
+               </div>
             </div>
          </div>
-      </div>
 
-      <!-- Row Role -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3 my-3">
-            <select class="form-select form-select-lg" aria-label=".form-select-lg example">
-               <option selected>SELECT ROLE</option>
-               <option value="Student">Student</option>
-               <option value="Teacher">Teacher</option>
-            </select>
-         </div>
-      </div>
-
-      <!-- Row Phone -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3">
-            <div class="inputGroup">
-               <input type="text" required="" autocomplete="off" pattern="^0{1}\d{2}\d{3}\d{4}$" title="กรอกเบอร์โทรไม่ถูกต้อง"">
-               <label for="name">PHONE</label>
+         <!-- Row Role -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3 my-3">
+               <select class="form-select form-select-lg" aria-label=".form-select-lg example" id="roleForm">
+                  <option disabled selected>SELECT ROLE</option>
+                  <option value="Student">Student</option>
+                  <option value="Teacher">Teacher</option>
+               </select>
             </div>
          </div>
-      </div>
 
-      <!-- Button -->
-      <div class="row d-flex justify-content-center align-items-center">
-         <div class="col-md-3 mt-5">
-            <div class="d-grid gap-2 col-md-12 mx-auto">
-               <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
+         <!-- Row Phone -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="inputGroup">
+                  <input type="text" id="phoneForm" required="" autocomplete="off" pattern="^0{1}\d{2}\d{3}\d{4}$"
+                     title="กรอกเบอร์โทรไม่ถูกต้อง"">
+               <label for=" name">PHONE</label>
+               </div>
             </div>
          </div>
-      </div>
-      <!-- Button -->
-      <input type="text" id="point" class="form-control form-control-lg" style="display: none;" name="point"
-         value="0" required disabled />
-   </form>
-</div>
-<!-- !Form Register -->
+
+         <!-- Button -->
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3 mt-5">
+               <div class="d-grid gap-2 col-md-12 mx-auto">
+                  <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
+               </div>
+            </div>
+         </div>
+         <!-- Button -->
+         <input type="text" id="point" class="form-control form-control-lg" style="display: none;" name="point"
+            value="0" required disabled />
+      </form>
+   </div>
+   <!-- !Form Register -->
 
 
    <!-- !Footer -->
    <footer-component></footer-component>
+
+   <script>
+      const registerForm = document.getElementById('registerForm');
+      registerForm.addEventListener('submit', (e) => {
+         e.preventDefault();
+
+         const user_email = document.getElementById('emailForm').value;
+         const user_password = document.getElementById('passwordForm').value;
+         const user_firstname = document.getElementById('firstnameForm').value;
+         const user_lastname = document.getElementById('lastnameForm').value;
+         let roleSelect = document.getElementById("roleForm");
+         const user_role = roleSelect.value;
+         const user_phone = document.getElementById('phoneForm').value;
+
+         fetch(`http://localhost:5084/api/Products`, {
+            method: 'post',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               "user_email": user_email,
+               "user_firstname": user_firstname,
+               "user_lastname": user_lastname,
+               "user_password": user_password,
+               "user_role": user_role,
+               "user_phone": user_phone,
+            })
+         }).then(res => res.json())
+            .then(data => console.log(data))
+            .catch(error => console.log(error));
+      })
+      // registerForm.addEventListener('submit', (e) => {
+      //    e.preventDefault();
+      //    const formData = new FormData(registerForm);
+      //    const data = Object.fromEntries(formData);
+      //    console.log(data);
+      //    fetch('http://localhost:3000/users', {
+      //       method: 'POST',
+      //       headers: {
+      //          'Content-Type': 'application/json'
+      //       },
+      //       body: JSON.stringify(data)
+      //    })
+      //       .then(response => response.json())
+      //       .then(data => {
+      //          console.log('Success:', data);
+      //          window.location.href = "login.html";
+      //       })
+      //       .catch((error) => {
+      //          console.error('Error:', error);
+      //       });
+      // });
+   </script>
 
    <!-- Script -->
    <script src="js/script.js"></script>
@@ -206,4 +263,5 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
       crossorigin="anonymous"></script>
 </body>
+
 </html>
