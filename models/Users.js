@@ -2,16 +2,10 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const UserSchema = new mongoose.Schema({
-   user_email: {
-      type: String,
-      required: [true, 'กรุณากรอกอีเมล'],
-   },
+   user_email: String,
    user_firstname: String,
    user_lastname: String,
-   user_password: {
-      type: String,
-      require: [true, 'กรุณากรอกรหัสผ่าน'],
-   },
+   user_password: String,
    user_role: String,
    user_phone: String,
 })

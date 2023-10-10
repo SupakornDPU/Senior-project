@@ -1,10 +1,10 @@
 const express = require('express');
-const userRouter = express.Router();
+const registerRouter = express.Router();
 const mongoose = require('mongoose');
 const User = require('../models/Users');
 
 // สร้าง route สำหรับ get ข้อมูล user
-userRouter.get('/', (req, res, next) => {
+registerRouter.get('/', (req, res, next) => {
    User.find()
       .then((users) => {
          res.json(users);
@@ -15,7 +15,7 @@ userRouter.get('/', (req, res, next) => {
 });
 
 // สร้าง route สำหรับ post ข้อมูล user
-userRouter.post('/', (req, res, next) => {
+registerRouter.post('/', (req, res, next) => {
    User.create(req.body)
       .then((post) => {
          res.json(post);
@@ -26,7 +26,7 @@ userRouter.post('/', (req, res, next) => {
 })
 
 // สร้าง route สำหรับ get ข้อมูล user ตาม id
-userRouter.get('/:id', (req, res, next) => {
+registerRouter.get('/:id', (req, res, next) => {
    User.findById(req.params.id)
       .then((user) => {
          res.json(user);
@@ -37,7 +37,7 @@ userRouter.get('/:id', (req, res, next) => {
 });
 
 // สร้าง route สำหรับ put ข้อมูล user ตาม id
-userRouter.put('/:id', (req, res, next) => {
+registerRouter.put('/:id', (req, res, next) => {
    User.findByIdAndUpdate(req.params.id, req.body)
       .then(() => {
          res.json({ message: 'Updated' });
@@ -48,7 +48,7 @@ userRouter.put('/:id', (req, res, next) => {
 });
 
 // สร้าง route สำหรับ delete ข้อมูล user ตาม id
-userRouter.delete('/:id', (req, res, next) => {
+registerRouter.delete('/:id', (req, res, next) => {
    User.findByIdAndRemove(req.params.id, req.body)
       .then(() => {
          res.json({ message: 'Deleted' });
@@ -58,4 +58,4 @@ userRouter.delete('/:id', (req, res, next) => {
       }); // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
 });
 
-module.exports = userRouter;
+module.exports = registerRouter;
