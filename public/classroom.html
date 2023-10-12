@@ -77,12 +77,13 @@
                <h5 class="card-title">Special title treatment</h5>
                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
                <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
+               <a class="button" id="btnnew" href="#formedit"><i class="bi bi-file-earmark-plus"></i></a>
             </div>
          </div>
       </div>
    </div>
 
-   <!-- FORMPOP -->
+   <!-- FORMPOP CREATE -->
    <div class="overlay" id="divOne">
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
@@ -97,10 +98,38 @@
                         <label class="font-poppin">Description</label>
                         <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,72}$"
                            iplaceholder="Write something.." required></textarea>
-                        <input style="display: none;" value="Supakorn Dongkew" id="creator"> 
-                        <input style="display: none;" value="" id="teacherid"> 
-                        <input style="display: none;" value="" id="adminid"> 
+                        <input style="display: none;" value="Supakorn Dongkew" id="creator">
+                        <input style="display: none;" value="" id="teacherid">
+                        <input style="display: none;" value="" id="adminid">
                         <input type="submit" value="Create" class="btn-add" id="createdata">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- FORMPOP EDIT -->
+   <div class="overlay" id="formedit">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="wrapper">
+               <h2 class="font-poppin">Create Classroom</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form id="updateroom">
+                        <input value="" id="classroomid">
+                        <label class="font-poppin">Name room</label>
+                        <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
+                           pattern="^[a-zA-Z0-9]{1,5}$" required>
+                        <label class="font-poppin">Description</label>
+                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,72}$"
+                           iplaceholder="Write something.." required></textarea>
+                        <input style="display: none;" value="Supakorn Dongkew" id="creator">
+                        <input style="display: none;" value="" id="teacherid">
+                        <input style="display: none;" value="" id="adminid">
+                        <input type="submit" value="Create" class="btn-add" id="updatedata">
                      </form>
                   </div>
                </div>
@@ -113,11 +142,59 @@
 
    <!-- SCRIPT -->
    <script>
+
+
       const btnnew = document.getElementById("btnnew");
       btnnew.addEventListener("click", function () {
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";
       });
+
+      const renderpost = (each) => {
+         const cardClassroom = document.getElementById('cardClassroom');
+         each.forEach(each => {
+            const classroomCol = document.createElement('div');
+            classroomCol.className = 'col-md-3';
+            classroomCol.innerHTML = `
+                  <div class="card" id=${each._id}>
+                     <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
+                     <div class="card-body">
+                        <p class="card-text">${each.classroom_des}</p>
+                        <input style="" value="${each._id}" id="udid"> 
+                        <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                        <a class="button" id="btnupdate" href="#formedit" value = "${each._id}" onclick = "btnupdatedata()" ><i class="bi bi-file-earmark-plus"></i></a>
+                     </div>
+                  </div>
+               `;
+            cardClassroom.appendChild(classroomCol);
+            console.log(btnupdate);
+         });
+      }
+
+      const updateroom = document.querySelector('.col-md-3')
+      fetch('/projectsenior/classroom', {
+         method: 'get',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+      })
+         .then(response => response.json())
+         .then(data => renderpost(data));
+
+      function createData() {
+         fetch('/projectsenior/classroom', {
+            method: 'post',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "classroom_name": namerooms,
+               "classroom_des": descriptions
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+      }
 
       const formadd = document.getElementById("createroom");
       formadd.addEventListener("submit", (e) => {
@@ -129,71 +206,69 @@
          const teacherids = document.getElementById("teacherid").value;
          const adminids = document.getElementById("adminid").value;
 
-         fetch('/projectsenior/classroom',{
+         fetch('/projectsenior/classroom', {
             method: 'post',
             headers: {
-               'Content-Type':'application/json'
+               'Content-Type': 'application/json'
             },
-            body:JSON.stringify({
-               "classroom_name" : namerooms,
+            body: JSON.stringify({
+               "classroom_name": namerooms,
                "classroom_creator": creators,
-               "classroom_des" : descriptions,
-               "teacher_id" : teacherids,
-               "admin_id" : adminids,
+               "classroom_des": descriptions,
+               "teacher_id": teacherids,
+               "admin_id": adminids,
             })
          })
-      .then(response => console.log(response))
-      .catch(err => console.log(err))
-      .then(() => {
-         alert("เพิ่มห้องเรียนเรียบร้อย")
-         window.location.href = " classroom.html "
-      })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มห้องเรียนเรียบร้อย")
+               window.location.href = " classroom.html "
+            })
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";
       })
 
-      fetch('/projectsenior/classroom', {
-         method: 'get',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-      })
-         .then(response => response.json())
-         .then(data => {
-            const cardClassroom = document.getElementById('cardClassroom');
-            data.forEach(each => {
-               const classroomCol = document.createElement('div');
-               classroomCol.className = 'col-md-3';
-               classroomCol.innerHTML = `
-                  <div class="card">
-                     <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
-                     <div class="card-body">
-                        <p class="card-text">${each.classroom_des}</p>
-                        <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
-                     </div>
-                  </div>
-               `;
-               cardClassroom.appendChild(classroomCol);
-            });
-         })
-         .catch(error => {
-            console.error('Error:', error);
-         });
+      function btnupdatedata() {
+         document.getElementById("classroomid").value ="";
+         document.getElementById("classroomid").value = document.getElementById("udid").value;
+         console.log(document.getElementById("udid").value)
 
-         function createData(){
-            fetch('/projectsenior/classroom',{
-               method: 'post',
-               headers: {
-                  'Content-Type':'application/json'
-               },
-               body:JSON.stringify({
-                  "classroom_name" : namerooms ,
-                  "classroom_des" : descriptions
-               })
+      }
+
+      const formupdate = document.getElementById("updateroom");
+      formupdate.addEventListener("submit", (e) => {
+         e.preventDefault();
+         const namerooms = document.getElementById("nameroom").value;
+         const creators = document.getElementById("creator").value;
+         const descriptions = document.getElementById("description").value;
+         const teacherids = document.getElementById("teacherid").value;
+         const adminids = document.getElementById("adminid").value;
+
+         fetch('/projectsenior/classroom', {
+            method: 'put',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "classroom_name": namerooms,
+               "classroom_creator": creators,
+               "classroom_des": descriptions,
+               "teacher_id": teacherids,
+               "admin_id": adminids,
             })
-         .then(response => console.log(response))
-         .catch(err => console.log(err))
-         }
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มห้องเรียนเรียบร้อย")
+               window.location.href = " classroom.html "
+            })
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+      })
+
+
    </script>
 
    <script src="js/script.js"></script>
