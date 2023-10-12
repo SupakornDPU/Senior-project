@@ -6,6 +6,7 @@ const loginUserRouter = require('./router/loginUserRouter');
 const loginRouter = require('./router/loginRouter');
 const classroomRouter = require('./router/classroomRouter');
 const indexRouter = require('./router/indexRouter');
+const deckRouter = require('./router/deckRouter');
 const mongoose = require('mongoose');
 const expressSession = require('express-session');
 
@@ -43,6 +44,7 @@ app.use('/projectsenior/register', registerRouter);  // เรียกใช้
 app.use('/projectsenior/loginUser', loginUserRouter);  // เรียกใช้ loginUserRouter
 app.use('/projectsenior/logout', loginRouter);  // เรียกใช้ loginRouter เพื่อทำการ logout
 app.use('/projectsenior/classroom', classroomRouter);  // เรียกใช้ classroomRouter
+app.use('/projectsenior/deck', deckRouter);  // เรียกใช้ deckRouter
 
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
