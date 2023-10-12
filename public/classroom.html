@@ -152,7 +152,12 @@
          document.getElementById("description").value = "";
       })
 
-      fetch('/projectsenior/classroom')
+      fetch('/projectsenior/classroom', {
+         method: 'get',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+      })
          .then(response => response.json())
          .then(data => {
             const cardClassroom = document.getElementById('cardClassroom');
@@ -164,7 +169,7 @@
                      <h5 class="card-header fw-bold">${each.classroom_name} <p>${each.classroom_creator}</p></h5>
                      <div class="card-body">
                         <p class="card-text">${each.classroom_des}</p>
-                        <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
+                        <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
                      </div>
                   </div>
                `;
