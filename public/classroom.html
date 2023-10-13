@@ -41,12 +41,16 @@
       }
 
       .card {
-         width: 18rem !important;
+         width: 278px !important;
          height: 240px !important;
       }
+      
+      .card-text {
+         max-width: 17rem;
+      }
 
-      .card-body {
-         overflow: hidden;
+      .col-lg-3 {
+         width: fit-content!important;
       }
    </style>
 
@@ -81,8 +85,8 @@
    </div>
 
    <!--!Container-->
-   <div class="row" id="cardClassroom">
-      <div class="col-md-3">
+   <div class="row" id="cardClassroom" style="margin-right: 50px;">
+      <div class="col-lg-3 col-md-12 my-2">
          <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                <h5 class="fw-bold">CE112 <p>Supakorn Dongkew</p>
@@ -90,9 +94,10 @@
                <a class="button" id="btnCreateClassroom" href="#formedit"><i class="bi bi-file-earmark-plus"></i></a>
             </div>
             <div class="card-body d-flex justify-content-between">
-               <div class="row">
+               <div class="row card-text">
                   <div class="col-md-12">
-                     <p class="card-text">Lorem ipsum, lor</p>
+                     <p style="margin: 0;">
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar</p>
                   </div>
                   <div class="col-md-12 d-flex align-items-end">
                      <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
@@ -185,7 +190,7 @@
          const cardClassroom = document.getElementById('cardClassroom');
          each.forEach(each => {
             const classroomCol = document.createElement('div');
-            classroomCol.className = 'col-md-3';
+            classroomCol.className = 'col-lg-3 col-md-12 my-2';
             classroomCol.innerHTML = `
             <div class="card" id=${each._id}>
                <div class="card-header d-flex justify-content-between align-items-center">
@@ -193,7 +198,7 @@
                   <a class="button" id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                </div>
                <div class="card-body d-flex justify-content-between">
-                  <div class="row">
+                  <div class="row card-text">
                      <div class="col-md-12">
                         <p class="card-text">${each.classroom_des}</p>
                      </div>
@@ -207,7 +212,7 @@
             cardClassroom.appendChild(classroomCol);
          });
       }
-      
+
       // POST DATA 
       const formadd = document.getElementById("createroom");
       formadd.addEventListener("submit", (e) => {
@@ -264,17 +269,6 @@
                descriptions.value = data.classroom_des;
             })
             .catch(err => console.log(err))
-
-         // fetch('/projectsenior/classroom/' + id,{
-         //    method:'GET',
-         //    headers:{
-         //       'Content-Type' : 'application/json'
-         //    }, body: JSON.stringify({
-         //    namerooms : "classroom_name"
-         //    })
-         // })
-
-
       }
 
       // UPDATE DATA
