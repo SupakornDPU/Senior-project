@@ -14,8 +14,38 @@ classroomRouter.get('/', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
+// Logic สำหรับสร้างรหัสสุ่ม 6 ตัวอักษร
+const generateRandomCode = () => {
+   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+   let code = '';
+
+   // Generate a 6-character random code
+   for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      code += characters[randomIndex];
+   }
+
+   return code;
+};
+
+// ตรวจสอบว่ามีรหัสนี้ในฐานข้อมูลหรือยัง
+const isCodeUnique = async (code) => {
+   const existingClassroom = await Classroom.findOne({ code });
+   return !existingClassroom;
+};
+
+// สร้างรหัสใหม่ และตรวจสอบความซ้ำกัน
+const generateUniqueCode = async () => {
+   let code;
+   do {
+      code = generateRandomCode(); // สร้างรหัส
+   } while (!(await isCodeUnique(code))); // ตรวจสอบความซ้ำ
+   return code;
+};
+
 // สร้าง route สำหรับ post ข้อมูล classroom
 classroomRouter.post('/', (req, res, next) => {
+   req.body.classroom_code = generateRandomCode();
    Classroom.create(req.body)
       .then((post) => {
          res.json(post);
