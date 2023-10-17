@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Class room</title>
+   <title>Classroom</title>
 
    <!-- Font Awesome -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -62,7 +62,7 @@
    <div class="height-100 bg-light">
       <div class="row" style="margin: 60px 0 60px 0;">
          <div class="col-md-12 m-0 p-0">
-            <a class="btn btn-primary font-poppin" href="createFlashcard.html" role="button" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> 
+            <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> 
                Create Flash Card</a>
          </div>
       </div>
@@ -88,7 +88,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Learning</a>
+                        <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
                      </div>
                   </div>
                   <div class="row mb-3">
@@ -98,7 +98,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Score Board</a>
+                        <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
                      </div>
                   </div>
                </div>
@@ -125,7 +125,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Learning</a>
+                        <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
                      </div>
                   </div>
                   <div class="row mb-3">
@@ -135,7 +135,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Score Board</a>
+                        <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
                      </div>
                   </div>
                </div>
@@ -162,7 +162,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Learning</a>
+                        <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
                      </div>
                   </div>
                   <div class="row mb-3">
@@ -172,7 +172,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Score Board</a>
+                        <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
                      </div>
                   </div>
                </div>
@@ -199,7 +199,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Learning</a>
+                        <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
                      </div>
                   </div>
                   <div class="row mb-3">
@@ -209,7 +209,7 @@
                   </div>
                   <div class="row mb-3">
                      <div class="col-md-12">
-                        <a class="btn btn-primary font-poppin" href="#" role="button" style="font-weight: bold;">Score Board</a>
+                        <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
                      </div>
                   </div>
                </div>
@@ -220,6 +220,11 @@
    <!--!Container-->
 
    <!-- SCRIPT -->
+   <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const classroomID = urlParams.get('classroomID')
+      console.log(classroomID);
+   </script>
    <script src="js/script.js"></script>
 
    <!-- Bootrap 5 -->

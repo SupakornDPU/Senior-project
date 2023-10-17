@@ -72,10 +72,10 @@
       </div>
       <div class="row">
          <div class="row text-center my-4">
-            <div class="col-md-3">
+            <div class="col-3">
                <span style="font-weight: bold;">Question</span>
             </div>
-            <div class="col-md-3">
+            <div class="col-3">
                <span style="font-weight: bold;">Answer</span>
             </div>
          </div>
@@ -91,8 +91,10 @@
                      <textarea class="form-control" aria-label="With textarea" placeholder="Answer"></textarea>
                   </div>
                </div>
-               <div class="col-3 my-2">
+               <div class="col-md-1 col-3 my-2">
                   <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+               </div>
+               <div class="col-md-1 col-3 my-2">
                   <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
                </div>
             </div>
@@ -120,9 +122,11 @@
                   <textarea class="form-control" aria-label="With textarea" placeholder="Answer"></textarea>
                </div>
             </div>
-            <div class="col-3 my-2">
-                  <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
-                  <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+            <div class="col-md-1 col-3 my-2">
+               <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+            </div>
+            <div class="col-md-1 col-3 my-2">
+               <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
             </div>
          `;
          formQA.appendChild(div); // เป็นการเพิ่ม div ลงไปใน formQA

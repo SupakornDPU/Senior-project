@@ -27,16 +27,29 @@
 
    <style>
       .btn-loginform {
-         background-color: #b29f82;
+         background-color: #292929;
          color: white;
       }
 
       .btn-loginform:hover {
-         background-color: #b29f82;
+         background-color: #132948;
+         color: white;
       }
 
-      .form-control {
-         border: 1px solid #b29f82;
+      .form-control,
+      .form-select {
+         border: 1px solid #b29f8200;
+         background-color: #f0f0f0;
+      }
+
+      .form-outline {
+         & label {
+            font-family: 'Poppins', sans-serif !important;
+         }
+
+         & .form-control {
+            font-family: 'Poppins', sans-serif !important;
+         }
       }
 
       .w3-bar {
@@ -50,47 +63,6 @@
          background-position: center bottom 220px;
          background-size: cover;
       }
-
-      /* ? Input */
-      .inputGroup {
-         font-family: 'Segoe UI', sans-serif;
-         margin: 1em 0 1em 0;
-         max-width: 100%;
-         position: relative;
-      }
-
-      .inputGroup input {
-         font-size: 100%;
-         padding: 0.8em;
-         outline: none;
-         border: 2px solid rgb(200, 200, 200);
-         background-color: transparent;
-         border-radius: 20px;
-         width: 100%;
-      }
-
-      .inputGroup label {
-         font-size: 100%;
-         position: absolute;
-         left: 0;
-         padding: 0.8em;
-         margin-left: 0.5em;
-         pointer-events: none;
-         transition: all 0.3s ease;
-         color: rgb(100, 100, 100);
-      }
-
-      .inputGroup :is(input:focus, input:valid)~label {
-         transform: translateY(-50%) scale(.9);
-         margin: 0em;
-         margin-left: 1.3em;
-         padding: 0.4em;
-         background-color: #ffffff;
-      }
-
-      .inputGroup :is(input:focus, input:valid) {
-         border-color: rgb(150, 150, 200);
-      }
    </style>
 </head>
 
@@ -99,7 +71,7 @@
    <navbar-component></navbar-component>
 
    <!-- !Form Login -->
-   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;padding-top: 400px; margin-top: -250px;">
+   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;margin-top: -700px; padding-top: 60rem;">
       <form id="loginForm" style="margin-top: 10rem;">
          <div class="d-flex justify-content-center align-items-center mb-5">
             <h1 style="font-weight: bold;" class="font-poppin">LOGIN</h1>
@@ -108,9 +80,9 @@
          <!-- Row 1 -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="text" required="" autocomplete="off">
-                  <label for="name" class="font-poppin">Email</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typeEmail">Email address*</label>
+                  <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com" />
                </div>
             </div>
          </div>
@@ -118,9 +90,9 @@
          <!-- Row 2 -->
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3">
-               <div class="inputGroup">
-                  <input type="text" required="" autocomplete="off">
-                  <label for="name" class="font-poppin">Password</label>
+               <div class="form-outline mb-4">
+                  <label class="mb-1" for="typePassword">Password*</label>
+                  <input type="password" id="typePassword" class="form-control" placeholder="Example1234" />
                </div>
                <!-- Button -->
                <div class="d-grid gap-2 col-md-12">
@@ -134,6 +106,36 @@
 
    <!-- !Footer -->
    <footer-component></footer-component>
+
+   <script>
+      const loginForm = document.getElementById('loginForm');
+      loginForm.addEventListener('submit', (e) => {
+         e.preventDefault();
+
+         const user_email = document.getElementById('typeEmail').value;
+         const user_password = document.getElementById('typePassword').value;
+
+         fetch(`http://localhost:5000/projectsenior/loginUser`, {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+               "user_email": user_email,
+               "user_password": user_password,
+            })
+         }).then(response => response.json())
+            .then(data => {
+               console.log('Success:', data);
+               if (data.message === "Login Fail") {
+                  window.location.href = "login.html";
+               } else {
+                  window.location.href = "index.html";
+               }
+            })
+            .catch(error => console.log(error));
+      })
+   </script>
 
    <!-- Script -->
    <script src="js/script.js"></script>

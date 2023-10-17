@@ -1,3 +1,12 @@
+function logout() {
+   fetch(`http://localhost:5000/projectsenior/logout`, {})
+      .then(response => response.json())
+      .then(data => {
+         console.log('Success:', data);
+         window.location.href = "index.html";
+      })
+}
+
 // Navbar
 class NavBar extends HTMLElement {
    constructor() {
@@ -20,15 +29,16 @@ class NavBar extends HTMLElement {
                   <a class="nav-link active" aria-current="page" href="index.html">Home</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="classroom.html">Classroom</a>
+                  <a class="nav-link" href="classroom.html" id="menuClassroom">Classroom</a>
                </li>
                <li class="nav-item">
                   <a class="nav-link" href="#">About</a>
                </li>
             </ul>
             <form class="d-flex gap-2">
-               <a name="" id="" class="btn btn-primary btn-login" href="login.html" role="button">Login</a>
-               <a name="" id="" class="btn btn-primary" href="register.html" role="button">Register</a>
+               <a name="" id="loginButton" class="btn btn-primary btn-login" href="login.html" role="button">Login</a>
+               <a name="" id="registerButton" class="btn btn-primary" href="register.html" role="button">Register</a>
+               <a name="" id="logoutButton" class="btn btn-danger" href="#" role="button" style="display: none;" onclick="logout()">Logout</a>
             </form>
          </div>
       </div>

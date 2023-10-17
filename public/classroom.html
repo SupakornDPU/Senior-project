@@ -19,7 +19,9 @@
 
    <!-- CSS -->
    <link rel="stylesheet" href="css/classroom.css" />
-   
+   <link rel="stylesheet" href="css/main.css" />
+
+
    <style>
       p {
          margin-bottom: 0;
@@ -30,7 +32,25 @@
       }
 
       .col-md-3 {
+         margin-top: 30px;
          margin-bottom: 30px;
+      }
+
+      .card-header {
+         background-color: #f5f5f5;
+      }
+
+      .card {
+         width: 278px !important;
+         height: 240px !important;
+      }
+      
+      .card-text {
+         max-width: 17rem;
+      }
+
+      .col-lg-3 {
+         width: fit-content!important;
       }
    </style>
 
@@ -41,7 +61,7 @@
       <div class="header_toggle">
          <i class="bx bx-menu bx-x" id="header-toggle"></i>
       </div>
-      <button type="button" class="btn btn-success"><i class="bi bi-file-earmark-plus"></i></button>
+      <a class="button" id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
    </header>
    <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -65,51 +85,228 @@
    </div>
 
    <!--!Container-->
-   <div class="row">
-      <div class="col-md-3">
+   <div class="row" id="cardClassroom" style="margin-right: 50px;">
+      <div class="col-lg-3 col-md-12 my-2">
          <div class="card">
-            <h5 class="card-header">CE112 <p>Supakorn Dongkew</p></h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary">Go</a>
+            <div class="card-header d-flex justify-content-between align-items-center">
+               <h5 class="fw-bold">CE112 <p>Supakorn Dongkew</p>
+               </h5>
+               <a class="button" id="btnCreateClassroom" href="#formedit"><i class="bi bi-file-earmark-plus"></i></a>
             </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header">CE112 <p>Supakorn Dongkew</p></h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary">Go</a>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header">CE112 <p>Supakorn Dongkew</p></h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary">Go</a>
-            </div>
-         </div>
-      </div>
-      <div class="col-md-3">
-         <div class="card">
-            <h5 class="card-header">CE112 <p>Supakorn Dongkew</p></h5>
-            <div class="card-body">
-               <h5 class="card-title">Special title treatment</h5>
-               <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-               <a href="classroomFlashcard.html" class="btn btn-primary">Go</a>
+            <div class="card-body d-flex justify-content-between">
+               <div class="row card-text">
+                  <div class="col-md-12">
+                     <p style="margin: 0;">
+                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar</p>
+                  </div>
+                  <div class="col-md-12 d-flex align-items-end">
+                     <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
+                  </div>
+               </div>
             </div>
          </div>
       </div>
    </div>
+
+   <!-- FORMPOP CREATE -->
+   <div class="overlay" id="divOne">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="wrapper">
+               <h2 class="font-poppin">Create Classroom</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form id="createroom">
+                        <label class="font-poppin">Name room</label>
+                        <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
+                           pattern="^[a-zA-Z0-9]{1,5}$" required>
+                        <label class="font-poppin">Description</label>
+                        <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,72}$"
+                           iplaceholder="Write something.." required></textarea>
+                        <input style="display: none;" value="Supakorn Dongkew" id="creator">
+                        <input style="display: none;" value="" id="teacherid">
+                        <input style="display: none;" value="" id="adminid">
+                        <input type="submit" value="Create" class="btn-add" id="createdata">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <!-- FORMPOP EDIT -->
+   <div class="overlay" id="formedit">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="wrapper">
+               <h2 class="font-poppin">Update Classroom</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form id="updateroom">
+                        <input style="display: none;" for="" id="classroomID"></input>
+                        <label class="font-poppin">Name room</label>
+                        <input placeholder="Your classname.." type="text" value="" id="updatenameroom"
+                           pattern="^[a-zA-Z0-9]{1,5}$" required>
+                        <label class="font-poppin">Description</label>
+                        <textarea id="updatedescription" value="" pattern="^[ก-๏a-z\s]{1,72}$"
+                           iplaceholder="Write something.." required></textarea>
+                        <input style="display: none;" value="Supakorn Dongkew" id="updatecreator">
+                        <input style="display: none;" value="" id="updateteacherid">
+                        <input style="display: none;" value="" id="updateadminid">
+                        <input type="submit" value="Update" class="btn-add" id="updatedata">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
    <!--!Container-->
 
    <!-- SCRIPT -->
+   <script>
+
+      // BTN CREATE CLASSROOM CLEAR DATA
+      const btnCreateClassroom = document.getElementById("btnCreateClassroom");
+      btnCreateClassroom.addEventListener("click", function () {
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+      });
+
+      // GET DATA CLASSROOM
+      fetch('/projectsenior/classroom', {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+      })
+         .then(response => response.json())
+         .then(data => renderpost(data))
+         .catch(err => console.log(err))
+
+      const renderpost = (each) => {
+         const cardClassroom = document.getElementById('cardClassroom');
+         each.forEach(each => {
+            const classroomCol = document.createElement('div');
+            classroomCol.className = 'col-lg-3 col-md-12 my-2';
+            classroomCol.innerHTML = `
+            <div class="card" id=${each._id}>
+               <div class="card-header d-flex justify-content-between align-items-center">
+                  <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
+                  <a class="button" id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
+               </div>
+               <div class="card-body d-flex justify-content-between">
+                  <div class="row card-text">
+                     <div class="col-md-12">
+                        <p class="card-text">${each.classroom_des}</p>
+                     </div>
+                     <div class="col-md-12 d-flex align-items-end">
+                        <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                     </div>
+                  </div>
+               </div>
+            </div>
+               `;
+            cardClassroom.appendChild(classroomCol);
+         });
+      }
+
+      // POST DATA 
+      const formadd = document.getElementById("createroom");
+      formadd.addEventListener("submit", (e) => {
+         e.preventDefault();
+
+         const namerooms = document.getElementById("nameroom").value;
+         const creators = document.getElementById("creator").value;
+         const descriptions = document.getElementById("description").value;
+         const teacherids = document.getElementById("teacherid").value;
+         const adminids = document.getElementById("adminid").value;
+
+         fetch('/projectsenior/classroom', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "classroom_name": namerooms,
+               "classroom_creator": creators,
+               "classroom_des": descriptions,
+               "teacher_id": teacherids,
+               "admin_id": adminids,
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มห้องเรียนเรียบร้อย")
+               window.location.href = " classroom.html "
+            })
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+      })
+
+      function btnupdatedata(id) {
+         inputShowClassroomID = document.getElementById("classroomID");
+         inputShowClassroomID.value = id;
+         const btnupdateex = document.getElementById("btnupdatedata");
+         const creators = document.getElementById("updatecreator").value;
+         const teacherids = document.getElementById("updateteacherid").value;
+         const adminids = document.getElementById("updateadminid").value;
+         const classroomID = document.getElementById("classroomID").value;
+         fetch('/projectsenior/classroom/' + id, {
+            method: 'GET',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+         })
+            .then(response => response.json())
+            .then(data => {
+               const namerooms = document.getElementById("updatenameroom");
+               const descriptions = document.getElementById("updatedescription");
+               namerooms.value = data.classroom_name;
+               descriptions.value = data.classroom_des;
+            })
+            .catch(err => console.log(err))
+      }
+
+      // UPDATE DATA
+      const formupdate = document.getElementById("updateroom");
+      formupdate.addEventListener("submit", (e) => {
+         e.preventDefault();
+         const namerooms = document.getElementById("updatenameroom").value;
+         const creators = document.getElementById("updatecreator").value;
+         const descriptions = document.getElementById("updatedescription").value;
+         const teacherids = document.getElementById("updateteacherid").value;
+         const adminids = document.getElementById("updateadminid").value;
+         const classroomID = document.getElementById("classroomID").value;
+
+         fetch('/projectsenior/classroom/' + classroomID, {
+            method: 'put',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "classroom_name": namerooms,
+               "classroom_creator": creators,
+               "classroom_des": descriptions,
+               "teacher_id": teacherids,
+               "admin_id": adminids,
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มห้องเรียนเรียบร้อย")
+               window.location.href = " classroom.html "
+            })
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+      })
+
+   </script>
+
    <script src="js/script.js"></script>
 
    <!-- Bootrap 5 -->
