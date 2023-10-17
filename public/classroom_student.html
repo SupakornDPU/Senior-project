@@ -44,7 +44,7 @@
       <div class="header_toggle">
          <i class="bx bx-menu bx-x" id="header-toggle"></i>
       </div>
-      <a class="button" id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
+      <a class="button" id="btnJoinClassroom" href="#joinclasspop"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a>
    </header>
    <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -68,14 +68,36 @@
    </div>
 
    <!--!Container-->
-
+   <!-- FORMPOP JOINCLASSROOM -->
+   <div class="joinclass" id="joinclasspop">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="joinclasswrapper" style="align-items: center;">
+               <h2 class="font-poppin">Join Classroom</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form id="joinroom">
+                        <label class="font-poppin">Classroom Code</label>
+                        <input type="text" for="" id="userstdid" >
+                        <input placeholder="Enter Your Code class.." type="text" class="" value="" id="roomcode"
+                           pattern="^[a-zA-Z0-9]{1,12}$" required>
+                        <input type="submit" value="Join" class="btn-add" id="createdata" style="background-color :#4723D9 ;">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
    <!--!Container-->
-
+    
    <!-- SCRIPT -->
    <script>
       fetch(`http://localhost:5000/projectsenior/index`, {})
          .then(response => response.json())
          .then(data => {
+            const a = document.getElementById("userstdid");
+            a.value = data.loggedIn
             console.log('Logged in user:', data.loggedIn);
             console.log('Role:', data.role);
             if (data.loggedIn) {
@@ -96,8 +118,33 @@
             }
          })
          .catch((error) => {
-            console.error('Error:', error);
+            console.error('error:', error);
          });
+
+      const joinclass = document.getElementById("joinroom");
+      joinclass.addEventListener("submit", (e) => {
+         e.preventDefault();
+         const userstdid =document.getElementById("userstdid").value;
+         const roomcodes = document.getElementById("roomcode").value;
+         
+         fetch('/projectsenior/student/' + userstdid, {
+            method: 'put',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "classroom": roomcodes,
+               
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มห้องเรียนเรียบร้อย")
+               window.location.href = " classroom_student.html "
+            })
+      })
+      
    </script>
 
    <script src="js/script.js"></script>

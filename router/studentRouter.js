@@ -35,4 +35,15 @@ studentRouter.put('/:id', (req, res, next) => {
    });
 });
 
+// สร้าง route สำหรับ get ข้อมูล student ตาม id
+studentRouter.get('/:id', (req, res, next) => {
+   Student.findById(req.params.id)
+      .then((students) => {
+         res.json(students);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
+});
+
 module.exports = studentRouter;
