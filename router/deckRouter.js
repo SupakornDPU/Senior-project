@@ -3,7 +3,7 @@ const deckRouter = express.Router();
 const mongoose = require('mongoose');
 const Deck = require('../models/Deck');
 
-// สร้าง route สำหรับ get ข้อมูล deck
+// สร้าง route สำหรับ get ข้อมูล deck ตาม Classroom_id ที่รับค่ามาจาก parameter
 deckRouter.get('/:classroom_id', (req, res, next) => {
    Deck.find({ classroom_id: req.params.classroom_id})
       .then((decks) => {

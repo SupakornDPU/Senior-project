@@ -19,7 +19,7 @@ const generateRandomCode = () => {
    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
    let code = '';
 
-   // Generate a 6-character random code
+   // สุ่มตัวอักษร 6 ตัว จาก characters ที่กำหนด แล้วนำมาต่อกัน แล้ว return ออกมา
    for (let i = 0; i < 6; i++) {
       const randomIndex = Math.floor(Math.random() * characters.length);
       code += characters[randomIndex];
@@ -43,7 +43,7 @@ const generateUniqueCode = async () => {
    return code;
 };
 
-// สร้าง route สำหรับ post ข้อมูล classroom
+// สร้าง route สำหรับ post ข้อมูล classroom พร้อมกับสร้างรหัสสุ่ม
 classroomRouter.post('/', (req, res, next) => {
    req.body.classroom_code = generateRandomCode();
    Classroom.create(req.body)
