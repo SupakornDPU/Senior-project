@@ -26,7 +26,6 @@ studentRouter.put('/:id', (req, res, next) => {
          });
       } else if (classroom) {
          Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id }}, { new: true })
-            .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
             .then((result) => {
                res.status(200).json(result);
             })
@@ -40,6 +39,7 @@ studentRouter.put('/:id', (req, res, next) => {
 // สร้าง route สำหรับ get ข้อมูล student ตาม id
 studentRouter.get('/:id', (req, res, next) => {
    Student.findById(req.params.id)
+      .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
       .then((students) => {
          res.json(students);
       })
