@@ -7,6 +7,7 @@ const Classroom = require('../models/Classroom');
 // สร้าง route สำหรับ get ข้อมูล student
 studentRouter.get('/', (req, res, next) => {
    Student.find()
+      .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
       .then((students) => {
          res.json(students);
       })
@@ -25,6 +26,7 @@ studentRouter.put('/:id', (req, res, next) => {
          });
       } else if (classroom) {
          Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id }}, { new: true })
+            .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
             .then((result) => {
                res.status(200).json(result);
             })
