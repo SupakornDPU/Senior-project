@@ -35,6 +35,23 @@
          margin-top: 30px;
          margin-bottom: 30px;
       }
+
+      .card-header {
+         background-color: #f5f5f5;
+      }
+
+      .card {
+         width: 278px !important;
+         height: 240px !important;
+      }
+
+      .card-text {
+         max-width: 17rem;
+      }
+
+      .col-lg-3 {
+         width: fit-content !important;
+      }
    </style>
 
 </head>
@@ -55,7 +72,7 @@
                <span class="nav_logo-name">Home</span>
             </a>
             <div class="nav_list">
-               <a href="classroom.html" class="nav_link active">
+               <a href="classroom_student.html" class="nav_link active">
                   <i class="bx bx-grid-alt nav_icon"></i>
                   <span class="nav_name">Classroom</span>
                </a>
@@ -70,27 +87,8 @@
 
    <!--!Container-->
    <div class="row" id="cardClassroom" style="margin-right: 50px;">
-      <input type="text" id="studentId">
-      <div class="col-lg-3 col-md-12 my-2">
-         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-               <h5 class="fw-bold">CE112 <p>Supakorn Dongkew</p>
-               </h5>
-               <a class="button" id="btnCreateClassroom" href="#formedit"><i class="bi bi-file-earmark-plus"></i></a>
-            </div>
-            <div class="card-body d-flex justify-content-between">
-               <div class="row card-text">
-                  <div class="col-md-12">
-                     <p style="margin: 0;">
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar</p>
-                  </div>
-                  <div class="col-md-12 d-flex align-items-end">
-                     <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
+      <input style="display: none;" type="text" id="studentId">
+      
    </div>
 
 
@@ -130,7 +128,7 @@
             console.log('Role:', data.role);
 
             // GET DATA CLASSROOM WITH USERID
-               // ต้องนำมาใส่ไว้ใน fetch ของ user เพราะว่าต้องการให้ทำงานหลังจากที่ user ทำงานเสร็จแล้ว
+            // ต้องนำมาใส่ไว้ใน fetch ของ user เพราะว่าต้องการให้ทำงานหลังจากที่ user ทำงานเสร็จแล้ว
             fetch('/projectsenior/student/' + data.loggedIn, {
                method: 'get',
                headers: {
@@ -139,8 +137,30 @@
             })
                .then(response => response.json())
                .then(data => {
-                  console.log(data);
-                  renderpost(data);
+                  data.classroom.forEach(each => {
+                     console.log(each);
+                     const classroomCol = document.createElement('div');
+                     classroomCol.className = 'col-lg-3 col-md-12 my-2';
+                     classroomCol.innerHTML = `
+                     <div class="card" id=${each._id}>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                           <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
+                        </div>
+                        <div class="card-body d-flex justify-content-between">
+                           <div class="row card-text">
+                              <div class="col-md-12">
+                                 <p class="card-text">${each.classroom_des}</p>
+                              </div>
+                              <div class="col-md-12 d-flex align-items-end">
+                                 <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                                 `;
+                     cardClassroom.appendChild(classroomCol);
+                  })
+
                })
                .catch(err => console.log(err));
          })
