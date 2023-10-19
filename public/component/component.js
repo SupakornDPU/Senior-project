@@ -1,5 +1,5 @@
 function logout() {
-   fetch(`http://localhost:5000/projectsenior/logout`, {})
+   fetch(`/projectsenior/logout`, {})
       .then(response => response.json())
       .then(data => {
          console.log('Success:', data);
