@@ -166,7 +166,7 @@
          const user_role = roleSelect.value;
          const user_phone = document.getElementById('typePhone').value;
 
-         fetch(`http://localhost:5000/projectsenior/register`, {
+         fetch(`/projectsenior/register`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',

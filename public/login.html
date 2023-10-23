@@ -115,7 +115,7 @@
          const user_email = document.getElementById('typeEmail').value;
          const user_password = document.getElementById('typePassword').value;
 
-         fetch(`http://localhost:5000/projectsenior/loginUser`, {
+         fetch(`/projectsenior/loginUser`, {
             method: 'POST',
             headers: {
                'Content-Type': 'application/json',
