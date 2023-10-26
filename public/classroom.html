@@ -44,13 +44,13 @@
          width: 278px !important;
          height: 240px !important;
       }
-      
+
       .card-text {
          max-width: 17rem;
       }
 
       .col-lg-3 {
-         width: fit-content!important;
+         width: fit-content !important;
       }
    </style>
 
@@ -86,27 +86,6 @@
 
    <!--!Container-->
    <div class="row" id="cardClassroom" style="margin-right: 50px;">
-      <!-- <div class="col-lg-3 col-md-12 my-2">
-         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-               <h5 class="fw-bold">CE112 <p>Supakorn Dongkew</p>
-               </h5>
-               <a class="button" id="btnCreateClassroom" href="#formedit"><i class="bi bi-file-earmark-plus"></i></a>
-            </div>
-            <div class="card-body d-flex justify-content-between">
-               <div class="row card-text">
-                  <div class="col-md-12">
-                     <p style="margin: 0;">
-                        aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaar</p>
-                  </div>
-                  <div class="col-md-12 d-flex align-items-end">
-                     <a href="classroomFlashcard.html" class="btn btn-primary fw-bold">Go</a>
-                     <a class="button" id="btndelete" href="#" onclick="btndeletedata('${each._id}')" ><i class="fa-solid fa-trash-can fa-xl"></i></a>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div> -->
    </div>
 
    <!-- FORMPOP CREATE -->
@@ -156,7 +135,7 @@
                         <input style="display: none;" value="" id="updateteacherid">
                         <input style="display: none;" value="" id="updateadminid">
                         <input type="submit" value="Update" class="btn-add" id="updatedata">
-                        <a class="button" id="btndelete" href="#" onclick="btndeletedata()" >DELETE</a>
+                        <a class="button" id="btndelete" href="#" onclick="btndeletedata()">DELETE</a>
                      </form>
                   </div>
                </div>
@@ -185,35 +164,34 @@
          },
       })
          .then(response => response.json())
-         .then(data => renderpost(data))
-         .catch(err => console.log(err))
-
-      const renderpost = (each) => {
-         const cardClassroom = document.getElementById('cardClassroom');
-         each.forEach(each => {
-            const classroomCol = document.createElement('div');
-            classroomCol.className = 'col-lg-3 col-md-12 my-2';
-            classroomCol.innerHTML = `
-            <div class="card" id=${each._id}>
-               <div class="card-header d-flex justify-content-between align-items-center">
-                  <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
-                  <a class="button" id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
-               </div>
-               <div class="card-body d-flex justify-content-between">
-                  <div class="row card-text">
-                     <div class="col-md-12">
-                        <p class="card-text">${each.classroom_des}</p>
+         .then(data => {
+            const cardClassroom = document.getElementById('cardClassroom');
+            console.log(data);
+            data.forEach(each => {
+               const classroomCol = document.createElement('div');
+               classroomCol.className = 'col-lg-3 col-md-12 my-2';
+               classroomCol.innerHTML = `
+                  <div class="card" id=${each._id}>
+                     <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
+                        <a class="button" id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                      </div>
-                     <div class="col-md-12 d-flex align-items-end">
-                        <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                     <div class="card-body d-flex justify-content-between">
+                        <div class="row card-text">
+                           <div class="col-md-12">
+                              <p class="card-text">${each.classroom_des}</p>
+                           </div>
+                           <div class="col-md-12 d-flex align-items-end">
+                              <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                           </div>
+                        </div>
                      </div>
                   </div>
-               </div>
-            </div>
                `;
-            cardClassroom.appendChild(classroomCol);
-         });
-      }
+               cardClassroom.appendChild(classroomCol);
+            });
+         })
+         .catch(err => console.log(err))
 
       // POST DATA 
       const formadd = document.getElementById("createroom");
@@ -308,20 +286,18 @@
       })
 
       // DELETE DATA
-      function btndeletedata(id) {
+      function btndeletedata() {
          const classroomID = document.getElementById("classroomID").value;
          fetch('/projectsenior/classroom/' + classroomID, {
             method: 'DELETE',
-           
          })
             .then(response => response.json())
             .then(() => {
                alert("ลบห้องเรียนเรียบร้อย")
-               window.location.href = " classroom.html "})
+               window.location.href = "classroom.html"
+            })
             .catch(err => console.log(err))
       }
-
-
    </script>
 
    <script src="js/script.js"></script>

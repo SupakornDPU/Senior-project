@@ -2,6 +2,7 @@ const express = require('express');
 const classroomRouter = express.Router();
 const mongoose = require('mongoose');
 const Classroom = require('../models/Classroom');
+const Student = require('../models/Student');
 
 // สร้าง route สำหรับ get ข้อมูล classroom
 classroomRouter.get('/', (req, res, next) => {
@@ -81,6 +82,13 @@ classroomRouter.put('/:id', (req, res, next) => {
 classroomRouter.delete('/:id', (req, res, next) => {
    Classroom.findByIdAndRemove(req.params.id, req.body)
       .then(() => {
+
+         // ลบข้อมูลของห้องเรียนที่เกี่ยวข้องออกจาก collection student โดยใช้ method updateMany() ใช้สำหรับอัพเดทหลายๆ ข้อมูลใน collection
+         // และใช้ method $pull ในการลบข้อมูลออกจาก array โดยจะหา classroom ที่มี id ตรงกับ req.params.id แล้วลบออก
+         Student.updateMany(
+            { classroom: new mongoose.Types.ObjectId(req.params.id) }, // 
+            { $pull: { classroom: new mongoose.Types.ObjectId(req.params.id) } }
+         )
          res.json({ message: 'Deleted' });
       })
       .catch((err) => {
