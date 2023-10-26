@@ -45,7 +45,7 @@
 }
 
 body {
-  
+
   margin: var(--header-height) 0 0 0;
   padding: 1rem 1rem 0;
   font-family: var(--body-font);
@@ -188,7 +188,7 @@ img {
 }
 
 .nav__links {
-  
+
   align-items: center;
   color: var(--text-color);
 }
@@ -265,7 +265,7 @@ img {
 /*===== Active link =====*/
 .active {
   background-color: #40C7C0;
-  color: rgb(255, 255, 255); 
+  color: rgb(255, 255, 255);
   padding: 8px;
   border-radius: 10px;
 }
@@ -333,7 +333,7 @@ img {
     opacity: 0;
     transition: .3s;
   } */
-  
+
   /* Navbar expanded */
   /* .nav:hover {
     width: var(--nav-width);
@@ -360,7 +360,7 @@ img {
     display: flex;
     align-items: center;
   }
-  
+
   .admin-profile {
     white-space: nowrap;
     max-width: 100%;
@@ -370,23 +370,23 @@ img {
     flex: 1;
     overflow: hidden;
   }
-  
+
   .admin-user img {
     width: 2.9rem;
     border-radius: 50%;
     margin: 0 0.4rem;
   }
-  
+
   .admin-info {
     padding-left: 0.3rem;
   }
-  
+
   .admin-info h3 {
     font-weight: 500;
     font-size: 1rem;
     line-height: 1;
   }
-  
+
   .admin-info h5 {
     font-weight: 400;
     font-size: 0.75rem;
@@ -394,30 +394,35 @@ img {
     margin-top: 0.3rem;
     line-height: 1;
   }
-  
+
   hr.style {
     border-top: 5px solid #ffffff;
     align-items: center;
     width: 100%;
     margin-top: 40px;
-}
-.btn-delete {
-  background-color: #ff2600;
-  color: white;
-  font-size: small;
+  }
+
+  .btn-delete {
+    background-color: #ff2600;
+    color: white;
+    font-size: small;
+  }
+
+  .btn-delete:hover {
+    background-color: #b29f82;
+  }
+
+  .btn-detail {
+    background-color: #17A2B8;
+    color: white;
+    font-size: small;
+  }
+
+  .btn-detail:hover {
+    background-color: #08a0b8;
+  }
 }
 
-.btn-delete:hover {
-  background-color: #b29f82;
-}
-
-.btn-detail {
-  background-color: #17A2B8;
-  color: white;
-  font-size: small;
-}
-
-.btn-detail:hover {
-  background-color: #08a0b8;
-}
+.dataTables_wrapper {
+  color: black;
 }
