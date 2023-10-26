@@ -4,7 +4,7 @@
 <head>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>CreateFlashCard</title>
+   <title>Manage Flashcard</title>
 
    <!-- Font Awesome -->
    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
@@ -92,10 +92,12 @@
                   </div>
                </div>
                <div class="col-md-1 col-3 my-2">
-                  <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+                  <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()"
+                     style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
                </div>
                <div class="col-md-1 col-3 my-2">
-                  <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+                  <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()"
+                     style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
                </div>
             </div>
          </div>
@@ -104,7 +106,7 @@
    <!--!Container-->
 
    <script>
-      
+
       function addForm() {
          const addBtn = document.getElementById('addBtn');
          const formQA = document.getElementById('formQA');
