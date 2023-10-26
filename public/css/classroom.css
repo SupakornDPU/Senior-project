@@ -327,9 +327,33 @@ textarea {
    margin-bottom: 16px;
    resize: vertical;
 }
-
-input[type="submit"] {
+/* POPUP BOTTON */
+#createdata{
    background-color: #413b3b;
+   color: #fff;
+   padding: 15px 50px;
+   border: none;
+   border-radius: 50px;
+   cursor: pointer;
+   font-size: 15px;
+   text-transform: uppercase;
+   letter-spacing: 3px;
+}
+
+#updatedata{
+   background-color: #413b3b;
+   color: #fff;
+   padding: 15px 50px;
+   border: none;
+   border-radius: 50px;
+   cursor: pointer;
+   font-size: 15px;
+   text-transform: uppercase;
+   letter-spacing: 3px;
+}
+
+#btndelete{
+   background-color: #ee3131;
    color: #fff;
    padding: 15px 50px;
    border: none;
@@ -352,7 +376,7 @@ input[type="submit"] {
    letter-spacing: 3px;
 }
 
-#btndelete {
+/* #btndelete {
    background-color: #ffffff;
    color: #0b0808;
    margin-left: 10px;
@@ -363,7 +387,7 @@ input[type="submit"] {
    font-size: 15px;
    text-transform: uppercase;
    letter-spacing: 3px;
-}
+} */
 
 /* POPUP JOINCLASSROOM */
 .joinclass {

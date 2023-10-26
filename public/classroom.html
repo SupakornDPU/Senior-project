@@ -86,7 +86,7 @@
 
    <!--!Container-->
    <div class="row" id="cardClassroom" style="margin-right: 50px;">
-      <div class="col-lg-3 col-md-12 my-2">
+      <!-- <div class="col-lg-3 col-md-12 my-2">
          <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                <h5 class="fw-bold">CE112 <p>Supakorn Dongkew</p>
@@ -106,7 +106,7 @@
                </div>
             </div>
          </div>
-      </div>
+      </div> -->
    </div>
 
    <!-- FORMPOP CREATE -->
@@ -156,6 +156,7 @@
                         <input style="display: none;" value="" id="updateteacherid">
                         <input style="display: none;" value="" id="updateadminid">
                         <input type="submit" value="Update" class="btn-add" id="updatedata">
+                        <a class="button" id="btndelete" href="#" onclick="btndeletedata()" >DELETE</a>
                      </form>
                   </div>
                </div>
@@ -205,7 +206,6 @@
                      </div>
                      <div class="col-md-12 d-flex align-items-end">
                         <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
-                        <a class="button" id="btndelete" href="#" onclick="btndeletedata('${each._id}')" ><i class="fa-solid fa-trash-can fa-xl"></i></a>
                      </div>
                   </div>
                </div>
@@ -309,15 +309,14 @@
 
       // DELETE DATA
       function btndeletedata(id) {
-         inputShowClassroomID = document.getElementById("classroomID");
-         inputShowClassroomID.value = id;
-         fetch('/projectsenior/classroom/' + id, {
+         const classroomID = document.getElementById("classroomID").value;
+         fetch('/projectsenior/classroom/' + classroomID, {
             method: 'DELETE',
            
          })
             .then(response => response.json())
             .then(() => {
-               echo 
+               alert("ลบห้องเรียนเรียบร้อย")
                window.location.href = " classroom.html "})
             .catch(err => console.log(err))
       }
