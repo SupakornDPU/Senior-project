@@ -20,6 +20,8 @@
    <!-- CSS -->
    <link rel="stylesheet" href="css/classroom.css" />
 
+   <!-- Data table -->
+   <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
    <style>
       p {
@@ -33,7 +35,7 @@
       .col-md-3 {
          margin-bottom: 30px;
       }
-      
+
       .btn-delete {
          background-color: #dc3545;
          color: white;
@@ -79,7 +81,7 @@
    <div class="height-100">
       <h1 class="text-center">Score Board</h1>
       <div class="table-responsive " style="padding: 2rem;">
-         <table class="table table-striped table-hover table-info">
+         <table class="table table-striped table-hover table-info" id="scoreboardTable">
             <thead class="table-active">
                <tr>
                   <th>No.</th>
@@ -100,21 +102,21 @@
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td></td>
-                  
+
                </tr>
                <tr>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td></td>
-                  
+
                </tr>
                <tr>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td>Lorem ipsum dolor sit amet.</td>
                   <td></td>
-                  
+
                </tr>
             </tbody>
          </table>
@@ -128,6 +130,15 @@
    <!-- Bootrap 5 -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+   <!-- Data table -->
+   <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+   <script>
+      // Data table
+      let table = new DataTable('#scoreboardTable');
+
+   </script>
 </body>
 
 </html>
