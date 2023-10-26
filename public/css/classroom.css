@@ -351,6 +351,19 @@ input[type="submit"] {
    text-transform: uppercase;
    letter-spacing: 3px;
 }
+
+#btndelete {
+   background-color: #ffffff;
+   color: #0b0808;
+   margin-left: 10px;
+   padding: 10px 10px;
+   border: none;
+   border-radius: 50px;
+   cursor: pointer;
+   font-size: 15px;
+   text-transform: uppercase;
+   letter-spacing: 3px;
+}
 /* POPUP JOINCLASSROOM */
 .joinclass {
    position: fixed;
