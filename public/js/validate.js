@@ -10,7 +10,6 @@ function checkValidate() {
     }
     document.getElementById("textEmail").innerHTML = textEmail;
 
-
     // ! Check Password
     var regPassword = /^[-\w\.\$@\*\!]{1,30}$/;
     let textPassword;
@@ -42,14 +41,13 @@ function checkValidate() {
     }
     document.getElementById("textLastname").innerHTML = textLastname;
 
-    var reg = /^\S*[^0-9]$/;
+    let selectedRole = document.getElementById("roleForm").value;
     let textRole;
-    if (!reg.test(document.getElementById("roleForm").value)) {
-        textRole = "กรุณาเลือกโรล.";
-    } else {
+    if (selectedRole === "student" || selectedRole === "teacher") {
         textRole = "";
+    } else {
+        textRole = "กรุณาเลือกโรล.";
     }
     document.getElementById("textrole").innerHTML = textRole;
 
-    
 }
