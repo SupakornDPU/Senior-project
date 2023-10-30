@@ -1,5 +1,7 @@
-function checkValidate() {
-    
+const registerForm = document.getElementById('registerForm');
+registerForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
     // ! Check Email
     var reg = /^\S*[^0-9]$/;
     let textEmail;
@@ -11,7 +13,8 @@ function checkValidate() {
     document.getElementById("textEmail").innerHTML = textEmail;
 
     // ! Check Password
-    var regPassword = /^[-\w\.\$@\*\!]{1,30}$/;
+    // var regPassword = /^[a-zA-Z0-9]{1,30}$/;
+    var regPassword = /^[-\w]{1,30}$/;
     let textPassword;
 
     if (!regPassword.test(document.getElementById("typePassword").value)) {
@@ -22,7 +25,7 @@ function checkValidate() {
     document.getElementById("textPassword").innerHTML = textPassword;
 
     // ! Check Firstname
-    var reg = /^\S*[^0-9]$/;
+    var reg = /^[a-zA-Z]+$/;
     let textFirstname;
     if (!reg.test(document.getElementById("typeFirstname").value)) {
         textFirstname = "กรุณากรอก ชื่อจริง.";
@@ -32,7 +35,7 @@ function checkValidate() {
     document.getElementById("textFirstname").innerHTML = textFirstname;
 
     // ! Check Lastname
-    var reg = /^\S*[^0-9]$/;
+    var reg = /^[a-zA-Z]+$/;
     let textLastname;
     if (!reg.test(document.getElementById("typeLastname").value)) {
         textLastname = "กรุณากรอก นามสกุล.";
@@ -43,11 +46,42 @@ function checkValidate() {
 
     let selectedRole = document.getElementById("roleForm").value;
     let textRole;
-    if (selectedRole === "student" || selectedRole === "teacher") {
+    if (selectedRole === "Student" || selectedRole === "Teacher") {
         textRole = "";
     } else {
         textRole = "กรุณาเลือกโรล.";
     }
     document.getElementById("textrole").innerHTML = textRole;
 
-}
+    // ตรวจสอบว่าทุกอย่างถูกต้องก่อนส่งฟอร์ม
+    if (textEmail === "" && textPassword === "" && textFirstname === "" && textLastname === "" && textRole === "") {
+        // ส่งฟอร์มไปยังเซิร์ฟเวอร์
+        const registerForm = document.getElementById('registerForm');
+
+        const user_email = document.getElementById('typeEmail').value;
+        const user_password = document.getElementById('typePassword').value;
+        const user_firstname = document.getElementById('typeFirstname').value;
+        const user_lastname = document.getElementById('typeLastname').value;
+        let roleSelect = document.getElementById("roleForm");
+        const user_role = roleSelect.value;
+
+        fetch(`/projectsenior/register`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user_email": user_email,
+                "user_firstname": user_firstname,
+                "user_lastname": user_lastname,
+                "user_password": user_password,
+                "user_role": user_role,
+            })
+        }).then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                window.location.href = "login.html";
+            })
+            .catch(error => console.log(error));
+    }
+})

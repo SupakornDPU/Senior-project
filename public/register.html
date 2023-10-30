@@ -24,7 +24,7 @@
    <!-- Style -->
    <link rel="stylesheet" href="css/main.css">
    <link rel="stylesheet" href="css/footer.css">
-   
+
    <style>
       .btn-loginform {
          background-color: #292929;
@@ -36,7 +36,8 @@
          color: white;
       }
 
-      .form-control, .form-select {
+      .form-control,
+      .form-select {
          border: 1px solid #b29f8200;
          background-color: #f0f0f0;
       }
@@ -77,7 +78,7 @@
             <div class="col-md-3">
                <div class="form-outline mb-4">
                   <label class="mb-1" for="typeEmail">Email address*</label>
-                  <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com"/>
+                  <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com" />
                   <label id="textEmail" style="color: red; display: block;"></label>
                </div>
             </div>
@@ -88,7 +89,7 @@
             <div class="col-md-3">
                <div class="form-outline mb-4">
                   <label class="mb-1" for="typePassword">Password*</label>
-                  <input type="password" id="typePassword" class="form-control" placeholder="Example1234"/>
+                  <input type="password" id="typePassword" class="form-control" placeholder="Example1234" />
                   <label id="textPassword" style="color: red; display: block;"></label>
                </div>
             </div>
@@ -99,7 +100,7 @@
             <div class="col-md-3">
                <div class="form-outline mb-4">
                   <label class="mb-1" for="typeFirstname">First name*</label>
-                  <input type="text" id="typeFirstname" class="form-control" placeholder="steve"/>
+                  <input type="text" id="typeFirstname" class="form-control" placeholder="steve" />
                   <label id="textFirstname" style="color: red; display: block;"></label>
                </div>
             </div>
@@ -110,7 +111,7 @@
             <div class="col-md-3">
                <div class="form-outline">
                   <label class="mb-1" for="typeLastname">Last name*</label>
-                  <input type="text" id="typeLastname" class="form-control" placeholder="job"/>
+                  <input type="text" id="typeLastname" class="form-control" placeholder="job" />
                   <label id="textLastname" style="color: red; display: block;"></label>
                </div>
             </div>
@@ -133,7 +134,7 @@
          <div class="row d-flex justify-content-center align-items-center">
             <div class="col-md-3 mt-5">
                <div class="d-grid gap-2 col-md-12 mx-auto">
-                  <button class="btn btn-lg btn-block btn-loginform" type="submit" onclick="checkValidate()">CREATE</button>
+                  <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
                </div>
             </div>
          </div>
@@ -149,37 +150,6 @@
    <footer-component></footer-component>
 
    <script>
-      const registerForm = document.getElementById('registerForm');
-      registerForm.addEventListener('submit', (e) => {
-         e.preventDefault();
-
-         const user_email = document.getElementById('typeEmail').value;
-         const user_password = document.getElementById('typePassword').value;
-         const user_firstname = document.getElementById('typeFirstname').value;
-         const user_lastname = document.getElementById('typeLastname').value;
-         let roleSelect = document.getElementById("roleForm");
-         const user_role = roleSelect.value;
-         
-
-         fetch(`/projectsenior/register`, {
-            method: 'POST',
-            headers: {
-               'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-               "user_email": user_email,
-               "user_firstname": user_firstname,
-               "user_lastname": user_lastname,
-               "user_password": user_password,
-               "user_role": user_role,
-            })
-         }) .then(response => response.json())
-            .then(data => {
-               console.log('Success:', data);
-               window.location.href = "login.html";
-            })
-            .catch(error => console.log(error));
-      })
       // registerForm.addEventListener('submit', (e) => {
       //    e.preventDefault();
       //    const formData = new FormData(registerForm);
