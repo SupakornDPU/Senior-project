@@ -27,26 +27,24 @@ deckRouter.post('/', (req, res, next) => {
 });
 
 deckRouter.put('/:id', (req, res, next) => {
+   Deck.find({ classroom_id: req.params.id })
+      .then((decks) => {
+         if (!decks || decks.length === 0) {
+            return res.status(400).json({
+               message: 'No matching decks found',
+            });
+         }
+         // นำข้อมูลที่ได้จากการค้นหามาเก็บไว้ในตัวแปร deckIds โดยเก็บเป็น array ของ id เพื่อใช้ในการ update Classroom
+         const deckIds = decks.map((deck) => deck._id);
 
-   const { classroom_id } = req.body;
-
-   Deck.find({ classroom_id: classroom_id }).then((classroom_id) => {
-      if (!classroom_id) {
-         return res.status(400).json({
-            message: 'Classroom not found',
-         });
-      } else if (classroom_id) { // ถ้ามีรหัสที่ตรงกัน ให้ทำการอัพเดทข้อมูลลงใน Collection student โดยอัพเดทรหัสห้องเรียนลงใน Array classroom
-         Classroom.findByIdAndUpdate(req.params.id, { $addToSet: { deck: classroom_id._id } }, { new: true })
+         // นำข้อมูลที่อยู่ในตัวแปร deckIds มาเพิ่มเข้าไปใน Classroom ที่มี id ตรงกับ req.params.id
+         Classroom.findByIdAndUpdate(req.params.id, { $addToSet: { deck: { $each: deckIds } } }, { new: true })
             .then((result) => {
                res.status(200).json(result);
             })
             .catch((err) => {
                next(err);
             });
-      }
-   });
-
-
-
+      });
 });
 module.exports = deckRouter;
