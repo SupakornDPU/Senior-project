@@ -110,10 +110,13 @@
                                  <div style="align-items: center;">
                                     <div class="content">
                                        <div class="container">
-                                          <form id="joinroom">
-                                             <label class="font-poppin">Flashcard Name</label>
+                                          <form id="createdeck">
+                                             <label class="font-poppin">Deck Name</label>
+                                             <input style="display: none;" for="" id="createdeckid">
                                              <input placeholder="Enter Your Flashcard name.." type="text" class=""
-                                                value="" id="roomcode" pattern="^[a-zA-Z0-9]{1,12}$" required>
+                                                value="" id="deckname" pattern="^[a-zA-Z0-9]{1,12}$" required>
+                                             <input style="display: none;" value="" id="teacherid">
+                                             <input style="display: none;" value="" id="adminid">
                                              <input type="submit" value="Create" class="btn-add" id="createdata"
                                                 style="background-color :#4723D9 ;">
                                           </form>
@@ -133,6 +136,52 @@
    <!--!Container-->
 
    <!-- SCRIPT -->
+   <script>
+      const urlParams = new URLSearchParams(window.location.search);
+      const classroomID = urlParams.get('classroomID')
+      console.log(classroomID);
+
+      const createdeck = document.getElementById("createdeck");
+      createdeck.addEventListener("submit", (e) => {
+         e.preventDefault();
+
+         const deckname = document.getElementById("deckname").value;
+         const teacherids = document.getElementById("teacherid").value;
+         const adminids = document.getElementById("adminid").value;
+
+         fetch('/projectsenior/deck', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "deck_name": deckname,
+               "teacher_id": teacherids,
+               "admin_id": adminids,
+               "classroom_id": classroomID
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("เพิ่มเรียบร้อย")
+               console.log(classroomID)
+               fetch('/projectsenior/deck/'+classroomID, {
+                  method: 'PUT',
+                  headers: {
+                     'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({
+                     "classroom_id": classroomID
+                  })
+               })
+                  .then(response => console.log(response))
+                  .catch(err => console.log(err))
+            })
+               
+         document.getElementById("deckname").value = "";
+      })
+   </script>
    <script src="js/script.js"></script>
 
    <!-- Bootrap 5 -->
