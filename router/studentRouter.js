@@ -59,14 +59,19 @@ studentRouter.route('/:id')
             next(err);
          }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
    })
+   // route สำหรับ put ข้อมูลเข้าไปใน Collection student โดยที่จะนำรหัสของ classroom ไปเก็บใน Array classroom ที่อยุ่ใน Collection student
    .put((req, res, next) => {
+
+      // classroom คือรหัสห้องเรียนที่ส่งมาจากฝั่ง Client
       const { classroom } = req.body;
+
+      // ค้นหาว่ามีห้องเรียนที่มีรหัสตรงกับ classroom code ที่ส่งมาหรือไม่
       Classroom.findOne({ classroom_code: classroom }).then((classroom) => {
          if (!classroom) {
             return res.status(400).json({
                message: 'Classroom not found',
             });
-         } else if (classroom) {
+         } else if (classroom) { // ถ้ามีรหัสที่ตรงกัน ให้ทำการอัพเดทข้อมูลลงใน Collection student โดยอัพเดทรหัสห้องเรียนลงใน Array classroom
             Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id }}, { new: true })
                .then((result) => {
                   res.status(200).json(result);

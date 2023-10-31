@@ -52,7 +52,7 @@ registerForm.addEventListener('submit', (e) => {
         textRole = "กรุณาเลือกโรล.";
     }
     document.getElementById("textrole").innerHTML = textRole;
-
+    
     // ตรวจสอบว่าทุกอย่างถูกต้องก่อนส่งฟอร์ม
     if (textEmail === "" && textPassword === "" && textFirstname === "" && textLastname === "" && textRole === "") {
         // ส่งฟอร์มไปยังเซิร์ฟเวอร์

@@ -90,58 +90,18 @@
             <thead class="table-active">
                 <tr>
                     <th>#</th>
+                    <th>Id</th>
                     <th>Class Name</th>
-                    <th>Creater </th>
-                    <th></th>
+                    <th>Creator</th>
+                    <th>Description</th>
+                    <th>Code</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td></td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td></td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td></td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td></td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
+            <tbody id="classroomTableBody">
             </tbody>
         </table>
     </div>
-    <!-- <div class="row justify-content-center">
-        <div class="col-12 ms-md-auto ">
-            <h1 class="font-poppin" style="color: black;font-weight: 700; padding-bottom: 50px;"><ins> Question</ins>
-            </h1>
-            <p class="font-poppin" id="questuin" style="font-weight: 500; color: black;">
-                Lorem ipsum
-                dolor
-                sit
-                amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et
-                dolore.
-            </p>
-        </div>
-    </div> -->
     <!--!Container-->
 
     <!-- SCRIPT -->
@@ -155,7 +115,48 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        let table = new DataTable('#classroomTable');
+        // API Get data
+        fetch('/projectsenior/admin/classroom', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                let html = '';
+                data.forEach((item, index) => {
+                    // console.log(item);
+                    html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item._id}</td>
+                        <td>${item.classroom_name}</td>
+                        <td>${item.classroom_creator}</td>
+                        <td>${item.classroom_des}</td>
+                        <td>${item.classroom_code}</td>
+                        <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;" onclick="deleteTeacher('${item._id}')">Delete</button></td>
+                    </tr>
+                `;
+                })
+                document.getElementById('classroomTableBody').innerHTML = html;
+                $('#classroomTableBody').html(html).promise().done(() => {
+                    $('#classroomTable').DataTable();
+                })
+            })
+
+        // DELETE CLASSROOM
+        function deleteTeacher(_id) {
+            fetch('/projectsenior/admin/classroom/' + _id, {
+                method: 'DELETE',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    location.reload();
+                })
+        }
 
         const showMenu = (headerToggle, navbarId) => {
             const toggleBtn = document.getElementById(headerToggle),

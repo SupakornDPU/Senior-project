@@ -90,63 +90,17 @@
             <thead class="table-active">
                 <tr>
                     <th>#</th>
+                    <th>Id</th>
                     <th>First name</th>
                     <th>Last name</th>
                     <th>Email</th>
-                    <th>Role</th>
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Student</td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Student</td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Student</td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Lorem ipsum dolor sit amet.</td>
-                    <td>Student</td>
-                    <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;">Delete</button></td>
-                </tr>
+            <tbody id="studentTableBody">
             </tbody>
         </table>
     </div>
-    <!-- <div class="row justify-content-center">
-        <div class="col-12 ms-md-auto ">
-            <h1 class="font-poppin" style="color: black;font-weight: 700; padding-bottom: 50px;"><ins> Question</ins>
-            </h1>
-            <p class="font-poppin" id="questuin" style="font-weight: 500; color: black;">
-                Lorem ipsum
-                dolor
-                sit
-                amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et
-                dolore.
-            </p>
-        </div>
-    </div> -->
     <!--!Container-->
 
     <!-- SCRIPT -->
@@ -160,8 +114,47 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
-        // Data table
-        let table = new DataTable('#studentTable');
+        // GET STUDENT
+        fetch('/projectsenior/admin/student', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data);
+                let html = '';
+                data.forEach((item, index) => {
+                    // console.log(item);
+                    html += `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td>${item._id}</td>
+                        <td>${item.user_firstname}</td>
+                        <td>${item.user_lastname}</td>
+                        <td>${item.user_email}</td>
+                        <td> <button type="submit" class="btn btn-lg btn-delete" style="padding: 5px;" onclick="deleteTeacher('${item._id}')">Delete</button></td>
+                    </tr>
+                `;
+                })
+                document.getElementById('studentTableBody').innerHTML = html;
+                $('#studentTableBody').html(html).promise().done(() => {
+                    $('#studentTable').DataTable();
+                })
+            })
+
+        // DELETE STUDENT
+        function deleteTeacher(_id) {
+            fetch('/projectsenior/admin/student/' + _id, {
+                method: 'DELETE',
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    location.reload();
+                })
+        }
 
         // Show menu
         const showMenu = (headerToggle, navbarId) => {

@@ -82,7 +82,6 @@ classroomRouter.put('/:id', (req, res, next) => {
 classroomRouter.delete('/:id', (req, res, next) => {
    Classroom.findByIdAndRemove(req.params.id, req.body)
       .then(() => {
-
          // ลบข้อมูลของห้องเรียนที่เกี่ยวข้องออกจาก collection student โดยใช้ method updateMany() ใช้สำหรับอัพเดทหลายๆ ข้อมูลใน collection
          // และใช้ method $pull ในการลบข้อมูลออกจาก array โดยจะหา classroom ที่มี id ตรงกับ req.params.id แล้วลบออก
          Student.updateMany(

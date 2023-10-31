@@ -12,6 +12,7 @@ const classroomRouter = require('./router/classroomRouter');
 const indexRouter = require('./router/indexRouter');
 const deckRouter = require('./router/deckRouter');
 const studentRouter = require('./router/studentRouter');
+const adminRouter = require('./router/adminRouter');
 
 // ! ตั้งค่าการเชื่อมต่อฐานข้อมูล
 mongoose.Promise = global.Promise;
@@ -51,6 +52,7 @@ app.use('/projectsenior/logout', loginRouter);  // เรียกใช้ logi
 app.use('/projectsenior/classroom', classroomRouter);  // เรียกใช้ classroomRouter
 app.use('/projectsenior/deck', deckRouter);  // เรียกใช้ deckRouter
 app.use('/projectsenior/student', studentRouter);  // เรียกใช้ studentRouter
+app.use('/projectsenior/admin', adminRouter);  // เรียกใช้ adminRouter
 
 // ! Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
