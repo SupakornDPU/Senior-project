@@ -19,8 +19,8 @@ fetch('/projectsenior/deck/' + classroomID, {
          classroomCol.innerHTML = `
                <div href="#" class="ag-courses-item_link" id=${each._id}>
                   <div class="ag-courses-item_bg"></div>
-                  <div class="ag-courses-item_title">
-                     ${each.deck_name}
+                  <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center">
+                     ${each.deck_name} <a class="button" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedeck('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                   </div>
                   <div class="ag-courses-item_date-box">
                      <div class="row mb-2">
@@ -50,3 +50,64 @@ fetch('/projectsenior/deck/' + classroomID, {
    function btncreatedeck() {
       document.location = "createFlashcard.html?classroomID="+classroomID;
    }
+
+   //Function เมื่อกดฟันเฟืองให้ GET ข้อมูลมาใส่ใน input
+   function btnupdatedeck(id) {
+      inputShowClassroomID = document.getElementById("deckID");
+      inputShowClassroomID.value = id;
+      
+      fetch('/projectsenior/deck/getById/' + id, {
+         method: 'GET',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+      })
+         .then(response => response.json())
+         .then(data => {
+            const namedeck = document.getElementById("updatenamedeck");
+            namedeck.value = data.deck_name;
+         })
+         .catch(err => console.log(err))
+   }
+   // DELETE DECK
+   function btndeletedeck() {
+      const DeckID = document.getElementById("deckID").value;
+      fetch('/projectsenior/deck/' + DeckID, {
+         method: 'DELETE',
+      })
+         .then(response => response.json())
+         .then(() => {
+            alert("ลบห้องเรียนเรียบร้อย")
+            document.location = "deck.html?classroomID="+classroomID;
+         })
+         .catch(err => console.log(err))
+   }
+
+   const formupdatedeck = document.getElementById("updatedecks");
+   formupdatedeck.addEventListener("submit", (e) => {
+         e.preventDefault();
+         const DeckID = document.getElementById("deckID").value;
+         const namedeck = document.getElementById("updatenamedeck").value;
+         const teacherids = document.getElementById("updateteacherid").value;
+         const adminids = document.getElementById("updateadminid").value;
+
+
+         fetch('/projectsenior/deck/' + DeckID, {
+            method: 'put',
+            headers: {
+               'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+               "deck_name": namedeck,
+               
+            })
+         })
+            .then(response => console.log(response))
+            .catch(err => console.log(err))
+            .then(() => {
+               alert("แก้ไขห้องเรียนเรียบร้อย")
+               document.location = "deck.html?classroomID="+classroomID;
+            })
+         document.getElementById("nameroom").value = "";
+         document.getElementById("description").value = "";
+      })

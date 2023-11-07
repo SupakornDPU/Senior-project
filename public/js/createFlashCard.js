@@ -28,14 +28,14 @@ createdeck.addEventListener("submit", (e) => {
          console.log(classroomID)
 
          // อัพเดทข้อมูลเข้าไปใน Array ของ deck ที่อยู่ใน Collection classroom
-         fetch('/projectsenior/deck/' + classroomID, {
-            method: 'PUT',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-         })
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+         // fetch('/projectsenior/deck/' + classroomID, {
+         //    method: 'PUT',
+         //    headers: {
+         //       'Content-Type': 'application/json'
+         //    },
+         // })
+         //    .then(response => console.log(response))
+         //    .catch(err => console.log(err))
          window.location = "deck.html?classroomID=" + classroomID;
       })
       .catch(err => console.log(err))

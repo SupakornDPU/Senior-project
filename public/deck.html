@@ -70,11 +70,11 @@
          <div class="col-md-3 col-lg-3 mb-5">
             <div class="ag-format-container">
                <div class="ag-courses_box" id="innerhtmlclassflash" >
-                  <!-- <div class="ag-courses_item">
+                  <div class="ag-courses_item">
                      <div href="#" class="ag-courses-item_link">
                         <div class="ag-courses-item_bg"></div>
-                        <div class="ag-courses-item_title">
-                           Lesson 1
+                        <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center" >
+                           Lesson 1 <a class="button" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                         </div>
                         <div class="ag-courses-item_date-box">
                            <div class="row mb-2">
@@ -94,7 +94,7 @@
                            </div>
                         </div>
                      </div>
-                  </div> -->
+                  </div>
                </div>
             </div>
          </div>
@@ -115,6 +115,31 @@
                            pattern="^[a-zA-Z0-9]{1,12}$" required>
                         <input type="submit" value="Create" class="btn-add" id="createdata"
                            style="background-color :#4723D9 ;">
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="overlay" id="formeditdeck">
+      <div class="row">
+         <div class="col-md-12" style="padding-left: 50px;">
+            <div class="wrapper">
+               <h2 class="font-poppin">Update Deck</h2><a class="close" href="#">&times;</a>
+               <div class="content">
+                  <div class="container">
+                     <form id="updatedecks">
+                        <input style="display: none;" for="" id="deckID"></input>
+                        <label class="font-poppin">Deck name</label>
+                        <input placeholder="Your classname.." type="text" value="" id="updatenamedeck"
+                           pattern="^[a-zA-Z0-9]{1,8}$" required>
+                        <input style="display: none;" value="Supakorn Dongkew" id="updatecreator">
+                        <input style="display: none;" value="" id="updateteacherid">
+                        <input style="display: none;" value="" id="updateadminid">
+                        <input type="submit" value="Update" class="btn-add" id="updatedata">
+                        <a class="button" id="btndelete" href="#" onclick="btndeletedeck()">DELETE</a>
                      </form>
                   </div>
                </div>
