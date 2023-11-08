@@ -47,7 +47,8 @@
       formadd.addEventListener("submit", (e) => {
          e.preventDefault();
 
-         const namerooms = document.getElementById("nameroom").value;
+         const getNameRoom = document.getElementById("nameroom").value;
+         const namerooms = getNameRoom.toUpperCase();
          const creators = document.getElementById("creator").value;
          const descriptions = document.getElementById("description").value;
          const teacherids = document.getElementById("teacherid").value;
@@ -76,6 +77,7 @@
          document.getElementById("description").value = "";
       })
 
+      // BTN UPDATE CLASSROOM
       function btnupdatedata(id) {
          inputShowClassroomID = document.getElementById("classroomID");
          inputShowClassroomID.value = id;

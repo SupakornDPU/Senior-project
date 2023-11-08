@@ -4,6 +4,7 @@ loginForm.addEventListener('submit', (e) => {
 
    const user_email = document.getElementById('typeEmail').value;
    const user_password = document.getElementById('typePassword').value;
+   let textEmail;
 
    fetch(`/projectsenior/loginUser`, {
       method: 'POST',
@@ -18,8 +19,14 @@ loginForm.addEventListener('submit', (e) => {
       .then(data => {
          console.log('Success:', data);
          if (data.message === "Login Fail") {
-            window.location.href = "login.html";
+            // window.location.href = "login.html";
+            textEmail = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
+            document.getElementById("alertBox").style.display = "block";
+            document.getElementById("textAlert").innerHTML = textEmail;
          } else {
+            textEmail = "";
+            document.getElementById("alertBox").style.display = "none";
+            document.getElementById("textAlert").innerHTML = textEmail;
             window.location.href = "index.html";
          }
       })

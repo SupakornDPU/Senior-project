@@ -28,12 +28,12 @@ fetch('/projectsenior/deck/' + classroomID, {
                            <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
                         </div>
                      </div>
-                     <div class="row mb-3">
+                     <div class="row mb-2">
                         <div class="col-md-12">
                            <a class="btn btn-primary font-poppin" href="manageFlashcard.html" role="button" style="font-weight: bold;">Manage Flash card</a>
                         </div>
                      </div>
-                     <div class="row mb-3">
+                     <div class="row mb-2">
                         <div class="col-md-12">
                            <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
                         </div>
@@ -47,13 +47,14 @@ fetch('/projectsenior/deck/' + classroomID, {
    })
    .catch(err => console.log(err))
 
+   
    function btncreatedeck() {
       document.location = "createFlashcard.html?classroomID="+classroomID;
    }
 
-   //Function เมื่อกดฟันเฟืองให้ GET ข้อมูลมาใส่ใน input
+   // Funtion get ข้อมูลมาแสดงในหน้า popup update
    function btnupdatedeck(id) {
-      inputShowClassroomID = document.getElementById("deckID");
+      const inputShowClassroomID = document.getElementById("deckID");
       inputShowClassroomID.value = id;
       
       fetch('/projectsenior/deck/getById/' + id, {
@@ -69,6 +70,7 @@ fetch('/projectsenior/deck/' + classroomID, {
          })
          .catch(err => console.log(err))
    }
+
    // DELETE DECK
    function btndeletedeck() {
       const DeckID = document.getElementById("deckID").value;
@@ -83,11 +85,18 @@ fetch('/projectsenior/deck/' + classroomID, {
          .catch(err => console.log(err))
    }
 
+   // Funtion ให้ตัวแรกเป็นตัวใหญ่
+   function capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+   }
+
+   // UPDATE DECK
    const formupdatedeck = document.getElementById("updatedecks");
    formupdatedeck.addEventListener("submit", (e) => {
          e.preventDefault();
          const DeckID = document.getElementById("deckID").value;
-         const namedeck = document.getElementById("updatenamedeck").value;
+         const getNameDeck = document.getElementById("updatenamedeck").value;
+         const namedeck = capitalizeFirstLetter(getNameDeck);
          const teacherids = document.getElementById("updateteacherid").value;
          const adminids = document.getElementById("updateadminid").value;
 

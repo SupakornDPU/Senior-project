@@ -7,8 +7,10 @@ registerForm.addEventListener('submit', (e) => {
     let textEmail;
     if (!reg.test(document.getElementById("typeEmail").value)) {
         textEmail = "กรุณากรอก อีเมล.";
+        document.getElementById("typeEmail").style.color = "red";
     } else {
         textEmail = "";
+        document.getElementById("typeEmail").style.color = "black";
     }
     document.getElementById("textEmail").innerHTML = textEmail;
 
@@ -77,11 +79,20 @@ registerForm.addEventListener('submit', (e) => {
                 "user_password": user_password,
                 "user_role": user_role,
             })
-        }).then(response => response.json())
-            .then(data => {
-                console.log('Success:', data);
-                window.location.href = "login.html";
-            })
-            .catch(error => console.log(error));
+        }).then(response => {
+            if (response.status === 400) {
+                return response.json().then(() => {
+                    document.getElementById("textEmail").innerHTML = "อีเมลนี้มีผู้ใช้งานแล้ว";
+                })
+            } else {
+                return response.json()
+                .then(data => {
+                    document.getElementById("textEmail").innerHTML = "";
+                    console.log('Success:', data);
+                    window.location.href = "login.html";
+                })
+            }
+        })
+        .catch(error => console.log(error));
     }
 })

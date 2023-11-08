@@ -58,6 +58,19 @@
          background-position: center bottom 500px;
          background-size: cover;
       }
+
+      .alert {
+         width: 512px;
+         padding: 16px;
+         max-width: 100%;
+         border: 2px solid #ff3838;
+         color: #ff3838;
+
+         & ul {
+            margin: 0 auto;
+            padding: 0 auto;
+         }
+      }
    </style>
 
 </head>
@@ -72,6 +85,18 @@
          <div class="d-flex justify-content-center align-items-center mb-5">
             <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
          </div>
+
+         <!-- <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="alert" id="alertBox" style="display: none;">
+                  <ul>
+                     <li id="textAlert">
+                        
+                     </li>
+                  </ul>
+               </div>
+            </div>
+         </div> -->
 
          <!-- Row EMAIL -->
          <div class="row d-flex justify-content-center align-items-center">
@@ -148,30 +173,6 @@
 
    <!-- !Footer -->
    <footer-component></footer-component>
-
-   <script>
-      // registerForm.addEventListener('submit', (e) => {
-      //    e.preventDefault();
-      //    const formData = new FormData(registerForm);
-      //    const data = Object.fromEntries(formData);
-      //    console.log(data);
-      //    fetch('http://localhost:3000/users', {
-      //       method: 'POST',
-      //       headers: {
-      //          'Content-Type': 'application/json'
-      //       },
-      //       body: JSON.stringify(data)
-      //    })
-      //       .then(response => response.json())
-      //       .then(data => {
-      //          console.log('Success:', data);
-      //          window.location.href = "login.html";
-      //       })
-      //       .catch((error) => {
-      //          console.error('Error:', error);
-      //       });
-      // });
-   </script>
 
    <!-- Script -->
    <script src="js/script.js"></script>

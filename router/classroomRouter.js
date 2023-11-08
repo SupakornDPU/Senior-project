@@ -82,7 +82,7 @@ classroomRouter.put('/:id', (req, res, next) => {
 // สร้าง route สำหรับ delete ข้อมูล classroom ตาม id
 classroomRouter.delete('/:id', (req, res, next) => {
    const ids = req.params.id
-   Classroom.findByIdAndRemove(req.params.id, req.body)
+   Classroom.findByIdAndRemove(req.params.id, req.body) // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
       .then(() => {
          // ลบข้อมูลของห้องเรียนที่เกี่ยวข้องออกจาก collection student โดยใช้ method updateMany() ใช้สำหรับอัพเดทหลายๆ ข้อมูลใน collection
          // และใช้ method $pull ในการลบข้อมูลออกจาก array โดยจะหา classroom ที่มี id ตรงกับ req.params.id แล้วลบออก
@@ -101,10 +101,9 @@ classroomRouter.delete('/:id', (req, res, next) => {
             next(err);
          });
       })
-      
       .catch((err) => {
          next(err);
-      }); // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
+      }); 
 });
 
 module.exports = classroomRouter;

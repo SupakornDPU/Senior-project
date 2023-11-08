@@ -63,6 +63,19 @@
          background-position: center bottom 220px;
          background-size: cover;
       }
+
+      .alert {
+         width: 512px;
+         padding: 16px;
+         max-width: 100%;
+         border: 2px solid #ff3838;
+         color: #ff3838;
+
+         & ul {
+            margin: 0 auto;
+            padding: 0 auto;
+         }
+      }
    </style>
 </head>
 
@@ -75,6 +88,17 @@
       <form id="loginForm" style="margin-top: 10rem;">
          <div class="d-flex justify-content-center align-items-center mb-5">
             <h1 style="font-weight: bold;" class="font-poppin">LOGIN</h1>
+         </div>
+
+         <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-3">
+               <div class="alert" id="alertBox" style="display: none;">
+                  <ul>
+                     <li id="textAlert">
+                     </li>
+                  </ul>
+               </div>
+            </div>
          </div>
 
          <!-- Row 1 -->
