@@ -445,7 +445,6 @@ a {
    align-items: flex-start;
    -ms-flex-wrap: wrap;
    flex-wrap: wrap;
-
    padding: 50px 0;
 }
 
@@ -458,6 +457,7 @@ a {
    overflow: hidden;
 
    border-radius: 28px;
+   box-shadow: 0 .20rem 2rem 0 rgba(58,59,69,.15);
 }
 
 .ag-courses-item_link {

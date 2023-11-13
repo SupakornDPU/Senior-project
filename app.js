@@ -57,6 +57,11 @@ app.use('/projectsenior/admin', adminRouter);  // เรียกใช้ admin
 // ! Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+// ! Set 404 page
+app.use((req, res) => {
+      res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
 // ! กำหนด port ให้กับ server
 const port = process.env.PORT || 5000;
 
