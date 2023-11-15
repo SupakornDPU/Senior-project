@@ -24,15 +24,15 @@ class NavBar extends HTMLElement {
             <span class="navbar-toggler-icon"></span>
          </button>
          <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="linkPage">
                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+                  <a class="nav-link " aria-current="page" href="index.html">Home</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="#" id="menuClassroom">Classroom</a>
+                  <a class="nav-link " aria-current="page" href="#" id="menuClassroom">Classroom</a>
                </li>
                <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
+                  <a class="nav-link " aria-current="page" href="about.html">About</a>
                </li>
             </ul>
             <form class="d-flex gap-2">
@@ -48,6 +48,37 @@ class NavBar extends HTMLElement {
 }
 
 customElements.define("navbar-component", NavBar);
+
+document.addEventListener("DOMContentLoaded", function () {
+   var linkPage = document.getElementById("linkPage");
+
+   linkPage.addEventListener("click", function (e) {
+      var target = e.target;
+
+      if (target.tagName === "A") {
+         // ลบคลาส "active" จากทุกลิงก์ที่มีคลาส "active"
+         var activeLinks = linkPage.querySelectorAll(".nav-link.active");
+         activeLinks.forEach(function (link) {
+            link.classList.remove("active");
+         });
+
+         // เพิ่มคลาส "active" ที่ลิงก์ที่ถูกคลิก
+         target.classList.add("active");
+
+         // บันทึกลิงก์ที่ถูกคลิกใน Local Storage
+         localStorage.setItem("activeLink", target.getAttribute("href"));
+      }
+   });
+
+   // ตรวจสอบ Local Storage เมื่อหน้าโหลด
+   var activeLink = localStorage.getItem("activeLink");
+   if (activeLink) {
+      var targetLink = linkPage.querySelector('a[href="' + activeLink + '"]');
+      if (targetLink) {
+         targetLink.classList.add("active");
+      }
+   }
+});
 
 // Footer
 class Footer extends HTMLElement {

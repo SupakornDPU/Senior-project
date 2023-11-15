@@ -60,6 +60,8 @@
 
    <!--!Container-->
    <div class="height-100 bg-light">
+
+      <!-- Button Create Flashcard -->
       <div class="row" style="margin: 60px 0 60px 0;">
          <div class="col-md-12 m-0 p-0">
             <a class="btn btn-primary font-poppin" role="button" style="font-weight: bold;" onclick="btncreatedeck()">
@@ -68,49 +70,26 @@
             </a>
          </div>
       </div>
+      <!-- Button Create Flashcard -->
+
+      <!-- Deck Card -->
       <div class="row">
          <div class="col-md-3 col-lg-3 mb-5">
             <div class="ag-format-container">
                <div class="ag-courses_box" id="innerhtmlclassflash" >
-                  <!-- <div class="ag-courses_item">
-                     <div href="#" class="ag-courses-item_link">
-                        <div class="ag-courses-item_bg"></div>
-                        <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center" >
-                           Lesson 1 
-                           <a class="button" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedata('${each._id}')" >
-                              <i class="fa-solid fa-gear"></i>
-                           </a>
-                        </div>
-                        <div class="ag-courses-item_date-box">
-                           <div class="row mb-2">
-                              <div class="col-md-12">
-                                 <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
-                              </div>
-                           </div>
-                           <div class="row mb-2">
-                              <div class="col-md-12">
-                                 <a class="btn btn-primary font-poppin" href="manageFlashcard.html" role="button" style="font-weight: bold;">Manage Flash card</a>
-                              </div>
-                           </div>
-                           <div class="row mb-2">
-                              <div class="col-md-12">
-                                 <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
-                              </div>
-                           </div>
-                        </div>
-                     </div>
-                  </div> -->
                </div>
             </div>
          </div>
       </div>
+      <!-- Deck Card -->
+
    </div>   
 
-   <!-- FORMPOP CREATE FLASHCARD -->
-   <div class="createflashcard" id="createflashcard">
+   <!-- FORMPOP CREATE DECK -->
+   <div class="createdeck" id="createdeck">
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
-            <div class="joinclasswrapper" style="align-items: center;">
+            <div class="updatedeckwrapper" style="align-items: center;">
                <h2 class="font-poppin">Create Flashcard</h2><a class="close" href="#">&times;</a>
                <div class="content">
                   <div class="container">
@@ -128,6 +107,7 @@
       </div>
    </div>
 
+   <!-- FORMPOP EDIT DECK -->
    <div class="overlay" id="formeditdeck">
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
@@ -144,7 +124,7 @@
                         <input style="display: none;" value="" id="updateteacherid">
                         <input style="display: none;" value="" id="updateadminid">
                         <input type="submit" value="Update" class="btn-add" id="updatedata">
-                        <a class="button" id="btndelete" href="#" onclick="btndeletedeck()">DELETE</a>
+                        <a class="" id="btndelete" href="#" onclick="btndeletedeck()">DELETE</a>
                      </form>
                   </div>
                </div>

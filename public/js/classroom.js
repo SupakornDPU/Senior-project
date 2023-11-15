@@ -20,10 +20,10 @@
                const classroomCol = document.createElement('div');
                classroomCol.className = 'col-lg-3 col-md-12 my-2';
                classroomCol.innerHTML = `
-                  <div class="card" id=${each._id}>
+                  <div class="card shadow" id=${each._id}>
                      <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
-                        <a class="button" id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
+                        <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                      </div>
                      <div class="card-body d-flex justify-content-between">
                         <div class="row card-text">

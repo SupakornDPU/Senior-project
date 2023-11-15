@@ -61,7 +61,7 @@
       <div class="header_toggle">
          <i class="bx bx-menu bx-x" id="header-toggle"></i>
       </div>
-      <a class="button" id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
+      <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
    </header>
    <div class="l-navbar show" id="nav-bar">
       <nav class="nav">
@@ -93,14 +93,14 @@
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
             <div class="wrapper">
-               <h2 class="font-poppin">Create Classroom</h2><a class="close" href="#">&times;</a>
+               <h2>Create Classroom</h2><a class="close" href="#">&times;</a>
                <div class="content">
                   <div class="container">
                      <form id="createroom">
-                        <label class="font-poppin">Name room</label>
+                        <label>Name room</label>
                         <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
                            pattern="^[a-zA-Z0-9]{1,5}$" required>
-                        <label class="font-poppin">Description</label>
+                        <label>Description</label>
                         <textarea id="description" value="" pattern="^[ก-๏a-z\s]{1,72}$"
                            iplaceholder="Write something.." required></textarea>
                         <input style="display: none;" value="Supakorn Dongkew" id="creator">
@@ -120,22 +120,22 @@
       <div class="row">
          <div class="col-md-12" style="padding-left: 50px;">
             <div class="wrapper">
-               <h2 class="font-poppin">Update Classroom</h2><a class="close" href="#">&times;</a>
+               <h2>Update Classroom</h2><a class="close" href="#">&times;</a>
                <div class="content">
                   <div class="container">
                      <form id="updateroom">
                         <input style="display: none;" for="" id="classroomID"></input>
-                        <label class="font-poppin">Name room</label>
+                        <label>Name room</label>
                         <input placeholder="Your classname.." type="text" value="" id="updatenameroom"
                            pattern="^[a-zA-Z0-9]{1,5}$" required>
-                        <label class="font-poppin">Description</label>
+                        <label>Description</label>
                         <textarea id="updatedescription" value="" pattern="^[ก-๏a-z\s]{1,72}$"
                            iplaceholder="Write something.." required></textarea>
                         <input style="display: none;" value="Supakorn Dongkew" id="updatecreator">
                         <input style="display: none;" value="" id="updateteacherid">
                         <input style="display: none;" value="" id="updateadminid">
                         <input type="submit" value="Update" class="btn-add" id="updatedata">
-                        <a class="button" id="btndelete" href="#" onclick="btndeletedata()">DELETE</a>
+                        <a class="" id="btndelete" href="#" onclick="btndeletedata()">DELETE</a>
                      </form>
                   </div>
                </div>
