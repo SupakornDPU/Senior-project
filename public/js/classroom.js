@@ -81,7 +81,7 @@ formadd.addEventListener("submit", (e) => {
             title: "Create Classroom Success",
             icon: "success",
             showConfirmButton: false,
-            backdrop: `rgba(57, 57, 57, 0.5)`,
+            backdrop: `rgba(0, 0, 0, 0.5)`,
             timer: 1000
          }).then(() => {
             window.location.href = "classroom.html"
