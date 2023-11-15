@@ -14,9 +14,9 @@ fetch('/projectsenior/deck/' + classroomID, {
       const decks = document.getElementById('innerhtmlclassflash');
       console.log(data);
       data.forEach(each => {
-         const classroomCol = document.createElement('div');
-         classroomCol.className = 'ag-courses_item';
-         classroomCol.innerHTML = `
+         const deckCol = document.createElement('div');
+         deckCol.className = 'ag-courses_item';
+         deckCol.innerHTML = `
                <div href="#" class="ag-courses-item_link" id=${each._id}>
                   <div class="ag-courses-item_bg"></div>
                   <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center">
@@ -25,7 +25,7 @@ fetch('/projectsenior/deck/' + classroomID, {
                   <div class="ag-courses-item_date-box">
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="exflash.html" role="button" style="font-weight: bold;">Learning</a>
+                           <a class="btn btn-primary font-poppin" href="flashcard.html?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
                         </div>
                      </div>
                      <div class="row mb-2">
@@ -42,7 +42,7 @@ fetch('/projectsenior/deck/' + classroomID, {
                </div>
             </div>
          `;
-         decks.appendChild(classroomCol);
+         decks.appendChild(deckCol);
       });
    })
    .catch(err => console.log(err))

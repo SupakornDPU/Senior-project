@@ -51,6 +51,7 @@ deckRouter.post('/', (req, res, next) => {
 // สร้าง route สำหรับ get ข้อมูล deck ตาม id
 deckRouter.get('/getById/:id', (req, res, next) => {
    Deck.findById(req.params.id)
+      .populate('flashcard')
       .then((decks) => {
          res.json(decks);
       })
@@ -79,6 +80,17 @@ deckRouter.put('/:id', (req, res, next) => {
       .catch((err) => {
          next(err);
       }); // ใช้ method findByIdAndUpdate() เพื่อค้นหาข้อมูลตาม id และทำการอัพเดทข้อมูล
+});
+
+deckRouter.get('/', (req, res, next) => {
+   Deck.find()
+      .populate('flashcard')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
+      .then((decks) => {
+         res.json(decks);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
 

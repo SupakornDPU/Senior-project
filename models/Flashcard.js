@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const FlashcardSchema = new mongoose.Schema({
-   card_id: String,
    card_question: String,
    card_answer: String,
    deck_id: String,
