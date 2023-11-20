@@ -34,34 +34,34 @@ fetch('/projectsenior/deck/getById/' + deckID, {
             const deckCol = document.createElement('div');
             deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
             deckCol.innerHTML = `
-        <div class="row justify-content-end">
-            <div class="col-3 ms-md-auto" style="width: fit-content;" ">
-                <a id="btnnextquestion" class="button btn btn-lg btn-next" >
-                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
-                        <path
-                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
-                    </svg><br>Next
-                </a>
+            <div class="row justify-content-end">
+                <div class="col-3 ms-md-auto" style="width: fit-content;" ">
+                    <a id="btnnextquestion" class="button btn btn-lg btn-next" >
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                            <path
+                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                        </svg><br>Next
+                    </a>
+                </div>
             </div>
-        </div>
-        <div class="row justify-content-center">
-            <div class="col-12 ms-md-auto">
-                <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px;"><ins> Question</ins></h1>
-                <p class="font-poppin" id="question" style="font-weight: 500;">
-                ${Item.card_question}
-                </p>
-            </div>
-        </div>
-        <hr class="style">
-        <div class="row justify-content-center">
-            <div class="col-md-9">
-                <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
-                    <p class="font-poppin" id="answer" style="font-weight: 500;padding-bottom: 20px;">
-                    ${Item.card_answer}
+            <div class="row justify-content-center">
+                <div class="col-12 ms-md-auto">
+                    <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px;"><ins> Question</ins></h1>
+                    <p class="font-poppin" id="question" style="font-weight: 500;">
+                    ${Item.card_question}
                     </p>
+                </div>
             </div>
-        </div>
-         `;
+            <hr class="style">
+            <div class="row justify-content-center">
+                <div class="col-md-9">
+                    <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
+                        <p class="font-poppin" id="answer" style="font-weight: 500;padding-bottom: 20px;">
+                        ${Item.card_answer}
+                        </p>
+                </div>
+            </div>
+            `;
             decks.appendChild(deckCol);
             const btnquestion = document.getElementById("btnnextquestion")
             btnquestion.addEventListener("click",()=>{

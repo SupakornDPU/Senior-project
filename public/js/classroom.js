@@ -162,20 +162,30 @@ formupdate.addEventListener("submit", (e) => {
 // DELETE DATA
 function btndeletedata() {
    const classroomID = document.getElementById("classroomID").value;
-   fetch('/projectsenior/classroom/' + classroomID, {
-      method: 'DELETE',
-   })
-      .then(response => response.json())
-      .then(() => {
-         swal.fire({
-            title: "Delete Classroom Success",
-            icon: "success",
-            showConfirmButton: false,
-            backdrop: `rgba(57, 57, 57, 0.5)`,
-            timer: 1000
-         }).then(() => {
-            window.location.href = "classroom.html"
+   Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+      if (result.isConfirmed) {
+         fetch("/projectsenior/classroom/" + classroomID, {
+            method: "DELETE",
          })
-      })
-      .catch(err => console.log(err))
+            .then((response) => response.json())
+            .then(() => {
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 900,
+               }).then(() => {
+                  window.location.href = "classroom.html";
+               });
+            }).catch((err) => console.log(err));
+      }
+   });
 }
