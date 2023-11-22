@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const deckID = urlParams.get('deck')
 console.log(deckID);
 
+// Get the deck ID from the URL
 let counter = 0;
 let i = 0;
 fetch('/projectsenior/deck/getById/' + deckID, {
@@ -14,12 +15,12 @@ fetch('/projectsenior/deck/getById/' + deckID, {
     .then(data => {
 
         const dataArray = [];
-        
+
         // เพิ่มข้อมูลลงใน array ด้วย forEach
         data.flashcard.forEach(each => {
             dataArray.push(each);
         });
-        
+
         // หรือใช้ spread operator เพื่อเพิ่มข้อมูลใน array
         console.log(dataArray);
         if (dataArray.length > 0) {
@@ -28,7 +29,7 @@ fetch('/projectsenior/deck/getById/' + deckID, {
             console.log(i);
             // ให้แสดงข้อมูลในArray
             console.log(Item);
-            
+
             // หรือให้แสดงข้อมูลบนหน้าเว็บ
             const decks = document.getElementById("innerhtmlflashcard")
             const deckCol = document.createElement('div');
@@ -64,12 +65,12 @@ fetch('/projectsenior/deck/getById/' + deckID, {
             `;
             decks.appendChild(deckCol);
             const btnquestion = document.getElementById("btnnextquestion")
-            btnquestion.addEventListener("click",()=>{
+            btnquestion.addEventListener("click", () => {
                 i++;
                 console.log('ค่านับใหม่:', i);
-                
+
                 const newItem = dataArray[i];
-        
+
                 // Update the displayed question and answer
                 document.getElementById("question").innerText = newItem.card_question;
                 document.getElementById("answer").innerText = newItem.card_answer;
@@ -80,7 +81,9 @@ fetch('/projectsenior/deck/getById/' + deckID, {
 
         // data.flashcard.forEach(each => {
         //     console.log(each);
-        
+
     })
     .catch(err => console.log(err));
+
+
 

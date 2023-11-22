@@ -61,15 +61,17 @@
    <!--!Container-->
    <div class="height-100 bg-light">
       <h1 class="text-center font-poppin" style="font-weight: bold;">Manage Flashcard</h1>
-      <div class="row my-5">
-         <label for="formFile" class="form-label" style="font-weight: bold;">Choose File</label>
-         <div class="col-md-3 my-3">
-            <input class="form-control" type="file" id="formFile">
+      <form action="" id="formImport">
+         <div class="row my-5">
+            <label for="formFile" class="form-label" style="font-weight: bold;">Choose File</label>
+            <div class="col-md-3 my-3">
+               <input class="form-control" type="file" id="formFile">
+            </div>
+            <div class="col-md-2 my-3">
+               <button type="submit" class="btn btn-primary" id="btnImport">Confirm</button>
+            </div>
          </div>
-         <div class="col-md-2 my-3">
-            <button type="button" class="btn btn-primary">Confirm</button>
-         </div>
-      </div>
+      </form>
       <div class="row">
          <div class="row text-center my-4">
             <div class="col-3">
@@ -142,6 +144,7 @@
 
    <!-- SCRIPT -->
    <script src="js/script.js"></script>
+   <script src="js/manageFlashcard.js"></script>
 
    <!-- Bootrap 5 -->
    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

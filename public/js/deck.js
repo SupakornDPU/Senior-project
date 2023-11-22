@@ -49,7 +49,7 @@ fetch('/projectsenior/deck/' + classroomID, {
 
    
    function btncreatedeck() {
-      document.location = "createFlashcard.html?classroomID="+classroomID;
+      document.location = "createDeck.html?classroomID="+classroomID;
    }
 
    // Funtion get ข้อมูลมาแสดงในหน้า popup update
