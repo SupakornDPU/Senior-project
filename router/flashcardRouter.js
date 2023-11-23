@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs-extra');
 const excelToJson = require('convert-excel-to-json');
-
 const Flashcard = require('../models/Flashcard');
+const Deck = require('../models/Deck');
 
 flashcardRouter.get('/', (req, res, next) => {
    Flashcard.find()
@@ -21,7 +21,7 @@ flashcardRouter.get('/', (req, res, next) => {
 const upload = multer({ dest: "data/" }); // เป็นการบอกว่าไฟล์ที่อัพโหลดจะถูกเก็บไว้ที่โฟลเดอร์ไหน
 
 // Import excel file
-flashcardRouter.post('/import', (upload.single('file')), (req, res, next) => {
+flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next) => {
    console.log(req.file);
    try {
 
@@ -46,15 +46,24 @@ flashcardRouter.post('/import', (upload.single('file')), (req, res, next) => {
             allData = allData.concat(excelData[sheet]);
          }
          res.status(200).json(allData);
-         console.log(allData);
+         // console.log(allData);
          fs.remove(filePath); // Delete excel file
 
          // Insert data to database
-         let deck_id = '6554db20ab46e706fc34b8bb'; // replace with your actual deck_id
+         const deck_id = req.params.deckId;
          allData = allData.map(item => ({ ...item, deck_id }));
          Flashcard.insertMany(allData)
-            .then(() => {
-               console.log('Inserted data to database.');
+            .then((insertedDocuments) => {
+               console.log(insertedDocuments);
+               // สร้าง array ของ _id จาก insertedDocuments
+               let flashcardIds = insertedDocuments.map(doc => doc._id);
+
+               // ใช้ $addToSet กับ $each เพื่อเพิ่มทุก _id ใน flashcardIds ลงใน flashcards ของ Deck
+               return Deck.findByIdAndUpdate(deck_id, { $addToSet: { flashcards: { $each: flashcardIds } } }, { new: true });
+            })
+            .then(updatedDeck => {
+               console.log(updatedDeck);
+               console.log('Inserted data to database and updated the decks.');
             })
             .catch((error) => {
                console.log(error);

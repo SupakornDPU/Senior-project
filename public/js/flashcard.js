@@ -17,7 +17,7 @@ fetch('/projectsenior/deck/getById/' + deckID, {
         const dataArray = [];
 
         // เพิ่มข้อมูลลงใน array ด้วย forEach
-        data.flashcard.forEach(each => {
+        data.flashcards.forEach(each => {
             dataArray.push(each);
         });
 

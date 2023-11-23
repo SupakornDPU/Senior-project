@@ -30,7 +30,7 @@ fetch('/projectsenior/deck/' + classroomID, {
                      </div>
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="manageFlashcard.html" role="button" style="font-weight: bold;">Manage Flash card</a>
+                           <a class="btn btn-primary font-poppin" href="manageFlashcard.html?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
                         </div>
                      </div>
                      <div class="row mb-2">

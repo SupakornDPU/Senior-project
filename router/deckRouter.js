@@ -51,7 +51,7 @@ deckRouter.post('/', (req, res, next) => {
 // สร้าง route สำหรับ get ข้อมูล deck ตาม id
 deckRouter.get('/getById/:id', (req, res, next) => {
    Deck.findById(req.params.id)
-      .populate('flashcard')
+      .populate('flashcards')
       .then((decks) => {
          res.json(decks);
       })
