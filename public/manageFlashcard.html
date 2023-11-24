@@ -81,7 +81,7 @@
                <span style="font-weight: bold;">Answer</span>
             </div>
          </div>
-         <div class="row" id="formQA">
+         <!-- <div class="row" id="formQA">
             <div class="row">
                <div class="col-md-3 my-2">
                   <div class="input-group">
@@ -101,8 +101,45 @@
                   <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()"
                      style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
                </div>
+               <div class="col-md-6 my-2 d-flex justify-content-center align-items-center">
+                  <button type="button" class="btn btn-secondary" id="addBtn" 
+                     style="font-weight: bold;"> Submit</button>
+               </div>
             </div>
-         </div>
+         </div> -->
+         <form id="importQA">
+            <div class="row" id="formQA">
+               <div class="row">
+                  <div class="col-md-3 my-2">
+                     <div class="input-group">
+                        <textarea name="question" class="form-control" id="importquestion" aria-label="With textarea"
+                           placeholder="Question"></textarea>
+                     </div>
+                  </div>
+                  <div class="col-md-3 my-2">
+                     <div class="input-group">
+                        <textarea name="answer" class="form-control" id="importanswer"aria-label="With textarea"
+                           placeholder="Answer"></textarea>
+                     </div>
+                  </div>
+                  <div class="col-md-1 col-3 my-2">
+                     <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()"
+                        style="font-weight: bold;">
+                        <i class="bi bi-plus-circle"></i> Add
+                     </button>
+                  </div>
+                  <div class="col-md-1 col-3 my-2">
+                     <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()"
+                        style="font-weight: bold;">
+                        <i class="bi bi-trash"></i> Del
+                     </button>
+                  </div>
+               </div>
+            </div>
+            <div class="col-md-6 my-2 d-flex justify-content-center align-items-center">
+               <button type="submit" class="btn btn-secondary" style="font-weight: bold;">Submit</button>
+            </div>
+         </form>
       </div>
    </div>
    <!--!Container-->
@@ -118,12 +155,12 @@
          div.innerHTML = `
             <div class="col-md-3 my-2">
                <div class="input-group">
-                  <textarea class="form-control" aria-label="With textarea" placeholder="Question"></textarea>
+                  <textarea name="question" class="form-control" aria-label="With textarea" id="importquestion" placeholder="Question"></textarea>
                </div>
             </div>
             <div class="col-md-3 my-2">
                <div class="input-group">
-                  <textarea class="form-control" aria-label="With textarea" placeholder="Answer"></textarea>
+                  <textarea name="answer" class="form-control" aria-label="With textarea" id="importanswer" placeholder="Answer"></textarea>
                </div>
             </div>
             <div class="col-md-1 col-3 my-2">
