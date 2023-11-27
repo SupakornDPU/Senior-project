@@ -31,7 +31,7 @@ fetch('/projectsenior/classroom', {
                               <p class="card-text">${each.classroom_des}</p>
                            </div>
                            <div class="col-md-12 d-flex align-items-end">
-                              <a href="deck.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                              <a href="deck?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
                            </div>
                         </div>
                      </div>
@@ -84,7 +84,7 @@ formadd.addEventListener("submit", (e) => {
             backdrop: `rgba(0, 0, 0, 0.5)`,
             timer: 1000
          }).then(() => {
-            window.location.href = "classroom.html"
+            window.location.href = "classroom"
          })
       })
    document.getElementById("nameroom").value = "";
@@ -152,7 +152,7 @@ formupdate.addEventListener("submit", (e) => {
             backdrop: `rgba(57, 57, 57, 0.5)`,
             timer: 1000
          }).then(() => {
-            window.location.href = "classroom.html"
+            window.location.href = "classroom"
          })
       })
    document.getElementById("nameroom").value = "";
@@ -183,7 +183,7 @@ function btndeletedata() {
                   showConfirmButton: false,
                   timer: 900,
                }).then(() => {
-                  window.location.href = "classroom.html";
+                  window.location.href = "classroom";
                });
             }).catch((err) => console.log(err));
       }

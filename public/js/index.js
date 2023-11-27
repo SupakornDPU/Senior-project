@@ -9,13 +9,13 @@ fetch(`/projectsenior/index`, {})
       document.getElementById('logoutButton').style.display = 'block';
       if (data.role == 'Student') {
          const menuClassroom = document.getElementById('menuClassroom');
-         menuClassroom.href = 'classroom_student.html';
+         menuClassroom.href = 'classroom_student';
       } else if (data.role == 'Teacher') {
          const menuClassroom = document.getElementById('menuClassroom');
-         menuClassroom.href = 'classroom.html';
+         menuClassroom.href = 'classroom';
       }
    } else {
-      document.getElementById('menuClassroom').href = 'login.html';
+      document.getElementById('menuClassroom').href = 'login';
       document.getElementById('loginButton').style.display = 'block';
       document.getElementById('registerButton').style.display = 'block';
       document.getElementById('logoutButton').style.display = 'none';

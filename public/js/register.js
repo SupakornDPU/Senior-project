@@ -89,7 +89,7 @@ registerForm.addEventListener('submit', (e) => {
                 .then(data => {
                     document.getElementById("textEmail").innerHTML = "";
                     console.log('Success:', data);
-                    window.location.href = "login.html";
+                    window.location.href = "login";
                 })
             }
         })

@@ -32,7 +32,7 @@
                                  <p class="card-text">${each.classroom_des}</p>
                               </div>
                               <div class="col-md-12 d-flex align-items-end">
-                                 <a href="classroomFlashcard.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                                 <a href="classroomFlashcard?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
                               </div>
                            </div>
                         </div>
@@ -66,7 +66,7 @@
             .then(response => console.log(response))
             .then(() => {
                alert("เพิ่มห้องเรียนเรียบร้อย")
-               window.location.href = " classroom_student.html "
+               window.location.href = " classroom_student "
             })
             .catch(err => console.log(err))
       })

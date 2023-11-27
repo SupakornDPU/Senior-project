@@ -25,17 +25,17 @@ fetch('/projectsenior/deck/' + classroomID, {
                   <div class="ag-courses-item_date-box">
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="flashcard.html?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
+                           <a class="btn btn-primary font-poppin" href="flashcard?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
                         </div>
                      </div>
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="manageFlashcard.html?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
+                           <a class="btn btn-primary font-poppin" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
                         </div>
                      </div>
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="scoreboard.html" role="button" style="font-weight: bold;">Score Board</a>
+                           <a class="btn btn-primary font-poppin" href="scoreboard" role="button" style="font-weight: bold;">Score Board</a>
                         </div>
                      </div>
                   </div>
@@ -49,7 +49,7 @@ fetch('/projectsenior/deck/' + classroomID, {
 
    
    function btncreatedeck() {
-      document.location = "createDeck.html?classroomID="+classroomID;
+      document.location = "createDeck?classroomID="+classroomID;
    }
 
    // Funtion get ข้อมูลมาแสดงในหน้า popup update
@@ -80,7 +80,7 @@ fetch('/projectsenior/deck/' + classroomID, {
          .then(response => response.json())
          .then(() => {
             alert("ลบห้องเรียนเรียบร้อย")
-            document.location = "deck.html?classroomID="+classroomID;
+            document.location = "deck?classroomID="+classroomID;
          })
          .catch(err => console.log(err))
    }
@@ -115,7 +115,7 @@ fetch('/projectsenior/deck/' + classroomID, {
             .catch(err => console.log(err))
             .then(() => {
                alert("แก้ไขห้องเรียนเรียบร้อย")
-               document.location = "deck.html?classroomID="+classroomID;
+               document.location = "deck?classroomID="+classroomID;
             })
          document.getElementById("nameroom").value = "";
          document.getElementById("description").value = "";

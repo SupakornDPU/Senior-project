@@ -58,6 +58,9 @@ app.use('/projectsenior/flashcard', flashcardRouter);  // เรียกใช�
 
 // ! Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public', {
+      extensions: ['html'],
+}));
 
 // ! Set 404 page
 app.use((req, res) => {

@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', (e) => {
       .then(data => {
          console.log('Success:', data);
          if (data.message === "Login Fail") {
-            // window.location.href = "login.html";
+            // window.location.href = "login";
             textEmail = "อีเมลหรือรหัสผ่านไม่ถูกต้อง";
             document.getElementById("alertBox").style.display = "block";
             document.getElementById("textAlert").innerHTML = textEmail;
@@ -27,7 +27,7 @@ loginForm.addEventListener('submit', (e) => {
             textEmail = "";
             document.getElementById("alertBox").style.display = "none";
             document.getElementById("textAlert").innerHTML = textEmail;
-            window.location.href = "index.html";
+            window.location.href = "home";
          }
       })
       .catch(error => console.log(error));

@@ -36,7 +36,7 @@ createdeck.addEventListener("submit", (e) => {
          // })
          //    .then(response => console.log(response))
          //    .catch(err => console.log(err))
-         window.location = "deck.html?classroomID=" + classroomID;
+         window.location = "deck?classroomID=" + classroomID;
       })
       .catch(err => console.log(err))
    document.getElementById("deckname").value = "";
