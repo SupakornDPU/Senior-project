@@ -74,5 +74,37 @@ flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next
    }
 });
 
+flashcardRouter.post('/:deckId', async (req, res) => {
+   const data = req.body.data;
+   const deckId = req.params.deckId; 
+   
+   try {
+     const newFlashcardIds = [];
+
+     // วนซ้ำเพื่อบันทึกข้อมูล FlashCard
+     for (const item of data) {
+       const newQA = new Flashcard({
+         "card_question": item.question,
+         "card_answer": item.answer,
+         "deck_id": item.deckid,
+       });
+
+       // บันทึกแฟลชการ์ดและบันทึกรหัสที่สร้างขึ้น
+       const savedFlashcard = await newQA.save();
+       newFlashcardIds.push(savedFlashcard._id); // _id เป็น ObjectId ที่สร้างขึ้น
+     }
+
+     // อัปเดตสำรับด้วยรหัสแฟลชการ์ดใหม่
+     const updatedDeck = await Deck.findOneAndUpdate(
+       { _id: deckId },
+       { $push: { flashcards: { $each: newFlashcardIds } } },
+       { new: true }
+     );
+
+     res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedDeck });
+   } catch (error) {
+     res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล' });
+   }
+ });
 
 module.exports = flashcardRouter;
