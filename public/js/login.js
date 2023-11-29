@@ -27,7 +27,7 @@ loginForm.addEventListener('submit', (e) => {
             textEmail = "";
             document.getElementById("alertBox").style.display = "none";
             document.getElementById("textAlert").innerHTML = textEmail;
-            window.location.href = "home";
+            window.location.href = "index";
          }
       })
       .catch(error => console.log(error));

@@ -26,16 +26,6 @@ createdeck.addEventListener("submit", (e) => {
       .then(() => {
          alert("เพิ่มเรียบร้อย")
          console.log(classroomID)
-
-         // อัพเดทข้อมูลเข้าไปใน Array ของ deck ที่อยู่ใน Collection classroom
-         // fetch('/projectsenior/deck/' + classroomID, {
-         //    method: 'PUT',
-         //    headers: {
-         //       'Content-Type': 'application/json'
-         //    },
-         // })
-         //    .then(response => console.log(response))
-         //    .catch(err => console.log(err))
          window.location = "deck?classroomID=" + classroomID;
       })
       .catch(err => console.log(err))

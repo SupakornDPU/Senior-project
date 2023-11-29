@@ -18,13 +18,17 @@ formImport.addEventListener('submit', (e) => {
    })
       .then(res => res.json())
       .then(data => {
-         console.log(data);
+         window.location = "manageFlashcard?deck=" + deckId;
          // console.log(deckId);
-      });
+      })
+      .then(() => {
+         console.log(data);
+      })
 });
 
-const formImports = document.getElementById('importQA');
-formImports.addEventListener('submit', (e) => {
+// POST import textarea
+const textareaForm = document.getElementById('textareaForm');
+textareaForm.addEventListener('submit', (e) => {
    e.preventDefault();
 
    // ดึงข้อมูลจาก textarea ทั้งหมด
@@ -59,7 +63,7 @@ formImports.addEventListener('submit', (e) => {
          questions.forEach(question => (question.value = ''));
          answers.forEach(answer => (answer.value = ''));
 
-         alert("เพิ่มสำเร็จ");
+         window.location = "manageFlashcard?deck=" + deckId;
       })
       .catch(err => console.log(err));
 });
