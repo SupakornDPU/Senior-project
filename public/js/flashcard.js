@@ -47,31 +47,20 @@ fetch('/projectsenior/deck/getById/' + deckID, {
             </div>
             <div class="row">
                 <div class="col-12">
-                    <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px;"><ins> Question</ins>
-                    </h1>
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px;"><ins> Question</ins></h1>
                 </div>
-                <div class="col-md-12">
-                    <pre class="font-poppin d-flex justify-content-center" id="question"
-                    style="font-weight: 500;padding-bottom: 20px;">
-                        <code class="align-items-center">
-${Item.card_question}
-                        </code>
-                    </pre>
-                </div>
+                <pre class="d-flex justify-content-center text-start">
+                        <code id="question">${Item.card_question}</code>
+                </pre>
             </div>
             <hr class="style">
             <div class="row">
                 <div class="col-md-12">
-                    <h1 class="font-poppin" style="font-weight: 700; padding-bottom: 50px; padding-top: 50px;">
-                        <ins> Answer </ins>
-                    </h1>
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
                 </div>
                 <div class="col-md-12">
-                    <pre class="font-poppin" id="answer"
-                    style="font-weight: 500;padding-bottom: 20px;">
-                        <code>
-${Item.card_answer}
-                        </code>
+                    <pre class="d-flex justify-content-center text-start">
+                        <code id="answer">${Item.card_answer}</code>
                     </pre>
                 </div>
             </div>

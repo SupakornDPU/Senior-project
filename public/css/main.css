@@ -62,10 +62,12 @@
    font-weight: bold;
 }
 
+/* Eng Font */
 .font-poppin {
    font-family: 'Poppins', sans-serif !important;
 }
 
+/* Th Font */
 .font-kanit {
    font-family: 'Kanit', sans-serif !important;
 }
