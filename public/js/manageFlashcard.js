@@ -64,6 +64,7 @@ textareaForm.addEventListener('submit', (e) => {
          answers.forEach(answer => (answer.value = ''));
 
          window.location = "manageFlashcard?deck=" + deckId;
+         alert("Import Success");
       })
       .catch(err => console.log(err));
 });
