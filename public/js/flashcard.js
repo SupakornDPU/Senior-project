@@ -25,10 +25,8 @@ fetch('/projectsenior/deck/getById/' + deckID, {
         console.log(dataArray);
         if (dataArray.length > 0) {
             let i = 0;
-            const Item = dataArray[i];
+            let Item = dataArray[i];
             console.log(i);
-            // ให้แสดงข้อมูลในArray
-            console.log(Item);
 
             // หรือให้แสดงข้อมูลบนหน้าเว็บ
             const decks = document.getElementById("innerhtmlflashcard")
@@ -66,24 +64,26 @@ fetch('/projectsenior/deck/getById/' + deckID, {
             </div>
             `;
             decks.appendChild(deckCol);
+            const answerBlock = document.getElementById("answer");
+            hljs.highlightElement(answerBlock);
             const btnquestion = document.getElementById("btnnextquestion")
             btnquestion.addEventListener("click", () => {
                 i++;
-                console.log('ค่านับใหม่:', i);
-
-                const newItem = dataArray[i];
+                console.log(i);
+                Item = dataArray[i];
 
                 // Update the displayed question and answer
-                document.getElementById("question").innerText = newItem.card_question;
-                document.getElementById("answer").innerText = newItem.card_answer;
+                const questionBlock = document.getElementById("question");
+                questionBlock.innerText = Item.card_question;
+                answerBlock.innerText = Item.card_answer;
+
+                // Highlight the code
+                answerBlock.dataset.highlighted = '';
+                hljs.highlightElement(answerBlock);
             });
         } else {
             console.log('ไม่มีข้อมูลใน dataArray');
         }
-
-        // data.flashcard.forEach(each => {
-        //     console.log(each);
-
     })
     .catch(err => console.log(err));
 
