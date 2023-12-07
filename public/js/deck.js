@@ -47,76 +47,127 @@ fetch('/projectsenior/deck/' + classroomID, {
    })
    .catch(err => console.log(err))
 
-   
-   function btncreatedeck() {
-      document.location = "createDeck?classroomID="+classroomID;
-   }
 
-   // Funtion get ข้อมูลมาแสดงในหน้า popup update
-   function btnupdatedeck(id) {
-      const inputShowClassroomID = document.getElementById("deckID");
-      inputShowClassroomID.value = id;
-      
-      fetch('/projectsenior/deck/getById/' + id, {
-         method: 'GET',
-         headers: {
-            'Content-Type': 'application/json'
-         },
+function btncreatedeck() {
+   document.location = "createDeck?classroomID=" + classroomID;
+}
+
+// Funtion get ข้อมูลมาแสดงในหน้า popup update
+function btnupdatedeck(id) {
+   const inputShowClassroomID = document.getElementById("deckID");
+   inputShowClassroomID.value = id;
+
+   fetch('/projectsenior/deck/getById/' + id, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+   })
+      .then(response => response.json())
+      .then(data => {
+         const namedeck = document.getElementById("updatenamedeck");
+         namedeck.value = data.deck_name;
       })
-         .then(response => response.json())
-         .then(data => {
-            const namedeck = document.getElementById("updatenamedeck");
-            namedeck.value = data.deck_name;
-         })
-         .catch(err => console.log(err))
-   }
+      .catch(err => console.log(err))
+}
 
-   // DELETE DECK
-   function btndeletedeck() {
-      const DeckID = document.getElementById("deckID").value;
-      fetch('/projectsenior/deck/' + DeckID, {
-         method: 'DELETE',
-      })
-         .then(response => response.json())
-         .then(() => {
-            alert("ลบห้องเรียนเรียบร้อย")
-            document.location = "deck?classroomID="+classroomID;
-         })
-         .catch(err => console.log(err))
-   }
-
-   // Funtion ให้ตัวแรกเป็นตัวใหญ่
-   function capitalizeFirstLetter(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-   }
-
-   // UPDATE DECK
-   const formupdatedeck = document.getElementById("updatedecks");
-   formupdatedeck.addEventListener("submit", (e) => {
-         e.preventDefault();
-         const DeckID = document.getElementById("deckID").value;
-         const getNameDeck = document.getElementById("updatenamedeck").value;
-         const namedeck = capitalizeFirstLetter(getNameDeck);
-         const teacherids = document.getElementById("updateteacherid").value;
-         const adminids = document.getElementById("updateadminid").value;
-
-
+// DELETE DECK
+function btndeletedeck() {
+   const DeckID = document.getElementById("deckID").value;
+   Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+      if (result.isConfirmed) {
          fetch('/projectsenior/deck/' + DeckID, {
-            method: 'put',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-               "deck_name": namedeck,
-               
-            })
+            method: 'DELETE',
          })
-            .then(response => console.log(response))
-            .catch(err => console.log(err))
+            .then(response => response.json())
             .then(() => {
-               alert("แก้ไขห้องเรียนเรียบร้อย")
-               document.location = "deck?classroomID="+classroomID;
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 900,
+               }).then(() => {
+                  document.location = "deck?classroomID=" + classroomID;
+               });
             })
-         document.getElementById("nameroom").value = "";
-         document.getElementById("description").value = "";
+            .catch(err => console.log(err))
+      }
+   });
+}
+
+// Funtion ให้ตัวแรกเป็นตัวใหญ่
+function capitalizeFirstLetter(string) {
+   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// UPDATE DECK
+const formupdatedeck = document.getElementById("updatedecks");
+formupdatedeck.addEventListener("submit", (e) => {
+   e.preventDefault();
+   const DeckID = document.getElementById("deckID").value;
+   const getNameDeck = document.getElementById("updatenamedeck").value;
+   const namedeck = capitalizeFirstLetter(getNameDeck);
+   const teacherids = document.getElementById("updateteacherid").value;
+   const adminids = document.getElementById("updateadminid").value;
+
+   fetch('/projectsenior/deck/' + DeckID, {
+      method: 'put',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+         "deck_name": namedeck,
+
       })
+   })
+      .then(response => console.log(response))
+      .then(() => {
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Update successfully"
+         }).then(() => {
+            document.location = "deck?classroomID=" + classroomID;
+         });
+      })
+      .catch(err => {
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "error",
+            title: err
+         }).then(() => {
+            document.location = "deck?classroomID=" + classroomID;
+         });
+      })
+   document.getElementById("nameroom").value = "";
+   document.getElementById("description").value = "";
+})

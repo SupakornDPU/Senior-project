@@ -42,7 +42,7 @@ fetch('/projectsenior/classroom', {
    })
    .catch(err => console.log(err))
 
-// POST DATA 
+// POST DATA Create Classroom
 const formadd = document.getElementById("createroom");
 formadd.addEventListener("submit", (e) => {
    e.preventDefault();
@@ -77,15 +77,24 @@ formadd.addEventListener("submit", (e) => {
          })
       })
       .then(() => {
-         swal.fire({
-            title: "Create Classroom Success",
-            icon: "success",
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
             showConfirmButton: false,
-            backdrop: `rgba(0, 0, 0, 0.5)`,
-            timer: 1000
+            timer: 1000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Create successfully"
          }).then(() => {
             window.location.href = "classroom"
-         })
+         });
       })
    document.getElementById("nameroom").value = "";
    document.getElementById("description").value = "";
@@ -145,15 +154,24 @@ formupdate.addEventListener("submit", (e) => {
          })
       })
       .then(() => {
-         swal.fire({
-            title: "Update Classroom Success",
-            icon: "success",
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
             showConfirmButton: false,
-            backdrop: `rgba(57, 57, 57, 0.5)`,
-            timer: 1000
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Update successfully"
          }).then(() => {
             window.location.href = "classroom"
-         })
+         });
       })
    document.getElementById("nameroom").value = "";
    document.getElementById("description").value = "";

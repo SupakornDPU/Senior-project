@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
 const Classroom = require('../models/Classroom');
+const Flashcard = require('../models/Flashcard');
 
 // สร้าง route สำหรับ get ข้อมูล teacher
 adminRouter.get('/teacher', (req, res, next) => {
@@ -71,6 +72,28 @@ adminRouter.delete('/classroom/:id', (req, res, next) => {
             { $pull: { classroom: new mongoose.Types.ObjectId(req.params.id) } }
          )
          res.json({ message: 'Classroom deleted' });
+      })
+      .catch((err) => {
+         next(err);
+      });
+});
+
+// route สำหรับ get ข้อมูล flashcard
+adminRouter.get('/flashcard', (req, res, next) => {
+   Flashcard.find()
+      .then((flashcards) => {
+         res.json(flashcards);
+      })
+      .catch((err) => {
+         next(err);
+      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+});
+
+// route สำหรับ delete ข้อมูล flashcard
+adminRouter.delete('/flashcard/:id', (req, res, next) => {
+   Flashcard.findByIdAndDelete(req.params.id)
+      .then(() => {
+         res.json({ message: 'Flashcard deleted' });
       })
       .catch((err) => {
          next(err);

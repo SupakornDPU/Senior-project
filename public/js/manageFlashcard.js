@@ -17,9 +17,25 @@ formImport.addEventListener('submit', (e) => {
       body: formData
    })
       .then(res => res.json())
-      .then(data => {
-         window.location = "manageFlashcard?deck=" + deckId;
-         // console.log(deckId);
+      .then(() => {
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Import successfully"
+         }).then(() => {
+            window.location = "manageFlashcard?deck=" + deckId;
+         });
       })
       .then(() => {
          console.log(data);
@@ -56,15 +72,29 @@ textareaForm.addEventListener('submit', (e) => {
       body: JSON.stringify({ data })
    })
       .then(response => response.json())
-      .then(result =>{
-         console.log(result);
+      .then(() =>{
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Create Flashcard successfully"
+         }).then(() => {
+            window.location = "manageFlashcard?deck=" + deckId;
+         });
 
          // Reset textarea values
          questions.forEach(question => (question.value = ''));
          answers.forEach(answer => (answer.value = ''));
-
-         window.location = "manageFlashcard?deck=" + deckId;
-         alert("Import Success");
       })
       .catch(err => console.log(err));
 });
