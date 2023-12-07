@@ -25,11 +25,14 @@ fetch('/projectsenior/deck/getById/' + deckID, {
         console.log(dataArray);
         if (dataArray.length > 0) {
             let i = 0;
-            let Item = dataArray[i];
+            const Item = dataArray[i];
             console.log(i);
+            // ให้แสดงข้อมูลในArray
+            console.log(Item);
 
             // หรือให้แสดงข้อมูลบนหน้าเว็บ
-            const decks = document.getElementById("innerhtmlflashcard")
+            const decks = document.getElementById("innerhtmlflashcard");
+            decks.innerHTML = '';
             const deckCol = document.createElement('div');
             deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
             deckCol.innerHTML = `
@@ -48,7 +51,7 @@ fetch('/projectsenior/deck/getById/' + deckID, {
                     <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px;"><ins> Question</ins></h1>
                 </div>
                 <pre class="d-flex justify-content-center text-start">
-                        <code id="question">${Item.card_question}</code>
+                    <code id="question" class="hljs">${Item.card_question}</code>
                 </pre>
             </div>
             <hr class="style">
@@ -58,32 +61,62 @@ fetch('/projectsenior/deck/getById/' + deckID, {
                 </div>
                 <div class="col-md-12">
                     <pre class="d-flex justify-content-center text-start">
-                        <code id="answer">${Item.card_answer}</code>
+                        <code id="answer" class="hljs">${Item.card_answer}</code>
                     </pre>
                 </div>
             </div>
             `;
             decks.appendChild(deckCol);
-            const answerBlock = document.getElementById("answer");
-            hljs.highlightElement(answerBlock);
-            const btnquestion = document.getElementById("btnnextquestion")
+
+            // Initialize Highlight.js
+            // การเตรียมการใช้งานไลบรารี Highlight.js โดยการกำหนดค่าพื้นฐานและตั้งค่าต่าง ๆ เพื่อให้ไลบรารีพร้อมที่จะทำการเน้นไวยากรณ์ของโค้ด (syntax highlighting) ในเว็บไซต์
+            hljs.highlightAll();
+
+            const btnquestion = document.getElementById("btnnextquestion");
             btnquestion.addEventListener("click", () => {
                 i++;
-                console.log(i);
-                Item = dataArray[i];
+                console.log('ค่านับใหม่:', i);
+                
+                const newItem = dataArray[i];
 
-                // Update the displayed question and answer
-                const questionBlock = document.getElementById("question");
-                questionBlock.innerText = Item.card_question;
-                answerBlock.innerText = Item.card_answer;
+                // Create new elements for the question and answer
+                // สร้างองค์ประกอบ (elements) ใหม่สำหรับคำถาม (question) และคำตอบ (answer) โดยใช้ document.createElement('p')
+                // ทั้งสององค์ประกอบถูกสร้างขึ้นและกำหนดค่าต่าง ๆ แล้ว แต่ยังไม่ได้ถูกเพิ่มเข้าไปใน DOM (Document Object Model) ของเว็บ
+                const newQuestionElement = document.createElement('p');
+                newQuestionElement.id = 'question';
+                newQuestionElement.className = 'font-poppin';
+                newQuestionElement.style = 'font-weight: 500;';
+                newQuestionElement.innerHTML = newItem.card_question;
 
-                // Highlight the code
-                answerBlock.dataset.highlighted = '';
-                hljs.highlightElement(answerBlock);
+                const newAnswerElement = document.createElement('p');
+                newAnswerElement.id = 'answer';
+                newAnswerElement.className = 'font-poppin';
+                newAnswerElement.style = 'font-weight: 500;padding-bottom: 20px;';
+                newAnswerElement.innerHTML = newItem.card_answer;
+
+                // ดึงข้อมูลขององค์ประกอบที่เป็นต้นแบบ (parent elements)"
+                // "Parent element" หมายถึง องค์ประกอบที่ต่ำกว่า (ติดต่อกันไป) ในลำดับของโครงสร้าง HTML หรือ DOM (Document Object Model)
+                const questionParent = document.getElementById('question').parentElement;
+                const answerParent = document.getElementById('answer').parentElement;
+
+                // Replace existing elements with the new ones
+                // การนี้มีไว้เพื่อทำการแทนที่ (replace) องค์ประกอบที่มี ID 'question' และ 'answer' ที่อยู่ใน DOM (Document Object Model) ของหน้าเว็บ ด้วยองค์ประกอบใหม่ที่ถูกสร้างขึ้นมา 
+                // หลังจากที่การแทนที่เสร็จสิ้น, องค์ประกอบใหม่จะถูกเพิ่มเข้าไปใน DOM และองค์ประกอบเดิมจะถูกลบทิ้ง.
+                questionParent.replaceChild(newQuestionElement, document.getElementById('question'));
+                answerParent.replaceChild(newAnswerElement, document.getElementById('answer'));
+
+                // Apply syntax highlighting to the new elements
+                // hljs.highlightElement() จากไลบรารี highlight.js เพื่อให้มีการเน้น (highlight) ไวยากรณ์ของโค้ด (syntax highlighting) บนองค์ประกอบ HTML ที่ถูกสร้างขึ้นใหม่สำหรับคำถามและคำตอบ.
+                hljs.highlightElement(newQuestionElement);
+                hljs.highlightElement(newAnswerElement);
             });
         } else {
             console.log('ไม่มีข้อมูลใน dataArray');
         }
+
+        // data.flashcard.forEach(each => {
+        //     console.log(each);
+
     })
     .catch(err => console.log(err));
 
