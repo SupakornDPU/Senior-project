@@ -84,14 +84,10 @@ fetch('/projectsenior/deck/getById/' + deckID, {
                 // ทั้งสององค์ประกอบถูกสร้างขึ้นและกำหนดค่าต่าง ๆ แล้ว แต่ยังไม่ได้ถูกเพิ่มเข้าไปใน DOM (Document Object Model) ของเว็บ
                 const newQuestionElement = document.createElement('p');
                 newQuestionElement.id = 'question';
-                newQuestionElement.className = 'font-poppin';
-                newQuestionElement.style = 'font-weight: 500;';
                 newQuestionElement.innerHTML = newItem.card_question;
 
                 const newAnswerElement = document.createElement('p');
                 newAnswerElement.id = 'answer';
-                newAnswerElement.className = 'font-poppin';
-                newAnswerElement.style = 'font-weight: 500;padding-bottom: 20px;';
                 newAnswerElement.innerHTML = newItem.card_answer;
 
                 // ดึงข้อมูลขององค์ประกอบที่เป็นต้นแบบ (parent elements)"
