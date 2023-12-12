@@ -30,7 +30,7 @@ fetch('/projectsenior/deck/' + classroomID, {
                      </div>
                      <div class="row mb-2">
                         <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
+                           <a class="btn btn-primary font-poppin btnManageFlashcard" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
                         </div>
                      </div>
                      <div class="row mb-2">
@@ -44,6 +44,32 @@ fetch('/projectsenior/deck/' + classroomID, {
          `;
          decks.appendChild(deckCol);
       });
+   })
+   .then(() => {
+      fetch(`/projectsenior/index`, {})
+         .then(response => response.json())
+         .then(data => {
+            console.log('Logged in user:', data.loggedIn);
+            console.log('Role:', data.role);
+            const menuClassroom = document.getElementById('sidebarClassroom');
+            const btnCreateDeck = document.getElementById('btnCreateDeck');
+            const btnManageFlashcard = document.querySelectorAll('.btnManageFlashcard');
+
+            if (data.loggedIn) {
+               if (data.role == 'Student') {
+                  btnCreateDeck.style.display = 'none';
+                  btnManageFlashcard.forEach(button => {
+                     button.style.display = 'none';
+                  });
+                  menuClassroom.href = 'classroom_student';
+               } else if (data.role == 'Teacher') {
+                  menuClassroom.href = 'classroom';
+               }
+            }
+         })
+         .catch((error) => {
+            console.error('Error:', error);
+         });
    })
    .catch(err => console.log(err))
 
