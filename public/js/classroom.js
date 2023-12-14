@@ -22,7 +22,7 @@ fetch('/projectsenior/classroom', {
          classroomCol.innerHTML = `
                   <div class="card shadow" id=${each._id}>
                      <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
+                     <div><h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5><p style = "font-size:0.8rem;font-weight: bold">Code "${each.classroom_code}"</p></div>
                         <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
                      </div>
                      <div class="card-body d-flex justify-content-between">
@@ -42,6 +42,10 @@ fetch('/projectsenior/classroom', {
    })
    .catch(err => console.log(err))
 
+const urlParams = new URLSearchParams(window.location.search);
+const userName = urlParams.get('name')
+console.log(userName);
+
 // POST DATA Create Classroom
 const formadd = document.getElementById("createroom");
 formadd.addEventListener("submit", (e) => {
@@ -49,7 +53,7 @@ formadd.addEventListener("submit", (e) => {
 
    const getNameRoom = document.getElementById("nameroom").value;
    const namerooms = getNameRoom.toUpperCase();
-   const creators = document.getElementById("creator").value;
+   // const creators = document.getElementById("creator").value;
    const descriptions = document.getElementById("description").value;
    const teacherids = document.getElementById("teacherid").value;
    const adminids = document.getElementById("adminid").value;
@@ -61,7 +65,7 @@ formadd.addEventListener("submit", (e) => {
       },
       body: JSON.stringify({
          "classroom_name": namerooms,
-         "classroom_creator": creators,
+         "classroom_creator": userName,
          "classroom_des": descriptions,
          "teacher_id": teacherids,
          "admin_id": adminids,

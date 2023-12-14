@@ -15,6 +15,7 @@ loginUserRouter.post('/', (req, res, next) => {
       if (user) {
          let cmp = bcrypt.compare(user_password, user.user_password).then((match) => {
             if (match) {
+               req.session.userName = user.user_firstname + ' ' + user.user_lastname;
                req.session.userId = user._id; // ใช้คำสั่งนี้เพื่อเก็บ session ของ user ที่ login เข้ามา โดยเก็บเป็น id ใส่ในตัวแปร userId
                req.session.userRole = 'Student'; // ใช้คำสั่งนี้เพื่อเก็บ session ของ user ที่ login เข้ามา โดยเก็บเป็น role ใส่ในตัวแปร userRole
                res.json({message: "Login Success"})
@@ -30,6 +31,7 @@ loginUserRouter.post('/', (req, res, next) => {
             if (user) {
                let cmp = bcrypt.compare(user_password, user.user_password).then((match) => {
                   if (match) {
+                     req.session.userName = user.user_firstname + ' ' + user.user_lastname;
                      req.session.userId = user._id; // ใช้คำสั่งนี้เพื่อเก็บ session ของ user ที่ login เข้ามา โดยเก็บเป็น id ใส่ในตัวแปร userId
                      req.session.userRole = 'Teacher'; // ใช้คำสั่งนี้เพื่อเก็บ session ของ user ที่ login เข้ามา โดยเก็บเป็น role ใส่ในตัวแปร userRole
                      res.json({message: "Login Success"})

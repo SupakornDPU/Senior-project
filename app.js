@@ -28,6 +28,7 @@ const app = express();
 // สร้างตัวแปร global เพื่อเก็บ session ของ user ที่ login เข้ามา
 global.loggedIn = null;
 global.role = null;
+global.userName = null;
 
 // ! Body parser middleware
 app.use(express.json());
@@ -38,6 +39,7 @@ app.use(expressSession({
       secret: "node secret"
 }))
 app.use("*", (req, res, next) => {
+      userName = req.session.userName;
       loggedIn = req.session.userId;
       role = req.session.userRole;
       next();
