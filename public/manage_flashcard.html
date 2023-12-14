@@ -286,7 +286,7 @@
                         <td>${item.card_answer}</td>
                         <td>${item.deck_id}</td>
                      <td>
-                           <a class="btn btn-danger btn-icon-split" onclick="deleteClassroom('${item._id}')">
+                           <a class="btn btn-danger btn-icon-split" onclick="deleteFlashcard('${item._id}')">
                               <span class="icon text-white-50">
                                  <i class="fas fa-trash"></i>
                               </span>
@@ -303,8 +303,8 @@
          })
 
       // DELETE TEACHER
-      function deleteTeacher(teacherId) {
-         fetch('/projectsenior/admin/teacher/' + teacherId, {
+      function deleteFlashcard(flashcardId) {
+         fetch('/projectsenior/admin/flashcard/' + flashcardId, {
             method: 'DELETE',
          })
             .then(response => response.json())
