@@ -4,7 +4,19 @@ const mongoose = require('mongoose');
 const Deck = require('../models/Deck');
 const Classroom = require('../models/Classroom');
 
-// สร้าง route สำหรับ get ข้อมูล deck ตาม Classroom_id ที่รับค่ามาจาก parameter
+// Get Router สำหรับค้นหา deck ทั้งหมด
+deckRouter.get('/', (req, res, next) => {
+   Deck.find()
+      .populate('flashcard')
+      .then((decks) => {
+         res.json(decks);
+      })
+      .catch((err) => {
+         next(err);
+      });
+});
+
+// Get Router สำหรับค้นหา Deck ตาม classroom_id
 deckRouter.get('/:classroom_id', (req, res, next) => {
    Deck.find({ classroom_id: req.params.classroom_id })
       .then((decks) => {
@@ -15,7 +27,19 @@ deckRouter.get('/:classroom_id', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// สร้าง route สำหรับ post ข้อมูล deck
+// Get Router สำหรับค้นหา deck ตาม id
+deckRouter.get('/getById/:id', (req, res, next) => {
+   Deck.findById(req.params.id)
+      .populate('flashcards') // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
+      .then((decks) => {
+         res.json(decks);
+      })
+      .catch((err) => {
+         next(err);
+      });
+});
+
+// Post Router สำหรับสร้าง Deck
 deckRouter.post('/', (req, res, next) => {
    Deck.create(req.body)
       .then((result) => {
@@ -26,41 +50,7 @@ deckRouter.post('/', (req, res, next) => {
       }); // ใช้ method save() เพื่อบันทึกข้อมูลลงใน database
 });
 
-// deckRouter.put('/:id', (req, res, next) => {
-//    Deck.find({ classroom_id: req.params.id })
-//       .then((decks) => {
-//          if (!decks || decks.length === 0) {
-//             return res.status(400).json({
-//                message: 'No matching decks found',
-//             });
-//          }
-//          // นำข้อมูลที่ได้จากการค้นหามาเก็บไว้ในตัวแปร deckIds โดยเก็บเป็น array ของ id เพื่อใช้ในการ update Classroom
-//          const deckIds = decks.map((deck) => deck._id);
-
-//          // นำข้อมูลที่อยู่ในตัวแปร deckIds มาเพิ่มเข้าไปใน Classroom ที่มี id ตรงกับ req.params.id
-//          Classroom.findByIdAndUpdate(req.params.id, { $addToSet: { deck: { $each: deckIds } } }, { new: true })
-//             .then((result) => {
-//                res.status(200).json(result);
-//             })
-//             .catch((err) => {
-//                next(err);
-//             });
-//       });
-// });
-
-// สร้าง route สำหรับ get ข้อมูล deck ตาม id
-deckRouter.get('/getById/:id', (req, res, next) => {
-   Deck.findById(req.params.id)
-      .populate('flashcards')
-      .then((decks) => {
-         res.json(decks);
-      })
-      .catch((err) => {
-         next(err);
-      }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
-});
-
-// สร้าง route สำหรับ delete ข้อมูล deck ตาม id
+// Delete Router สำหรับลบ deck ตาม id
 deckRouter.delete('/:id', (req, res, next) => {
    Deck.findByIdAndRemove(req.params.id, req.body)
       .then(() => {
@@ -68,10 +58,10 @@ deckRouter.delete('/:id', (req, res, next) => {
       })
       .catch((err) => {
          next(err);
-      }); // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
+      }); 
 });
 
-// สร้าง route สำหรับ put ข้อมูล deck ตาม id
+// Put Router สำหรับอัพเดทข้อมูล deck
 deckRouter.put('/:id', (req, res, next) => {
    Deck.findByIdAndUpdate(req.params.id, req.body)
       .then(() => {
@@ -79,19 +69,7 @@ deckRouter.put('/:id', (req, res, next) => {
       })
       .catch((err) => {
          next(err);
-      }); // ใช้ method findByIdAndUpdate() เพื่อค้นหาข้อมูลตาม id และทำการอัพเดทข้อมูล
+      });
 });
-
-deckRouter.get('/', (req, res, next) => {
-   Deck.find()
-      .populate('flashcard')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
-      .then((decks) => {
-         res.json(decks);
-      })
-      .catch((err) => {
-         next(err);
-      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
-});
-
 
 module.exports = deckRouter;

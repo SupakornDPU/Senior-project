@@ -6,7 +6,7 @@ const Student = require('../models/Student');
 const Classroom = require('../models/Classroom');
 const Flashcard = require('../models/Flashcard');
 
-// สร้าง route สำหรับ get ข้อมูล teacher
+// Get Router สำหรับค้นหาอาจารย์ทั้งหมด
 adminRouter.get('/teacher', (req, res, next) => {
    Teacher.find()
       .then((teachers) => {
@@ -17,7 +17,7 @@ adminRouter.get('/teacher', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// route สำหรับ delete ข้อมูล teacher
+// Delete Router สำหรับลบอาจารย์
 adminRouter.delete('/teacher/:id', (req, res, next) => {
    Teacher.findByIdAndDelete(req.params.id)
       .then(() => {
@@ -28,7 +28,7 @@ adminRouter.delete('/teacher/:id', (req, res, next) => {
       });
 });
 
-// สร้าง route สำหรับ get ข้อมูล student
+// Get Router สำหรับค้นหานักเรียนทั้งหมด
 adminRouter.get('/student', (req, res, next) => {
    Student.find()
       .then((students) => {
@@ -39,7 +39,7 @@ adminRouter.get('/student', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// route สำหรับ delete ข้อมูล student
+// Delete Router สำหรับลบนักเรียน
 adminRouter.delete('/student/:id', (req, res, next) => {
    Student.findByIdAndDelete(req.params.id)
       .then(() => {
@@ -50,7 +50,7 @@ adminRouter.delete('/student/:id', (req, res, next) => {
       });
 });
 
-// สร้าง route สำหรับ get ข้อมูล classroom
+// Get Router สำหรับค้นหาห้องเรียนทั้งหมด
 adminRouter.get('/classroom', (req, res, next) => {
    Classroom.find()
       .then((classrooms) => {
@@ -61,7 +61,7 @@ adminRouter.get('/classroom', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// route สำหรับ delete ข้อมูล classroom
+// Delete Router สำหรับลบห้องเรียน
 adminRouter.delete('/classroom/:id', (req, res, next) => {
    Classroom.findByIdAndDelete(req.params.id)
       .then(() => {
@@ -78,7 +78,7 @@ adminRouter.delete('/classroom/:id', (req, res, next) => {
       });
 });
 
-// route สำหรับ get ข้อมูล flashcard
+// Get Router สำหรับค้นหาข้อมูล flashcard ทั้งหมด
 adminRouter.get('/flashcard', (req, res, next) => {
    Flashcard.find()
       .then((flashcards) => {
@@ -89,7 +89,7 @@ adminRouter.get('/flashcard', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// route สำหรับ delete ข้อมูล flashcard
+// Delete Router สำหรับลบข้อมูล flashcard
 adminRouter.delete('/flashcard/:id', (req, res, next) => {
    Flashcard.findByIdAndDelete(req.params.id)
       .then(() => {

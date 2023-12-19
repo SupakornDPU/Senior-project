@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Student = require('../models/Student');
 const Classroom = require('../models/Classroom');
 
-// สร้าง route สำหรับ get ข้อมูล student
+// Get Router สำหรับค้นหานักเรียนทั้งหมด
 studentRouter.get('/', (req, res, next) => {
    Student.find()
       .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
@@ -13,73 +13,50 @@ studentRouter.get('/', (req, res, next) => {
       })
       .catch((err) => {
          next(err);
-      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+      });
 });
 
-// PUT Classroom_id โดยอิงจาก id ของ Student
-// studentRouter.put('/:id', (req, res, next) => {
-//    const { classroom } = req.body;
-//    Classroom.findOne({ classroom_code: classroom }).then((classroom) => {
-//       if (!classroom) {
-//          return res.status(400).json({
-//             message: 'Classroom not found',
-//          });
-//       } else if (classroom) {
-//          Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id }}, { new: true })
-//             .then((result) => {
-//                res.status(200).json(result);
-//             })
-//             .catch((err) => {
-//                next(err);
-//             });
-//       }
-//    });
-// });
-
-// // สร้าง route สำหรับ get ข้อมูล student ตาม id
-// studentRouter.get('/:id', (req, res, next) => {
-//    Student.findById(req.params.id)
-//       .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
-//       .then((students) => {
-//          res.json(students);
-//       })
-//       .catch((err) => {
-//          next(err);
-//       }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
-// });
-
+// Post Router สำหรับสร้างนักเรียน
 studentRouter.route('/:id')
    .get((req, res, next) => {
       Student.findById(req.params.id)
-         .populate('classroom')  // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
+         .populate('classroom')
          .then((students) => {
             res.json(students);
          })
          .catch((err) => {
             next(err);
-         }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
+         });
    })
-   // route สำหรับ put ข้อมูลเข้าไปใน Collection student โดยที่จะนำรหัสของ classroom ไปเก็บใน Array classroom ที่อยุ่ใน Collection student
+
+   // Put Router สำหรับอัพเดทข้อมูลนักเรียน
    .put((req, res, next) => {
+      const { classroom } = req.body;  // classroom คือรหัสห้องเรียนที่ส่งมาจากฝั่ง Client
 
-      // classroom คือรหัสห้องเรียนที่ส่งมาจากฝั่ง Client
-      const { classroom } = req.body;
-
-      // ค้นหาว่ามีห้องเรียนที่มีรหัสตรงกับ classroom code ที่ส่งมาหรือไม่
-      Classroom.findOne({ classroom_code: classroom }).then((classroom) => {
+      Classroom.findOne({ classroom_code: classroom }).then((classroom) => { // ค้นหาว่ามีห้องเรียนที่มีรหัสตรงกับ classroom code ที่ส่งมาหรือไม่
          if (!classroom) {
             return res.status(400).json({
-               message: 'Classroom not found',
+               message: 'ไม่พบห้องเรียนที่คุณต้องการเข้าร่วม',
             });
          } else if (classroom) { // ถ้ามีรหัสที่ตรงกัน ให้ทำการอัพเดทข้อมูลลงใน Collection student โดยอัพเดทรหัสห้องเรียนลงใน Array classroom
-            Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id }}, { new: true })
-               .then((result) => {
-                  res.status(200).json(result);
-               })
-               .catch((err) => {
-                  next(err);
-               });
+            Student.findOne({ classroom: classroom }).then((student) => {
+               if (student) {
+                  return res.status(400).json({
+                     message: 'คุณได้เข้าร่วมห้องเรียนนี้แล้ว',
+                  });
+               } else {
+                  Student.findByIdAndUpdate(req.params.id, { $addToSet: { classroom: classroom._id } }, { new: true })
+                     .then((result) => {
+                        res.status(200).json(result);
+                     })
+                     .catch((err) => {
+                        next(err);
+                     });
+               }
+            })
          }
+      }).catch((err) => {
+         next(err);
       });
    })
 

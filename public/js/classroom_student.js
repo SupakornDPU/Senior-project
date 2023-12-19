@@ -1,27 +1,27 @@
-      // GET DATA USER
-      fetch(`/projectsenior/index`, {})
+// GET DATA USER
+fetch(`/projectsenior/index`, {})
+   .then(response => response.json())
+   .then(data => {
+      const a = document.getElementById("studentId");
+      a.value = data.loggedIn
+      console.log('Logged in user:', data.loggedIn);
+      console.log('Role:', data.role);
+
+      // GET DATA CLASSROOM WITH USERID
+      // ต้องนำมาใส่ไว้ใน fetch ของ user เพราะว่าต้องการให้ทำงานหลังจากที่ user ทำงานเสร็จแล้ว
+      fetch('/projectsenior/student/' + data.loggedIn, {
+         method: 'get',
+         headers: {
+            'Content-Type': 'application/json'
+         },
+      })
          .then(response => response.json())
          .then(data => {
-            const a = document.getElementById("studentId");
-            a.value = data.loggedIn
-            console.log('Logged in user:', data.loggedIn);
-            console.log('Role:', data.role);
-
-            // GET DATA CLASSROOM WITH USERID
-            // ต้องนำมาใส่ไว้ใน fetch ของ user เพราะว่าต้องการให้ทำงานหลังจากที่ user ทำงานเสร็จแล้ว
-            fetch('/projectsenior/student/' + data.loggedIn, {
-               method: 'get',
-               headers: {
-                  'Content-Type': 'application/json'
-               },
-            })
-               .then(response => response.json())
-               .then(data => {
-                  data.classroom.forEach(each => {
-                     console.log(each);
-                     const classroomCol = document.createElement('div');
-                     classroomCol.className = 'col-lg-3 col-md-12 my-2';
-                     classroomCol.innerHTML = `
+            data.classroom.forEach(each => {
+               console.log(each);
+               const classroomCol = document.createElement('div');
+               classroomCol.className = 'col-lg-3 col-md-12 my-2';
+               classroomCol.innerHTML = `
                      <div class="card" id=${each._id}>
                         <div class="card-header d-flex justify-content-between align-items-center">
                            <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
@@ -37,36 +37,50 @@
                            </div>
                         </div>
                      </div>`;
-                     cardClassroom.appendChild(classroomCol);
-                  })
-               })
-               .catch(err => console.log(err));
-         })
-         .catch((error) => {
-            console.error('error:', error);
-         });
-
-      // PUT DATA CLASSROOM WITH USERID
-      // การ Fetch api เส้นนี้สามารถใช้งานได้เนื่องจากเป็นการทำงานหลังจาก ที่ API เส้นแรกทำงานเสร็จแล้ว
-      const joinclass = document.getElementById("joinroom");
-      joinclass.addEventListener("submit", (e) => {
-         e.preventDefault();
-         const studentId = document.getElementById("studentId").value;
-         const roomcodes = document.getElementById("roomcode").value;
-
-         fetch('/projectsenior/student/' + studentId, {
-            method: 'put',
-            headers: {
-               'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-               "classroom": roomcodes,
+               cardClassroom.appendChild(classroomCol);
             })
          })
-            .then(response => console.log(response))
-            .then(() => {
-               alert("เพิ่มห้องเรียนเรียบร้อย")
-               window.location.href = " classroom_student "
-            })
-            .catch(err => console.log(err))
+         .catch(err => console.log(err));
+   })
+   .catch((error) => {
+      console.error('error:', error);
+   });
+
+// PUT DATA CLASSROOM WITH USERID
+// การ Fetch api เส้นนี้สามารถใช้งานได้เนื่องจากเป็นการทำงานหลังจาก ที่ API เส้นแรกทำงานเสร็จแล้ว
+const joinclass = document.getElementById("joinroom");
+joinclass.addEventListener("submit", (e) => {
+   e.preventDefault();
+   const studentId = document.getElementById("studentId").value;
+   const roomcodes = document.getElementById("roomcode").value;
+
+   fetch('/projectsenior/student/' + studentId, {
+      method: 'put',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+         "classroom": roomcodes,
       })
+   })
+      .then(response => {
+         if (!response.ok) {
+            return response.json().then(data => {
+               throw new Error(data.message);
+            });
+         }
+         return response.json();
+      })
+      .then(() => {
+         alert("เพิ่มห้องเรียนเรียบร้อย")
+         window.location.href = " classroom_student "
+      })
+      .catch(err => {
+         swal.fire({
+            title: err,
+            icon: "error",
+            showConfirmButton: false,
+            timer: 1000
+         })
+      })
+})

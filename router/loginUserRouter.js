@@ -5,7 +5,7 @@ const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 const bcrypt = require('bcrypt');
 
-// เช็ค password ว่าตรงกับที่เราเข้าสู่ระบบมาหรือไม่
+// Post Router สำหรับ login compare password
 loginUserRouter.post('/', (req, res, next) => {
    const {user_email, user_password, user_role} = req.body;
 

@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 
-// สร้าง route สำหรับ get ข้อมูล teacher และ student
+// Get Router สำหรับค้นหาอาจารย์ทั้งหมด
 registerRouter.get('/', (req, res, next) => {
    Teacher.find()
       .then(teachers => {
@@ -21,7 +21,7 @@ registerRouter.get('/', (req, res, next) => {
       });
 });
 
-// สร้าง route สำหรับ post ข้อมูล teacher และ student
+// Post Router สำหรับสมัครสมาชิก
 registerRouter.post('/', (req, res, next) => {
    const { user_role } = req.body;
    Teacher.findOne({ user_email: req.body.user_email }).then((teacher) => {

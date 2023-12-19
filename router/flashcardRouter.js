@@ -7,6 +7,7 @@ const excelToJson = require('convert-excel-to-json');
 const Flashcard = require('../models/Flashcard');
 const Deck = require('../models/Deck');
 
+// Get Router สำหรับค้นหาข้อมูล FlashCard ทั้งหมด
 flashcardRouter.get('/', (req, res, next) => {
    Flashcard.find()
       .then((flashcards) => {
@@ -14,12 +15,12 @@ flashcardRouter.get('/', (req, res, next) => {
       })
       .catch((err) => {
          next(err);
-      }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+      });
 });
 
 const upload = multer({ dest: "data/" }); // เป็นการบอกว่าไฟล์ที่อัพโหลดจะถูกเก็บไว้ที่โฟลเดอร์ไหน
 
-// Import excel file
+// Post Router สำหรับสร้าง FlashCard และอัปโหลดไฟล์ excel
 flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next) => {
    console.log(req.file);
    try {
@@ -73,6 +74,7 @@ flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next
    }
 });
 
+// Post Router สำหรับสร้าง FlashCard สำหรับ form ที่ส่งมาจาก Client
 flashcardRouter.post('/:deckId', async (req, res) => {
    const data = req.body.data;
    const deckId = req.params.deckId;

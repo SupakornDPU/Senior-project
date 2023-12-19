@@ -5,7 +5,7 @@ const Classroom = require('../models/Classroom');
 const Student = require('../models/Student');
 const Deck = require('../models/Deck');
 
-// สร้าง route สำหรับ get ข้อมูล classroom
+// Get Router สำหรับค้นหาห้องเรียนทั้งหมด
 classroomRouter.get('/', (req, res, next) => {
    Classroom.find()
       .then((classrooms) => {
@@ -45,7 +45,7 @@ const generateUniqueCode = async () => {
    return code;
 };
 
-// สร้าง route สำหรับ post ข้อมูล classroom พร้อมกับสร้างรหัสสุ่ม
+// Post Router สำหรับสร้างห้องเรียน
 classroomRouter.post('/', (req, res, next) => {
    req.body.classroom_code = generateRandomCode();
    Classroom.create(req.body)
@@ -57,7 +57,7 @@ classroomRouter.post('/', (req, res, next) => {
       }); // ใช้ method create() เพื่อสร้างข้อมูล และรับข้อมูลผ่าน req.body ที่ส่งมา
 });
 
-// สร้าง route สำหรับ get ข้อมูล classroom ตาม id
+// Get Router สำหรับค้นหาห้องเรียนตาม id
 classroomRouter.get('/:id', (req, res, next) => {
    Classroom.findById(req.params.id)
       .then((classroom) => {
@@ -68,7 +68,7 @@ classroomRouter.get('/:id', (req, res, next) => {
       }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
 });
 
-// สร้าง route สำหรับ put ข้อมูล classroom ตาม id
+// Put Router สำหรับอัพเดทข้อมูลห้องเรียน
 classroomRouter.put('/:id', (req, res, next) => {
    Classroom.findByIdAndUpdate(req.params.id, req.body)
       .then(() => {
@@ -79,31 +79,20 @@ classroomRouter.put('/:id', (req, res, next) => {
       }); // ใช้ method findByIdAndUpdate() เพื่อค้นหาข้อมูลตาม id และทำการอัพเดทข้อมูล
 });
 
-// สร้าง route สำหรับ delete ข้อมูล classroom ตาม id
-classroomRouter.delete('/:id', (req, res, next) => {
-   const ids = req.params.id
-   Classroom.findByIdAndRemove(req.params.id, req.body) // ใช้ method findByIdAndRemove() เพื่อค้นหาข้อมูลตาม id และทำการลบข้อมูล
-      .then(() => {
-         // ลบข้อมูลของห้องเรียนที่เกี่ยวข้องออกจาก collection student โดยใช้ method updateMany() ใช้สำหรับอัพเดทหลายๆ ข้อมูลใน collection
-         // และใช้ method $pull ในการลบข้อมูลออกจาก array โดยจะหา classroom ที่มี id ตรงกับ req.params.id แล้วลบออก
-         Student.updateMany(
-            { classroom: new mongoose.Types.ObjectId(req.params.id) }, // 
-            { $pull: { classroom: new mongoose.Types.ObjectId(req.params.id) } }
-         )
-      })
-      .then(() => {
-         // ลบข้อมูลของห้องเรียนที่เกี่ยวข้องออกจาก collection deck โดยใช้ method deleteMany() ใช้สำหรับลบหลายๆ ข้อมูลใน collection
-         Deck.deleteMany({ classroom_id: {$in: req.params.id} })
-         .then(() => {
-            res.json({ message: 'Deleted' });
-         })
-         .catch((err) => {
-            next(err);
-         });
-      })
-      .catch((err) => {
-         next(err);
-      });
+// Delete Router สำหรับลบข้อมูลห้องเรียน
+classroomRouter.delete('/:id', async (req, res, next) => {  // async คือการบอกว่าเป็น function ที่มีการทำงานแบบ asynchronous คือ มีการทำงานที่ไม่จำเป็นต้องรอให้เสร็จก่อน
+   try {
+      const id = req.params.id;
+      await Classroom.findByIdAndRemove(id); // await คือการบอกว่าให้รอให้ function ที่เราเรียกใช้เสร็จก่อน แล้วค่อยทำต่อ
+      await Student.updateMany(
+         { classroom: id },
+         { $pull: { classroom: id } }
+      );
+      await Deck.deleteMany({ classroom_id: id });
+      res.json({ message: 'Deleted' });
+   } catch (err) {
+      next(err);
+   }
 });
 
 module.exports = classroomRouter;

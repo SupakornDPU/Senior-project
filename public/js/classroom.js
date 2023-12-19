@@ -1,3 +1,7 @@
+const urlParams = new URLSearchParams(window.location.search);
+const userName = urlParams.get('name')
+console.log(userName);
+
 // BTN CREATE CLASSROOM CLEAR DATA
 const btnCreateClassroom = document.getElementById("btnCreateClassroom");
 btnCreateClassroom.addEventListener("click", function () {
@@ -41,10 +45,6 @@ fetch('/projectsenior/classroom', {
       });
    })
    .catch(err => console.log(err))
-
-const urlParams = new URLSearchParams(window.location.search);
-const userName = urlParams.get('name')
-console.log(userName);
 
 // POST DATA Create Classroom
 const formadd = document.getElementById("createroom");
@@ -97,7 +97,7 @@ formadd.addEventListener("submit", (e) => {
             icon: "success",
             title: "Create successfully"
          }).then(() => {
-            window.location.href = "classroom"
+            window.location.href = "classroom?name="+userName;
          });
       })
    document.getElementById("nameroom").value = "";
@@ -174,7 +174,7 @@ formupdate.addEventListener("submit", (e) => {
             icon: "success",
             title: "Update successfully"
          }).then(() => {
-            window.location.href = "classroom"
+            window.location.href = "classroom?name="+userName
          });
       })
    document.getElementById("nameroom").value = "";
@@ -205,7 +205,7 @@ function btndeletedata() {
                   showConfirmButton: false,
                   timer: 900,
                }).then(() => {
-                  window.location.href = "classroom";
+                  window.location.href = "classroom?name="+userName;
                });
             }).catch((err) => console.log(err));
       }
