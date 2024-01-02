@@ -60,12 +60,12 @@ studentRouter.route('/:id')
       });
    })
 
-   // Delete Router สำหรับลบ Classroom ตาม id
+    // Delete Router สำหรับลบ Classroom ตาม id
    .delete((req, res, next) => {
-      student.findById(req.params.id)
+   Student.findById(req.params.id)
       .then((student) => {
          if (student) {
-            Student.findByIdAndUpdate(req.params.id, { $pull: { classroom: req.body.classroom } }, { new: true })
+            Student.findByIdAndUpdate(req.params.id, { $pull: { classroom: req.body.classroomId } }, { new: true })
                .then((result) => {
                   res.status(200).json(result);
                })
