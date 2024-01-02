@@ -60,4 +60,27 @@ studentRouter.route('/:id')
       });
    })
 
+    // Delete Router สำหรับลบ Classroom ตาม id
+   .delete((req, res, next) => {
+   Student.findById(req.params.id)
+      .then((student) => {
+         if (student) {
+            Student.findByIdAndUpdate(req.params.id, { $pull: { classroom: req.body.classroomId } }, { new: true })
+               .then((result) => {
+                  res.status(200).json(result);
+               })
+               .catch((err) => {
+                  next(err);
+               });
+         } else {
+            res.status(404).json({
+               message: 'ไม่พบข้อมูลนักเรียนที่ต้องการลบ',
+            });
+         }
+      })
+      .catch((err) => {
+         next(err);
+      });
+   });
+
 module.exports = studentRouter;

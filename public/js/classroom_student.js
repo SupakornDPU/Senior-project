@@ -24,9 +24,10 @@ fetch(`/projectsenior/index`, {})
                classroomCol.innerHTML = `
                      <div class="card" id=${each._id}>
                         <div class="card-header d-flex justify-content-between align-items-center">
-                           <h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5>
+                        <div><h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5></div>
+                        <a id="btn_std_delete_class" onclick="btn_std_delete_class('${each._id}')" ><i class="fa-solid fa-x"></i></a>
                         </div>
-                        <div class="card-body d-flex justify-content-between">
+                        <div class="card-body d-flex justify-content-between"> 
                            <div class="row card-text">
                               <div class="col-md-12">
                                  <p class="card-text">${each.classroom_des}</p>
@@ -84,3 +85,41 @@ joinclass.addEventListener("submit", (e) => {
          })
       })
 })
+
+// DELETE DATA
+function btn_std_delete_class(id) {
+   const studentId = document.getElementById("studentId").value;
+   const classroomId = id ;
+   console.log(id)
+   Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+      console.log(id)
+      if (result.isConfirmed) {
+         fetch("/projectsenior/student/" + studentId, {
+            method: "DELETE",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ classroomId: classroomId }),
+         })
+            .then((response) => response.json())
+            .then(() => {
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 900,
+               }).then(() => {
+                 location.reload();
+               });
+            }).catch((err) => console.log(err));
+      }
+   });
+}
