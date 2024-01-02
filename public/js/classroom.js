@@ -73,12 +73,12 @@ formadd.addEventListener("submit", (e) => {
    })
       .then(response => console.log(response))
       .catch(err => {
-         swal.fire({
-            title: err,
-            icon: "error",
-            showConfirmButton: false,
-            timer: 1000
-         })
+      swal.fire({
+         title: err,
+         icon: "error",
+         showConfirmButton: false,
+         timer: 1000
+      })
       })
       .then(() => {
          // SweetAlert

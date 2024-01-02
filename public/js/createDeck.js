@@ -22,7 +22,7 @@ createdeck.addEventListener("submit", (e) => {
          "classroom_id": classroomID
       })
    })
-      .then(response => console.log(response))
+   .then(response => console.log(response))
       .then(() => {
          // SweetAlert
          const Toast = Swal.mixin({

@@ -7,7 +7,6 @@ const TeacherSchema = new mongoose.Schema({
    user_lastname: String,
    user_password: String,
    user_role: String,
-   user_phone: String,
 })
 
 TeacherSchema.pre('save', function (next) {

@@ -168,10 +168,57 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <!-- Form add Teacher -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Manage Teacher</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="teacherForm">
+                                <div class="row mb-4 d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-1">
+                                        <span for="teacherEmail" class="col-form-label">Email</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="email" class="form-control" id="teacherEmail" placeholder="Email">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span for="teacherPassword" class="col-form-label">Password</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="password" class="form-control" id="teacherPassword"
+                                            placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-1">
+                                        <span for="teacherFirstname" class="col-form-label">Firstname</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="teacherFirstname"
+                                            placeholder="Firstname">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span for="teacherLastname" class="col-form-label">Lastname</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="teacherLastname"
+                                            placeholder="Lastname">
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Teachers Table</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Teachers Data</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -267,6 +314,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         // API Get data
         fetch('/projectsenior/admin/teacher', {
@@ -315,15 +365,109 @@
 
         // DELETE TEACHER
         function deleteTeacher(teacherId) {
-            fetch('/projectsenior/admin/teacher/' + teacherId, {
-                method: 'DELETE',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
+            Swal.fire({
+                title: "ต้องการจะลบใช่หรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ใช่, ลบรายการ!",
+                cancelButtonText: "ยกเลิก",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/projectsenior/admin/teacher/' + teacherId, {
+                        method: 'DELETE',
+                    }).then(response => response.json())
+                        .then(() => {
+                            const ToastTrue = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            ToastTrue.fire({
+                                icon: "success",
+                                title: "ลบข้อมูลสำเร็จแล้ว"
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                }
+            });
+        }
+
+        // ADD TEACHER
+        const teacherForm = document.getElementById('teacherForm');
+        teacherForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const teacherEmail = document.getElementById('teacherEmail').value;
+            const teacherPassword = document.getElementById('teacherPassword').value;
+            const teacherFirstname = document.getElementById('teacherFirstname').value;
+            const teacherLastname = document.getElementById('teacherLastname').value;
+
+            fetch(`/projectsenior/admin/teacher/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "user_email": teacherEmail,
+                    "user_password": teacherPassword,
+                    "user_firstname": teacherFirstname,
+                    "user_lastname": teacherLastname,
+                    "user_role": 'Teacher',
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.message);
+                    });
+                }
+                return response.json();
+            }).then(() => {
+                // SweetAlert
+                const ToastTrue = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                ToastTrue.fire({
+                    icon: "success",
+                    title: "เพิ่มข้อมูลสำเร็จแล้ว"
+                }).then(() => {
                     location.reload();
                 })
-        }
+            }).catch(err => {
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: err
+                })
+            });
+        })
     </script>
 
 </body>

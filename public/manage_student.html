@@ -168,6 +168,53 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    <!-- Form add Student -->
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Manage Student</h6>
+                        </div>
+                        <div class="card-body">
+                            <form id="studentForm">
+                                <div class="row mb-4 d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-1">
+                                        <span for="studentEmail" class="col-form-label">Email</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="email" class="form-control" id="studentEmail" placeholder="Email">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span for="studentPassword" class="col-form-label">Password</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="password" class="form-control" id="studentPassword"
+                                            placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-1">
+                                        <span for="studentFirstname" class="col-form-label">Firstname</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="studentFirstname"
+                                            placeholder="Firstname">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <span for="studentLastname" class="col-form-label">Lastname</span>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="studentLastname"
+                                            placeholder="Lastname">
+                                    </div>
+                                </div>
+                                <div class="row d-flex justify-content-center align-items-center text-center">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -265,6 +312,9 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <!-- Sweetalert -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <script>
         // GET STUDENT
         fetch('/projectsenior/admin/student', {
@@ -305,15 +355,110 @@
 
         // DELETE STUDENT
         function deleteStudent(studentId) {
-            fetch('/projectsenior/admin/student/' + studentId, {
-                method: 'DELETE',
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data);
+            Swal.fire({
+                title: "ต้องการจะลบใช่หรือไม่?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "ใช่, ลบรายการ!",
+                cancelButtonText: "ยกเลิก",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch('/projectsenior/admin/student/' + studentId, {
+                        method: 'DELETE',
+                    })
+                        .then(response => response.json())
+                        .then(() => {
+                            const ToastTrue = Swal.mixin({
+                                toast: true,
+                                position: "top-end",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.onmouseenter = Swal.stopTimer;
+                                    toast.onmouseleave = Swal.resumeTimer;
+                                }
+                            });
+                            ToastTrue.fire({
+                                icon: "success",
+                                title: "ลบข้อมูลสำเร็จแล้ว"
+                            }).then(() => {
+                                location.reload();
+                            });
+                        })
+                }
+            });
+        }
+
+        // ADD STUDENT
+        const studentForm = document.getElementById('studentForm');
+        studentForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const studentEmail = document.getElementById('studentEmail').value;
+            const studentPassword = document.getElementById('studentPassword').value;
+            const studentFirstname = document.getElementById('studentFirstname').value;
+            const studentLastname = document.getElementById('studentLastname').value;
+
+            fetch(`/projectsenior/admin/student/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "user_email": studentEmail,
+                    "user_password": studentPassword,
+                    "user_firstname": studentFirstname,
+                    "user_lastname": studentLastname,
+                    "user_role": 'Student',
+                })
+            }).then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        throw new Error(data.message);
+                    });
+                }
+                return response.json();
+            }).then(() => {
+                // SweetAlert
+                const ToastTrue = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 1500,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                ToastTrue.fire({
+                    icon: "success",
+                    title: "เพิ่มข้อมูลสำเร็จแล้ว"
+                }).then(() => {
                     location.reload();
                 })
-        }
+            }).catch(err => {
+
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: err
+                })
+            });
+        })
     </script>
 
 </body>

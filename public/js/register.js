@@ -67,7 +67,7 @@ registerForm.addEventListener('submit', (e) => {
         let roleSelect = document.getElementById("roleForm");
         const user_role = roleSelect.value;
 
-        fetch(`/projectsenior/register`, {
+        fetch(`/teacher/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

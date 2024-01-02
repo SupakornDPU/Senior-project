@@ -47,7 +47,10 @@ registerRouter.post('/', (req, res, next) => {
                   }); // ใช้ method create() เพื่อสร้างข้อมูล และรับข้อมูลผ่าน req.body ที่ส่งมา
             }
          }
-      });
+      })
+      .catch((err) => {
+         next(err);
+      })
    })
 })
 

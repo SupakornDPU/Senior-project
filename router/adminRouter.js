@@ -21,11 +21,29 @@ adminRouter.get('/teacher', (req, res, next) => {
 adminRouter.delete('/teacher/:id', (req, res, next) => {
    Teacher.findByIdAndDelete(req.params.id)
       .then(() => {
-         res.json({ message: 'Teacher deleted' });
+         res.json({ message: 'ลบอาจารย์เสร็จสิ้น' });
       })
       .catch((err) => {
          next(err);
       });
+});
+
+// Post Router สำหรับเพิ่ม Teacher
+adminRouter.post('/teacher/create', (req, res, next) => {
+   Teacher.findOne({ user_email: req.body.user_email })
+   .then((teacher) => {
+      if (teacher) {
+         return res.status(400).json({ message: "อีเมล์นี้มีผู้ใช้งานแล้ว" });
+      } else {
+         Teacher.create(req.body)
+            .then((post) => {
+               res.json(post);
+            })
+            .catch((err) => {
+               next(err);
+            });
+      }
+   })
 });
 
 // Get Router สำหรับค้นหานักเรียนทั้งหมด
@@ -43,11 +61,32 @@ adminRouter.get('/student', (req, res, next) => {
 adminRouter.delete('/student/:id', (req, res, next) => {
    Student.findByIdAndDelete(req.params.id)
       .then(() => {
-         res.json({ message: 'Student deleted' });
+         res.json({ message: 'ลบนักเรียนเสร็จสิ้น' });
       })
       .catch((err) => {
          next(err);
       });
+});
+
+// Post Router สำหรับเพิ่ม Student
+adminRouter.post('/student/create', (req, res, next) => {
+   Student.findOne({ user_email: req.body.user_email })
+   .then((student) => {
+      if (student) {
+         return res.status(400).json({ message: "อีเมล์นี้มีผู้ใช้งานแล้ว" });
+      } else {
+         Student.create(req.body)
+            .then((post) => {
+               res.json(post);
+            })
+            .catch((err) => {
+               next(err);
+            });
+      }
+   })
+   .catch((err) => {
+      next(err);
+   });
 });
 
 // Get Router สำหรับค้นหาห้องเรียนทั้งหมด
@@ -71,7 +110,7 @@ adminRouter.delete('/classroom/:id', (req, res, next) => {
             { classroom: new mongoose.Types.ObjectId(req.params.id) }, // 
             { $pull: { classroom: new mongoose.Types.ObjectId(req.params.id) } }
          )
-         res.json({ message: 'Classroom deleted' });
+         res.json({ message: 'ลบห้องเรียนเสร็จสิ้น' });
       })
       .catch((err) => {
          next(err);
@@ -93,7 +132,7 @@ adminRouter.get('/flashcard', (req, res, next) => {
 adminRouter.delete('/flashcard/:id', (req, res, next) => {
    Flashcard.findByIdAndDelete(req.params.id)
       .then(() => {
-         res.json({ message: 'Flashcard deleted' });
+         res.json({ message: 'ลบแฟลชการ์ดเสร็จสิ้น' });
       })
       .catch((err) => {
          next(err);
