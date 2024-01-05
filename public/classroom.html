@@ -2,160 +2,160 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8" />
-   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Class room</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class room</title>
 
-   <!-- Font Awesome -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-   <!-- Google Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
 
-   <!-- Bootrap 5 -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
-   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Bootrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 
-   <!-- CSS -->
-   <link rel="stylesheet" href="css/classroom.css" />
-   <link rel="stylesheet" href="css/main.css" />
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/classroom.css" />
+  <link rel="stylesheet" href="css/main.css" />
 
 
-   <style>
-      p {
-         margin-bottom: 0;
-      }
+  <style>
+    p {
+      margin-bottom: 0;
+    }
 
-      .card-text {
-         margin-bottom: 10px;
-      }
+    .card-text {
+      margin-bottom: 10px;
+    }
 
-      .col-md-3 {
-         margin-top: 30px;
-         margin-bottom: 30px;
-      }
+    .col-md-3 {
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
 
-      .card-header {
-         background-color: #f5f5f5;
-      }
+    .card-header {
+      background-color: #f5f5f5;
+    }
 
-      .card {
-         width: 278px !important;
-         height: 240px !important;
-      }
+    .card {
+      width: 278px !important;
+      height: 240px !important;
+    }
 
-      .card-text {
-         max-width: 17rem;
-      }
+    .card-text {
+      max-width: 17rem;
+    }
 
-      .col-lg-3 {
-         width: fit-content !important;
-      }
-   </style>
+    .col-lg-3 {
+      width: fit-content !important;
+    }
+  </style>
 
 </head>
 
 <body id="body-pd" class="body-pd">
-   <header class="header body-pd" id="header">
-      <div class="header_toggle">
-         <i class="bx bx-menu bx-x" id="header-toggle"></i>
+  <header class="header body-pd" id="header">
+    <div class="header_toggle">
+      <i class="bx bx-menu bx-x" id="header-toggle"></i>
+    </div>
+    <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
+  </header>
+  <div class="l-navbar show" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="index" class="nav_logo">
+          <i class="bx bx-layer nav_logo-icon"></i>
+          <span class="nav_logo-name">Home</span>
+        </a>
+        <div class="nav_list">
+          <a href="classroom" class="nav_link active">
+            <i class="bx bx-grid-alt nav_icon"></i>
+            <span class="nav_name">Classroom</span>
+          </a>
+        </div>
       </div>
-      <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
-   </header>
-   <div class="l-navbar show" id="nav-bar">
-      <nav class="nav">
-         <div>
-            <a href="index" class="nav_logo">
-               <i class="bx bx-layer nav_logo-icon"></i>
-               <span class="nav_logo-name">Home</span>
-            </a>
-            <div class="nav_list">
-               <a href="classroom" class="nav_link active">
-                  <i class="bx bx-grid-alt nav_icon"></i>
-                  <span class="nav_name">Classroom</span>
-               </a>
-            </div>
-         </div>
-         <a href="#" class="nav_link">
-            <i class="bx bx-log-out nav_icon"></i>
-            <span class="nav_name">SignOut</span>
-         </a>
-      </nav>
-   </div>
+      <a href="#" class="nav_link">
+        <i class="bx bx-log-out nav_icon"></i>
+        <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
+  </div>
 
-   <!--!Container-->
-   <div class="row" id="cardClassroom" style="margin-right: 50px;">
-   </div>
+  <!--!Container-->
+  <div class="row" id="cardClassroom" style="margin-right: 50px;">
+  </div>
 
-   <!-- FORMPOP CREATE -->
-   <div class="overlay" id="divOne">
-      <div class="row">
-         <div class="col-md-12" style="padding-left: 50px;">
-            <div class="wrapper">
-               <h2>Create Classroom</h2><a class="close" href="#">&times;</a>
-               <div class="content">
-                  <div class="container">
-                     <form id="createroom">
-                        <label>Name room</label>
-                        <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
-                           pattern="^[a-zA-Z0-9]{1,5}$" required>
-                        <label>Description</label>
-                        <textarea id="description" value="" iplaceholder="Write something.." 
-                           pattern="^[ก-๏a-z\s]{20,72}$" required></textarea>
-                        <input style="display: none;" value="" id="creator">
-                        <input style="display: none;" value="" id="teacherid">
-                        <input style="display: none;" value="" id="adminid">
-                        <input type="submit" value="Create" class="btn-add" id="createdata">
-                     </form>
-                  </div>
-               </div>
+  <!-- FORMPOP CREATE -->
+  <div class="overlay" id="divOne">
+    <div class="row">
+      <div class="col-md-12" style="padding-left: 50px;">
+        <div class="wrapper">
+          <h2>Create Classroom</h2><a class="close" href="#">&times;</a>
+          <div class="content">
+            <div class="container">
+              <form id="createroom">
+                <label>Name room</label>
+                <input placeholder="Your classname.." type="text" class="" value="" id="nameroom"
+                  pattern="^[a-zA-Z0-9]{1,5}$" required>
+                <label>Description</label>
+                <textarea id="description" value="" iplaceholder="Write something.." pattern="^[ก-๏a-z\s]{20,72}$"
+                  required></textarea>
+                <input style="display: none;" value="" id="creator">
+                <input style="display: none;" value="" id="teacherid">
+                <input style="display: none;" value="" id="adminid">
+                <input type="submit" value="Create" class="btn-add" id="createdata">
+              </form>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 
-   <!-- FORMPOP EDIT -->
-   <div class="overlay" id="formedit">
-      <div class="row">
-         <div class="col-md-12" style="padding-left: 50px;">
-            <div class="wrapper">
-               <h2>Update Classroom</h2><a class="close" href="#">&times;</a>
-               <div class="content">
-                  <div class="container">
-                     <form id="updateroom">
-                        <input style="display: none;" for="" id="classroomID"></input>
-                        <label>Name room</label>
-                        <input placeholder="Your classname.." type="text" value="" id="updatenameroom"
-                           pattern="^[a-zA-Z0-9]{1,5}$" required>
-                        <label>Description</label>
-                        <textarea id="updatedescription" value="" pattern="^[ก-๏a-z\s]{1,72}$"
-                           iplaceholder="Write something.." required></textarea>
-                        <input style="display: none;" value="" id="updatecreator">
-                        <input style="display: none;" value="" id="updateteacherid">
-                        <input style="display: none;" value="" id="updateadminid">
-                        <input type="submit" value="Update" class="btn-add" id="updatedata">
-                        <a class="" id="btndelete" href="#" onclick="btndeletedata()">DELETE</a>
-                     </form>
-                  </div>
-               </div>
+  <!-- FORMPOP EDIT -->
+  <div class="overlay" id="formedit">
+    <div class="row">
+      <div class="col-md-12" style="padding-left: 50px;">
+        <div class="wrapper">
+          <h2>Update Classroom</h2><a class="close" href="#">&times;</a>
+          <div class="content">
+            <div class="container">
+              <form id="updateroom">
+                <input style="display: none;" for="" id="classroomID"></input>
+                <label>Name room</label>
+                <input placeholder="Your classname.." type="text" value="" id="updatenameroom"
+                  pattern="^[a-zA-Z0-9]{1,5}$" required>
+                <label>Description</label>
+                <textarea id="updatedescription" value="" pattern="^[ก-๏a-z\s]{1,72}$" iplaceholder="Write something.."
+                  required></textarea>
+                <input style="display: none;" value="" id="updatecreator">
+                <input style="display: none;" value="" id="updateteacherid">
+                <input style="display: none;" value="" id="updateadminid">
+                <input type="submit" value="Update" class="btn-add" id="updatedata">
+                <a class="" id="btndelete" href="#" onclick="btndeletedata()">DELETE</a>
+              </form>
             </div>
-         </div>
+          </div>
+        </div>
       </div>
-   </div>
+    </div>
+  </div>
 
-   <!--!Container-->
+  <!--!Container-->
 
-   <!-- SCRIPT -->
-   <script src="js/script.js"></script>
-   <script src="js/classroom.js"></script>
+  <!-- SCRIPT -->
+  <script src="js/script.js"></script>
+  <script src="js/classroom.js"></script>
 
-   <!-- Bootrap 5 -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- Bootrap 5 -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-   <!-- Sweetalert -->
-   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <!-- Sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 
 </html>

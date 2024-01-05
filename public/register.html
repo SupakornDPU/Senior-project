@@ -2,189 +2,177 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Register</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
 
-   <!-- Font Awesome -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-   <!-- Google Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
-   <!-- Bootrap -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Bootrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-   <!-- Style -->
-   <link rel="stylesheet" href="css/main.css">
-   <link rel="stylesheet" href="css/footer.css">
+  <!-- Style -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/footer.css">
 
-   <style>
-      .btn-loginform {
-         background-color: #292929;
-         color: white;
+  <style>
+    .btn-loginform {
+      background-color: #292929;
+      color: white;
+    }
+
+    .btn-loginform:hover {
+      background-color: #284f2f;
+      color: white;
+    }
+
+    .form-control,
+    .form-select {
+      border: 1px solid #b29f8200;
+      background-color: #f0f0f0;
+    }
+
+    .form-outline {
+      & label {
+        font-family: 'Poppins', sans-serif !important;
       }
 
-      .btn-loginform:hover {
-         background-color: #284f2f;
-         color: white;
+      & .form-control {
+        font-family: 'Poppins', sans-serif !important;
       }
+    }
 
-      .form-control,
-      .form-select {
-         border: 1px solid #b29f8200;
-         background-color: #f0f0f0;
+    .backgound-hero {
+      background-image: url('img/hero.png');
+      background-repeat: no-repeat;
+      background-position: center bottom 500px;
+      background-size: cover;
+    }
+
+    .alert {
+      width: 512px;
+      padding: 16px;
+      max-width: 100%;
+      border: 2px solid #ff3838;
+      color: #ff3838;
+
+      & ul {
+        margin: 0 auto;
+        padding: 0 auto;
       }
-
-      .form-outline {
-         & label {
-            font-family: 'Poppins', sans-serif !important;
-         }
-
-         & .form-control {
-            font-family: 'Poppins', sans-serif !important;
-         }
-      }
-
-      .backgound-hero {
-         background-image: url('img/hero.png');
-         background-repeat: no-repeat;
-         background-position: center bottom 500px;
-         background-size: cover;
-      }
-
-      .alert {
-         width: 512px;
-         padding: 16px;
-         max-width: 100%;
-         border: 2px solid #ff3838;
-         color: #ff3838;
-
-         & ul {
-            margin: 0 auto;
-            padding: 0 auto;
-         }
-      }
-   </style>
+    }
+  </style>
 
 </head>
 
 <body>
-   <!-- !Navbar -->
-   <navbar-component></navbar-component>
+  <!-- !Navbar -->
+  <navbar-component></navbar-component>
 
-   <!-- !Form Register -->
-   <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;margin-top: -700px; padding-top: 60rem;">
-      <form id="registerForm">
-         <div class="d-flex justify-content-center align-items-center mb-5">
-            <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
-         </div>
+  <!-- !Form Register -->
+  <div class="container-fluid backgound-hero" style="margin-bottom: 18rem;margin-top: -700px; padding-top: 60rem;">
+    <form id="registerForm">
+      <div class="d-flex justify-content-center align-items-center mb-5">
+        <h1 style="font-weight: bold;" class="font-poppin">CREATE ACCOUNT</h1>
+      </div>
 
-         <!-- <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3">
-               <div class="alert" id="alertBox" style="display: none;">
-                  <ul>
-                     <li id="textAlert">
-                        
-                     </li>
-                  </ul>
-               </div>
-            </div>
-         </div> -->
+      <!-- Row EMAIL -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3">
+          <div class="form-outline mb-4">
+            <label class="mb-1" for="typeEmail">Email address*</label>
+            <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com" />
+            <label id="textEmail" style="color: red; display: block;"></label>
+          </div>
+        </div>
+      </div>
 
-         <!-- Row EMAIL -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3">
-               <div class="form-outline mb-4">
-                  <label class="mb-1" for="typeEmail">Email address*</label>
-                  <input type="email" id="typeEmail" class="form-control" placeholder="name@domain.com" />
-                  <label id="textEmail" style="color: red; display: block;"></label>
-               </div>
-            </div>
-         </div>
+      <!-- Row PASSWORD -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3">
+          <div class="form-outline mb-4">
+            <label class="mb-1" for="typePassword">Password*</label>
+            <input type="password" id="typePassword" class="form-control" placeholder="Example1234" />
+            <label id="textPassword" style="color: red; display: block;"></label>
+          </div>
+        </div>
+      </div>
 
-         <!-- Row PASSWORD -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3">
-               <div class="form-outline mb-4">
-                  <label class="mb-1" for="typePassword">Password*</label>
-                  <input type="password" id="typePassword" class="form-control" placeholder="Example1234" />
-                  <label id="textPassword" style="color: red; display: block;"></label>
-               </div>
-            </div>
-         </div>
+      <!-- Row First Name -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3">
+          <div class="form-outline mb-4">
+            <label class="mb-1" for="typeFirstname">First name*</label>
+            <input type="text" id="typeFirstname" class="form-control" placeholder="steve" />
+            <label id="textFirstname" style="color: red; display: block;"></label>
+          </div>
+        </div>
+      </div>
 
-         <!-- Row First Name -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3">
-               <div class="form-outline mb-4">
-                  <label class="mb-1" for="typeFirstname">First name*</label>
-                  <input type="text" id="typeFirstname" class="form-control" placeholder="steve" />
-                  <label id="textFirstname" style="color: red; display: block;"></label>
-               </div>
-            </div>
-         </div>
+      <!-- Row Last Name -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3">
+          <div class="form-outline">
+            <label class="mb-1" for="typeLastname">Last name*</label>
+            <input type="text" id="typeLastname" class="form-control" placeholder="job" />
+            <label id="textLastname" style="color: red; display: block;"></label>
+          </div>
+        </div>
+      </div>
 
-         <!-- Row Last Name -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3">
-               <div class="form-outline">
-                  <label class="mb-1" for="typeLastname">Last name*</label>
-                  <input type="text" id="typeLastname" class="form-control" placeholder="job" />
-                  <label id="textLastname" style="color: red; display: block;"></label>
-               </div>
-            </div>
-         </div>
+      <!-- Row Role -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3 my-4">
+          <label class="mb-1" for="roleForm">Select role*</label>
+          <select class="form-select" aria-label="example" id="roleForm">
+            <option disabled selected></option>
+            <option value="Student">Student</option>
+            <option value="Teacher">Teacher</option>
+          </select>
+          <label id="textrole" style="color: red; display: block;"></label>
+        </div>
+      </div>
 
-         <!-- Row Role -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3 my-4">
-               <label class="mb-1" for="roleForm">Select role*</label>
-               <select class="form-select" aria-label="example" id="roleForm">
-                  <option disabled selected></option>
-                  <option value="Student">Student</option>
-                  <option value="Teacher">Teacher</option>
-               </select>
-               <label id="textrole" style="color: red; display: block;"></label>
-            </div>
-         </div>
-
-         <!-- Button -->
-         <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-3 mt-5">
-               <div class="d-grid gap-2 col-md-12 mx-auto">
-                  <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
-               </div>
-            </div>
-         </div>
-         <!-- Button -->
-         <input type="text" id="point" class="form-control form-control-lg" style="display: none;" name="point"
-            value="0" required disabled />
-      </form>
-   </div>
-   <!-- !Form Register -->
+      <!-- Button -->
+      <div class="row d-flex justify-content-center align-items-center">
+        <div class="col-md-3 mt-5">
+          <div class="d-grid gap-2 col-md-12 mx-auto">
+            <button class="btn btn-lg btn-block btn-loginform" type="submit">CREATE</button>
+          </div>
+        </div>
+      </div>
+      <!-- Button -->
+      <input type="text" id="point" class="form-control form-control-lg" style="display: none;" name="point" value="0"
+        required disabled />
+    </form>
+  </div>
+  <!-- !Form Register -->
 
 
-   <!-- !Footer -->
-   <footer-component></footer-component>
+  <!-- !Footer -->
+  <footer-component></footer-component>
 
-   <!-- Script -->
-   <script src="js/script.js"></script>
-   <script src="js/register.js"></script>
+  <!-- Script -->
+  <script src="js/script.js"></script>
+  <script src="js/register.js"></script>
 
-   <!-- Component -->
-   <script src="component/component.js"></script>
+  <!-- Component -->
+  <script src="component/component.js"></script>
 
-   <!-- Bootrap -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"></script>
+  <!-- Bootrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
 const Classroom = require('../models/Classroom');
+const Deck = require('../models/Deck');
 const Flashcard = require('../models/Flashcard');
 
 // Get Router สำหรับค้นหาอาจารย์ทั้งหมด
@@ -100,7 +101,7 @@ adminRouter.get('/classroom', (req, res, next) => {
       }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// Delete Router สำหรับลบห้องเรียน
+// Delete Router สำหรับ Delete Classroom
 adminRouter.delete('/classroom/:id', (req, res, next) => {
    Classroom.findByIdAndDelete(req.params.id)
       .then(() => {
@@ -111,6 +112,58 @@ adminRouter.delete('/classroom/:id', (req, res, next) => {
             { $pull: { classroom: new mongoose.Types.ObjectId(req.params.id) } }
          )
          res.json({ message: 'ลบห้องเรียนเสร็จสิ้น' });
+      })
+      .catch((err) => {
+         next(err);
+      });
+});
+
+// Logic สำหรับสร้างรหัสสุ่ม 6 ตัวอักษร
+const generateRandomCode = () => {
+   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+   let code = '';
+
+   // สุ่มตัวอักษร 6 ตัว จาก characters ที่กำหนด แล้วนำมาต่อกัน แล้ว return ออกมา
+   for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      code += characters[randomIndex];
+   }
+
+   return code;
+};
+
+// ตรวจสอบว่ามีรหัสนี้ในฐานข้อมูลหรือยัง
+const isCodeUnique = async (code) => {
+   const existingClassroom = await Classroom.findOne({ code });
+   return !existingClassroom;
+};
+
+// สร้างรหัสใหม่ และตรวจสอบความซ้ำกัน
+const generateUniqueCode = async () => {
+   let code;
+   do {
+      code = generateRandomCode(); // สร้างรหัส
+   } while (!(await isCodeUnique(code))); // ตรวจสอบความซ้ำ
+   return code;
+};
+
+// Post Router สำหรับเพิ่ม Classroom
+adminRouter.post('/classroom/create', (req, res, next) => {
+   req.body.classroom_code = generateRandomCode();
+   Classroom.create(req.body)
+      .then((post) => {
+         res.json(post);
+      })
+      .catch((err) => {
+         next(err);
+      })
+});
+
+// Get Router สำหรับค้นหา Deck ทั้งหมด
+adminRouter.get('/deck', (req, res, next) => {
+   Deck.find()
+      .then((decks) => {
+         res.json(decks);
       })
       .catch((err) => {
          next(err);

@@ -2,239 +2,239 @@
 <html lang="en">
 
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Home</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
 
-   <!-- Font Awesome -->
-   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
 
-   <!-- Google Fonts -->
-   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
-   <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
 
-   <!-- Bootrap -->
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Bootrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
-   <!-- Style -->
-   <link rel="stylesheet" href="css/main.css">
-   <link rel="stylesheet" href="css/footer.css">
+  <!-- Style -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/footer.css">
 
-   <style>
-      .hero_section {
-         height: 800px;
-         width: 100%;
-         margin-top: -260px;
-         background-image: url('img/hero.png');
-         background-repeat: no-repeat;
-         background-position: center;
-         background-size: cover;
-         margin-bottom: 50px;
-      }
+  <style>
+    .hero_section {
+      height: 800px;
+      width: 100%;
+      margin-top: -260px;
+      background-image: url('img/hero.png');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      margin-bottom: 50px;
+    }
 
-      .hero-content {
-         color: white;
-         text-align: center;
-         padding-top: 450px;
-      }
+    .hero-content {
+      color: white;
+      text-align: center;
+      padding-top: 450px;
+    }
 
-      .hero-content h2 {
-         color: white;
-         font-weight: bolder;
-      }
+    .hero-content h2 {
+      color: white;
+      font-weight: bolder;
+    }
 
-      .img-card {
-         max-width: 40%;
-         margin: auto;
-      }
+    .img-card {
+      max-width: 40%;
+      margin: auto;
+    }
 
-      .col-card {
-         background-color: rgba(255, 255, 255, 0.171);
-         padding: 3rem;
-         border-radius: 1.5rem;
-      }
+    .col-card {
+      background-color: rgba(255, 255, 255, 0.171);
+      padding: 3rem;
+      border-radius: 1.5rem;
+    }
 
-      /* Button style */
-      .buttonui {
-         position: relative;
-         display: inline-block;
-         cursor: pointer;
-         outline: none;
-         border: 0;
-         vertical-align: middle;
-         text-decoration: none;
-         background: transparent;
-         padding: 0;
-         font-size: inherit;
-         font-family: inherit;
-      }
+    /* Button style */
+    .buttonui {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+      outline: none;
+      border: 0;
+      vertical-align: middle;
+      text-decoration: none;
+      background: transparent;
+      padding: 0;
+      font-size: inherit;
+      font-family: inherit;
+    }
 
-      .buttonui.learn-more {
-         width: 12rem;
-         height: auto;
-      }
+    .buttonui.learn-more {
+      width: 12rem;
+      height: auto;
+    }
 
-      .buttonui.learn-more .circle {
-         transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-         position: relative;
-         display: block;
-         margin: 0;
-         width: 3rem;
-         height: 3rem;
-         background: #217177;
-         border-radius: 1.625rem;
-      }
+    .buttonui.learn-more .circle {
+      transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+      position: relative;
+      display: block;
+      margin: 0;
+      width: 3rem;
+      height: 3rem;
+      background: #217177;
+      border-radius: 1.625rem;
+    }
 
-      .buttonui.learn-more .circle .icon {
-         transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-         position: absolute;
-         top: 0;
-         bottom: 0;
-         margin: auto;
-         background: #fff;
-      }
+    .buttonui.learn-more .circle .icon {
+      transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin: auto;
+      background: #fff;
+    }
 
-      .buttonui.learn-more .circle .icon.arrow {
-         transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-         left: 0.625rem;
-         width: 1.125rem;
-         height: 0.125rem;
-         background: none;
-      }
+    .buttonui.learn-more .circle .icon.arrow {
+      transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+      left: 0.625rem;
+      width: 1.125rem;
+      height: 0.125rem;
+      background: none;
+    }
 
-      .buttonui.learn-more .circle .icon.arrow::before {
-         position: absolute;
-         content: "";
-         top: -0.29rem;
-         right: 0.0625rem;
-         width: 0.625rem;
-         height: 0.625rem;
-         border-top: 0.125rem solid #fff;
-         border-right: 0.125rem solid #fff;
-         transform: rotate(45deg);
-      }
+    .buttonui.learn-more .circle .icon.arrow::before {
+      position: absolute;
+      content: "";
+      top: -0.29rem;
+      right: 0.0625rem;
+      width: 0.625rem;
+      height: 0.625rem;
+      border-top: 0.125rem solid #fff;
+      border-right: 0.125rem solid #fff;
+      transform: rotate(45deg);
+    }
 
-      .buttonui.learn-more .button-text {
-         transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
-         position: absolute;
-         top: 0;
-         left: 0;
-         right: 0;
-         bottom: 0;
-         padding: 0.75rem 0;
-         margin: 0 0 0 1.85rem;
-         color: #939393;
-         font-weight: 700;
-         line-height: 1.6;
-         text-align: center;
-         text-transform: uppercase;
-      }
+    .buttonui.learn-more .button-text {
+      transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 0.75rem 0;
+      margin: 0 0 0 1.85rem;
+      color: #939393;
+      font-weight: 700;
+      line-height: 1.6;
+      text-align: center;
+      text-transform: uppercase;
+    }
 
-      .buttonui:hover .circle {
-         width: 100%;
-      }
+    .buttonui:hover .circle {
+      width: 100%;
+    }
 
-      .buttonui:hover .circle .icon.arrow {
-         background: #fff;
-         transform: translate(1rem, 0);
-      }
+    .buttonui:hover .circle .icon.arrow {
+      background: #fff;
+      transform: translate(1rem, 0);
+    }
 
-      .buttonui:hover .button-text {
-         color: #fff;
-      }
+    .buttonui:hover .button-text {
+      color: #fff;
+    }
 
-      .buttonui a {
-         text-decoration: none;
-         color: white;
-      }
-   </style>
+    .buttonui a {
+      text-decoration: none;
+      color: white;
+    }
+  </style>
 
 </head>
 
 <body>
-   <!-- Navbar -->
-   <navbar-component></navbar-component>
+  <!-- Navbar -->
+  <navbar-component></navbar-component>
 
-   <!-- Hero -->
-   <div class="hero_section">
-      <div class="hero-content">
-         <div class="col-12 text-center align-middle">
-            <div class="row">
-               <h2 class="font-kanit">เรียนรู้ภาษา Python</h2>
-               <span>
-                  <h4 class="font-kanit">ฝึกเรียนรู้ไวยากรณ์ของ Python</h4>
-               </span>
-               <span>
-                  <h4 class="font-kanit">โดยใช้ Flash Card สำหรับการเรียนรู้</h4>
-               </span>
-            </div>
-            <div class="row justify-content-center text-center">
-               <div class="col-4">
-                  <button class="learn-more buttonui">
-                     <span class="circle" aria-hidden="true">
-                        <span class="icon arrow"></span>
-                     </span>
-                     <span class="button-text"><a href="classroom" class="font-poppin">Learn more</a></span>
-                  </button>
-               </div>
-            </div>
-         </div>
+  <!-- Hero -->
+  <div class="hero_section">
+    <div class="hero-content">
+      <div class="col-12 text-center align-middle">
+        <div class="row">
+          <h2 class="font-kanit">เรียนรู้ภาษา Python</h2>
+          <span>
+            <h4 class="font-kanit">ฝึกเรียนรู้ไวยากรณ์ของ Python</h4>
+          </span>
+          <span>
+            <h4 class="font-kanit">โดยใช้ Flash Card สำหรับการเรียนรู้</h4>
+          </span>
+        </div>
+        <div class="row justify-content-center text-center">
+          <div class="col-4">
+            <button class="learn-more buttonui">
+              <span class="circle" aria-hidden="true">
+                <span class="icon arrow"></span>
+              </span>
+              <span class="button-text"><a href="classroom" class="font-poppin">Learn more</a></span>
+            </button>
+          </div>
+        </div>
       </div>
-   </div>
-   <!-- Hero -->
+    </div>
+  </div>
+  <!-- Hero -->
 
-   <!-- Content -->
-   <div class="container-fluid">
-      <div class="row justify-content-center text-center gap-5">
-         <div class="col-md-3 col-card shadow-lg">
-            <div class="row img-card">
-               <img src="img/python.png" class="rounded" alt="">
-            </div>
-            <div class="row mt-4 text-start">
-               <span>
-                  <h5 class="font-poppin" style="font-weight: bold;">Flash card (แฟลชการ์ด)</h5>
-               </span>
-               <h5 class="font-kanit">
-                  คือบัตรหรือแผ่นกระดาษที่ใช้ในการเรียนรู้และจดจำข้อมูลโดยทั่วไปจะมีคำถามหรือข้อมูลด้านหน้าและคำตอบหรือข้อมูลที่เกี่ยวข้องด้านหลังเป็นเครื่องมือที่ช่วยในการฝึกฝนและทบทวนความรู้อย่างมีประสิทธิภาพในหลายๆ
-                  รายวิชาและสาขาวิชาต่างๆและมักนำมาใช้ในการเรียนภาษา, คณิตศาสตร์, และหลายสาขาวิชาอื่น ๆ อีกด้วย.</h5>
-            </div>
-         </div>
-         <div class="col-md-3 col-card shadow-lg">
-            <div class="row img-card">
-               <img src="img/flashcard.png" class="rounded" alt="">
-            </div>
-            <div class="row mt-4 text-start">
-               <span>
-                  <h5 class="font-poppin" style="font-weight: bold;">Python (ไพธอน)</h5>
-               </span>
-               <h5 class="font-kanit">
-                  คือภาษาโปรแกรมคอมพิวเตอร์ที่ใช้ในการพัฒนาและเขียนโปรแกรมมีความอ่านง่ายและเป็นที่นิยมในการเรียนรู้การเขียนโปรแกรมเนื่องจากไวยากรณ์ที่เข้าใจง่ายและมีชุดคำสั่งที่หลากหลายสำหรับการแก้ปัญหาต่าง
-                  ๆ บนคอมพิวเตอร์ได้อย่างมีประสิทธิภาพและรวดเร็ว.</h5>
-            </div>
-         </div>
+  <!-- Content -->
+  <div class="container-fluid">
+    <div class="row justify-content-center text-center gap-5">
+      <div class="col-md-3 col-card shadow-lg">
+        <div class="row img-card">
+          <img src="img/python.png" class="rounded" alt="">
+        </div>
+        <div class="row mt-4 text-start">
+          <span>
+            <h5 class="font-poppin" style="font-weight: bold;">Flash card (แฟลชการ์ด)</h5>
+          </span>
+          <h5 class="font-kanit">
+            คือบัตรหรือแผ่นกระดาษที่ใช้ในการเรียนรู้และจดจำข้อมูลโดยทั่วไปจะมีคำถามหรือข้อมูลด้านหน้าและคำตอบหรือข้อมูลที่เกี่ยวข้องด้านหลังเป็นเครื่องมือที่ช่วยในการฝึกฝนและทบทวนความรู้อย่างมีประสิทธิภาพในหลายๆ
+            รายวิชาและสาขาวิชาต่างๆและมักนำมาใช้ในการเรียนภาษา, คณิตศาสตร์, และหลายสาขาวิชาอื่น ๆ อีกด้วย.</h5>
+        </div>
       </div>
-   </div>
-   <!-- Content -->
+      <div class="col-md-3 col-card shadow-lg">
+        <div class="row img-card">
+          <img src="img/flashcard.png" class="rounded" alt="">
+        </div>
+        <div class="row mt-4 text-start">
+          <span>
+            <h5 class="font-poppin" style="font-weight: bold;">Python (ไพธอน)</h5>
+          </span>
+          <h5 class="font-kanit">
+            คือภาษาโปรแกรมคอมพิวเตอร์ที่ใช้ในการพัฒนาและเขียนโปรแกรมมีความอ่านง่ายและเป็นที่นิยมในการเรียนรู้การเขียนโปรแกรมเนื่องจากไวยากรณ์ที่เข้าใจง่ายและมีชุดคำสั่งที่หลากหลายสำหรับการแก้ปัญหาต่าง
+            ๆ บนคอมพิวเตอร์ได้อย่างมีประสิทธิภาพและรวดเร็ว.</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Content -->
 
-   <!-- Footer -->
-   <footer-component></footer-component>
+  <!-- Footer -->
+  <footer-component></footer-component>
 
-   <!-- Script -->
-   <script src="js/script.js"></script>
-   <script src="js/index.js"></script>
+  <!-- Script -->
+  <script src="js/script.js"></script>
+  <script src="js/index.js"></script>
 
-   <!-- Component -->
-   <script src="component/component.js"></script>
+  <!-- Component -->
+  <script src="component/component.js"></script>
 
-   <!-- Bootrap -->
-   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"></script>
+  <!-- Bootrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

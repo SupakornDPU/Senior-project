@@ -6,12 +6,11 @@
 
 .navbar {
    border-radius: 0.375rem 0.375rem 0 0 !important;
-}
 
-.navbar .nav-link,
-.navbar-brand {
-   color: white !important;
-   font-weight: bolder;
+   & .nav-link, .navbar-brand {
+      color: white !important;
+      font-weight: bolder;
+   }
 }
 
 .nav-item {
@@ -20,21 +19,22 @@
 
 .nav-link {
    border-radius: 0.375rem;
-}
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
-   background-color: rgb(17 24 39 / 1);
-   border-radius: 0.375rem;
-}
+   &.active {
+      background-color: rgb(17 24 39 / 1);
+      border-radius: 0.375rem;
 
-.nav-link.active, .nav-link.active:hover {
-   background-color: rgb(17 24 39 / 1);
-   border-radius: 0.375rem;
-}
+      &:hover {
+         background-color: rgb(17 24 39 / 1);
+         border-radius: 0.375rem;
+      }
+   }
 
-.nav-link:hover {
-   background-color: rgb(69, 73, 82);
-   border-radius: 0.375rem;
+   &:hover {
+      background-color: rgb(69, 73, 82);
+      border-radius: 0.375rem;
+   }
+   
 }
 
 .btn-link {
