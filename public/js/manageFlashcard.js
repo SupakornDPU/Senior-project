@@ -45,56 +45,70 @@ formImport.addEventListener('submit', (e) => {
 // POST import textarea
 const textareaForm = document.getElementById('textareaForm');
 textareaForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+   e.preventDefault();
 
-  // ดึงข้อมูลจาก textarea ทั้งหมด
-  const questions = document.querySelectorAll('textarea[name="question"]');
-  const answers = document.querySelectorAll('textarea[name="answer"]');
-  const deckids = deckId;
-  const data = [];
+   const questions = document.querySelectorAll('textarea[name="question"]');
+   const answers = document.querySelectorAll('textarea[name="answer"]');
+   const deckids = deckId;
+   const data = [];
 
-  // สร้างอาเรย์ของอ็อบเจ็กต์เพื่อเก็บข้อมูลจากทุก textarea
-  questions.forEach((question, index) => {
-    console.log(deckids);
-    data.push({
-      question: question.value,
-      answer: answers[index].value,
-      deckid: deckids
-    });
-  });
-  console.log(data)
-  // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
-  fetch('/projectsenior/flashcard/' + deckId, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ data })
-  })
-    .then(response => response.json())
-    .then(() => {
-      // SweetAlert
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
+   //เช็คค่าว่าง ถ้าเป็นจริงจะรีเทิร์นกลับแล้วจบIF ถ้าเป็นเท็จจะทำการบันทึกทั้งหมด
+   let CheckEmptyField = false;
+
+   // สร้างอาเรย์ของอ็อบเจ็กต์เพื่อเก็บข้อมูลจากทุก textarea
+   // ใช้ trim() เพื่อลบช่องว่างที่อาจจะมี).
+   questions.forEach((question, index) => {
+      if (question.value.trim() === '' || answers[index].value.trim() === '') {
+         CheckEmptyField = true;
+         return;
+      }
+
+      data.push({
+         question: question.value,
+         answer: answers[index].value,
+         deckid: deckids
       });
-      Toast.fire({
-        icon: "success",
-        title: "Create Flashcard successfully"
-      }).then(() => {
-        window.location = "manageFlashcard?deck=" + deckId;
-      });
+   });
+   //เมื่อ CheckEmptyField เป็นจริงจะทำการแจ้งเตือนและจบการทำงาน
+   if (CheckEmptyField) {
+      // แสดงการแจ้งเตือนถ้ามี textarea ว่าง
+      alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
+      return;
+   }
 
-      // Reset textarea values
-      questions.forEach(question => (question.value = ''));
-      answers.forEach(answer => (answer.value = ''));
-    })
-    .catch(err => console.log(err));
+   // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
+
+   fetch('/projectsenior/flashcard/' + deckId, {
+      method: 'POST',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ data })
+   })
+      .then(response => response.json())
+      .then(() =>{
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Create Flashcard successfully"
+         }).then(() => {
+            window.location = "manageFlashcard?deck=" + deckId;
+         });
+
+         // Reset textarea values
+         questions.forEach(question => (question.value = ''));
+         answers.forEach(answer => (answer.value = ''));
+      })
+      .catch(err => console.log(err));
 });
