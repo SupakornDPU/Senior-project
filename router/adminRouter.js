@@ -173,10 +173,32 @@ adminRouter.get('/deck', (req, res, next) => {
     });
 });
 
+// Post router สำหรับสร้าง Deck
+adminRouter.post('/deck/create', (req, res, next) => {
+  Deck.create(req.body)
+    .then((post) => {
+      res.json(post);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Delete Router สำหรับลบ Deck
+adminRouter.delete('/deck/delete/:id', (req, res, next) => {
+  Deck.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.json({ message: 'ลบดีกเสร็จสิ้น' });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 const upload = multer({ dest: "data/" }); // เป็นการบอกว่าไฟล์ที่อัพโหลดจะถูกเก็บไว้ที่โฟลเดอร์ไหน
 
 // Post Router สำหรับสร้าง FlashCard และอัปโหลดไฟล์ excel
-adminRouter.post('/import/:deckId', (upload.single('file')), (req, res, next) => {
+adminRouter.post('/flashcard/import/:deckId', (upload.single('file')), (req, res, next) => {
   console.log(req.file);
   try {
 
@@ -229,8 +251,8 @@ adminRouter.post('/import/:deckId', (upload.single('file')), (req, res, next) =>
   }
 });
 
-// Post Router สำหรับสร้าง FlashCard สำหรับ form ที่ส่งมาจาก Client
-adminRouter.post('/:deckId', async (req, res) => {
+// Post Router สำหรับเพิ่ม FlashCard จาก Textarea
+adminRouter.post('/flashcard/:deckId', async (req, res) => {
   const data = req.body.data;
   const deckId = req.params.deckId;
 

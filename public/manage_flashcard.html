@@ -265,7 +265,8 @@
   <script src="js/demo/datatables-demo.js"></script>
 
   <script>
-    // API Get data
+
+    // API Get Flashcard
     fetch('/projectsenior/admin/flashcard', {
       method: 'GET',
       headers: {
@@ -302,7 +303,7 @@
         });
       })
 
-    // DELETE TEACHER
+    // Funtion Delete Flashcard
     function deleteFlashcard(flashcardId) {
       fetch('/projectsenior/admin/flashcard/' + flashcardId, {
         method: 'DELETE',
@@ -313,6 +314,7 @@
           location.reload();
         })
     }
+    
   </script>
 
 </body>

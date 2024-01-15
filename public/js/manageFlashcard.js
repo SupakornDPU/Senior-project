@@ -7,39 +7,39 @@ const fileInput = document.getElementById('formFile');
 const formImport = document.getElementById('formImport');
 
 formImport.addEventListener('submit', (e) => {
-  e.preventDefault();
+   e.preventDefault();
 
-  const formData = new FormData();
-  formData.append('file', fileInput.files[0]);
+   const formData = new FormData();
+   formData.append('file', fileInput.files[0]);
 
-  fetch('/projectsenior/flashcard/import/' + deckId, {
-    method: 'POST',
-    body: formData
-  })
-    .then(res => res.json())
-    .then(() => {
-      // SweetAlert
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Import successfully"
-      }).then(() => {
-        window.location = "manageFlashcard?deck=" + deckId;
-      });
-    })
-    .then(() => {
-      console.log(data);
-    })
+   fetch('/projectsenior/flashcard/import/' + deckId, {
+      method: 'POST',
+      body: formData
+   })
+      .then(res => res.json())
+      .then(() => {
+         // SweetAlert
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Import successfully"
+         }).then(() => {
+            window.location = "manageFlashcard?deck=" + deckId;
+         });
+      })
+      .then(() => {
+         console.log(data);
+      })
 });
 
 // POST import textarea
@@ -86,7 +86,7 @@ textareaForm.addEventListener('submit', (e) => {
       body: JSON.stringify({ data })
    })
       .then(response => response.json())
-      .then(() =>{
+      .then(() => {
          // SweetAlert
          const Toast = Swal.mixin({
             toast: true,

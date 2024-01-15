@@ -24,23 +24,23 @@ fetch('/projectsenior/classroom', {
       const classroomCol = document.createElement('div');
       classroomCol.className = 'col-lg-3 col-md-12 my-2';
       classroomCol.innerHTML = `
-                <div class="card shadow" id=${each._id}>
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                    <div><h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5><p style = "font-size:0.8rem;font-weight: bold">Code "${each.classroom_code}"</p></div>
-                      <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
-                    </div>
-                    <div class="card-body d-flex justify-content-between">
-                      <div class="row card-text">
-                          <div class="col-md-12">
-                            <p class="card-text">${each.classroom_des}</p>
-                          </div>
-                          <div class="col-md-12 d-flex align-items-end">
-                            <a href="deck?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
-                          </div>
-                      </div>
-                    </div>
-                </div>
-              `;
+        <div class="card shadow" id=${each._id}>
+            <div class="card-header d-flex justify-content-between align-items-center">
+            <div><h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5><p style = "font-size:0.8rem;font-weight: bold">Code "${each.classroom_code}"</p></div>
+              <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
+            </div>
+            <div class="card-body d-flex justify-content-between">
+              <div class="row card-text">
+                  <div class="col-md-12">
+                    <p class="card-text">${each.classroom_des}</p>
+                  </div>
+                  <div class="col-md-12 d-flex align-items-end">
+                    <a href="deck?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
+                  </div>
+              </div>
+            </div>
+        </div>
+      `;
       cardClassroom.appendChild(classroomCol);
     });
   })

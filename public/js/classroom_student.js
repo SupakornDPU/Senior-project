@@ -1,4 +1,4 @@
-// GET DATA USER
+// Api Get Session
 fetch(`/projectsenior/index`, {})
   .then(response => response.json())
   .then(data => {
@@ -7,7 +7,7 @@ fetch(`/projectsenior/index`, {})
     console.log('Logged in user:', data.loggedIn);
     console.log('Role:', data.role);
 
-    // GET DATA CLASSROOM WITH USERID
+    // Api Get Classroom
     // ต้องนำมาใส่ไว้ใน fetch ของ user เพราะว่าต้องการให้ทำงานหลังจากที่ user ทำงานเสร็จแล้ว
     fetch('/projectsenior/student/' + data.loggedIn, {
       method: 'get',
@@ -47,7 +47,7 @@ fetch(`/projectsenior/index`, {})
     console.error('error:', error);
   });
 
-// PUT DATA CLASSROOM WITH USERID
+// Api Put Data Classroom
 // การ Fetch api เส้นนี้สามารถใช้งานได้เนื่องจากเป็นการทำงานหลังจาก ที่ API เส้นแรกทำงานเสร็จแล้ว
 const joinclass = document.getElementById("joinroom");
 joinclass.addEventListener("submit", (e) => {

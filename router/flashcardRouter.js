@@ -74,7 +74,7 @@ flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next
   }
 });
 
-// Post Router สำหรับสร้าง FlashCard สำหรับ form ที่ส่งมาจาก Client
+// Post Router สำหรับเพิ่ม FlashCard จาก Textarea
 flashcardRouter.post('/:deckId', async (req, res) => {
   const data = req.body.data;
   const deckId = req.params.deckId;

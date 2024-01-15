@@ -312,7 +312,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    // GET STUDENT
+
+    // Api Get Student
     fetch('/projectsenior/admin/student', {
       method: 'GET',
       headers: {
@@ -349,7 +350,7 @@
         });
       })
 
-    // DELETE STUDENT
+    // Funtion Api Delete Student
     function deleteStudent(studentId) {
       Swal.fire({
         title: "ต้องการจะลบใช่หรือไม่?",
@@ -388,7 +389,7 @@
       });
     }
 
-    // ADD STUDENT
+    // Api Post Student
     const studentForm = document.getElementById('studentForm');
     studentForm.addEventListener('submit', (e) => {
       e.preventDefault();

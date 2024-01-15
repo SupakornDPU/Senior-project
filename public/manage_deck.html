@@ -159,10 +159,10 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
+          
           <!-- Modal -->
           <div class="modal fade" id="flashcard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-            aria-labelledby="flashcardLabel" aria-hidden="true">
-            ?
+            aria-labelledby="flashcardLabel" aria-hidden="true">?
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
               <div class="modal-content">
                 <div class="modal-header">
@@ -185,53 +185,50 @@
                         </button>
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="row text-center my-2">
-                        <div class="col-5">
-                          <span style="font-weight: bold">Question</span>
-                        </div>
-                        <div class="col-5">
-                          <span style="font-weight: bold">Answer</span>
-                        </div>
+                  </form>
+                  <div class="row">
+                    <div class="row text-center my-2">
+                      <div class="col-5">
+                        <span style="font-weight: bold">Question</span>
                       </div>
-                      <form id="textareaForm">
-                        <div class="row" id="formQA">
-                          <div class="row">
-                            <div class="col-md-5 my-2">
-                              <div class="input-group">
-                                <textarea name="question" class="form-control" id="importquestion"
-                                  aria-label="With textarea" placeholder="Question"></textarea>
-                              </div>
-                            </div>
-                            <div class="col-md-5 my-2">
-                              <div class="input-group">
-                                <textarea name="answer" class="form-control" id="importanswer"
-                                  aria-label="With textarea" placeholder="Answer"></textarea>
-                              </div>
-                            </div>
-                            <div class="col-md-2 col-3 my-2">
-                              <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()"
-                                style="font-weight: bold">
-                                <i class="bi bi-plus-circle"></i> Add
-                              </button>
+                      <div class="col-5">
+                        <span style="font-weight: bold">Answer</span>
+                      </div>
+                    </div>
+                    <form id="textareaForm">
+                      <div class="row" id="formQA">
+                        <div class="row">
+                          <div class="col-md-5 my-2">
+                            <div class="input-group">
+                              <textarea name="question" class="form-control" id="importquestion"
+                                aria-label="With textarea" placeholder="Question"></textarea>
                             </div>
                           </div>
+                          <div class="col-md-5 my-2">
+                            <div class="input-group">
+                              <textarea name="answer" class="form-control" id="importanswer" aria-label="With textarea"
+                                placeholder="Answer"></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-1 col-3 my-2">
+                            <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()"
+                              style="font-weight: bold">
+                              <i class="bi bi-plus-circle"></i> Add
+                            </button>
+                          </div>
                         </div>
-                        <div class="col-md-10 my-2 d-flex justify-content-center align-items-center">
-                          <button type="submit" class="btn btn-secondary" style="font-weight: bold">
-                            Submit
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </form>
+                      </div>
+                      <div class="col-md-10 my-2 d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-secondary" style="font-weight: bold">
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                     Close
-                  </button>
-                  <button type="button" class="btn btn-primary">
-                    Save changes
                   </button>
                 </div>
               </div>
@@ -343,7 +340,8 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    // API Get data
+
+    // API GET DECK
     fetch("/projectsenior/admin/deck", {
       method: "GET",
       headers: {
@@ -364,12 +362,12 @@
                   <td>${item.classroom_id}</td>
                   <td>
                       <!-- Button trigger modal -->
-                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#flashcard">
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#flashcard"
+                      onclick="importFile('${item._id}')">
                           Add Flashcards
                       </button></td>
                   <td>
-                      <a class="btn btn-danger btn-icon-split" onclick="deleteTeacher('${item._id
-            }')">
+                      <a class="btn btn-danger btn-icon-split" onclick="deleteDeck('${item._id}')">
                           <span class="icon text-white-50">
                               <i class="fas fa-trash"></i>
                           </span>
@@ -385,8 +383,8 @@
         });
       });
 
-    // DELETE TEACHER
-    function deleteTeacher(teacherId) {
+    // Api Delete Deck
+    function deleteDeck(deckId) {
       Swal.fire({
         title: "ต้องการจะลบใช่หรือไม่?",
         icon: "warning",
@@ -397,10 +395,9 @@
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch("/projectsenior/admin/teacher/" + teacherId, {
+          fetch("/projectsenior/admin/deck/delete/" + deckId, {
             method: "DELETE",
-          })
-            .then((response) => response.json())
+          }).then((response) => response.json())
             .then(() => {
               const ToastTrue = Swal.mixin({
                 toast: true,
@@ -424,73 +421,136 @@
       });
     }
 
-    // // ADD TEACHER
-    // const teacherForm = document.getElementById('teacherForm');
-    // teacherForm.addEventListener('submit', (e) => {
-    //     e.preventDefault();
+    // Api Import File Flashcard
+    const fileInput = document.getElementById('formFile');
+    const formImport = document.getElementById('formImport');
 
-    //     const teacherEmail = document.getElementById('teacherEmail').value;
-    //     const teacherPassword = document.getElementById('teacherPassword').value;
-    //     const teacherFirstname = document.getElementById('teacherFirstname').value;
-    //     const teacherLastname = document.getElementById('teacherLastname').value;
+    function importFile(deckId) {
+      formImport.addEventListener('submit', (e) => {
+        e.preventDefault();
 
-    //     fetch(`/projectsenior/admin/teacher/create`, {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify({
-    //             "user_email": teacherEmail,
-    //             "user_password": teacherPassword,
-    //             "user_firstname": teacherFirstname,
-    //             "user_lastname": teacherLastname,
-    //             "user_role": 'Teacher',
-    //         })
-    //     }).then(response => {
-    //         if (!response.ok) {
-    //             return response.json().then(data => {
-    //                 throw new Error(data.message);
-    //             });
-    //         }
-    //         return response.json();
-    //     }).then(() => {
-    //         // SweetAlert
-    //         const ToastTrue = Swal.mixin({
-    //             toast: true,
-    //             position: "top-end",
-    //             showConfirmButton: false,
-    //             timer: 1500,
-    //             timerProgressBar: true,
-    //             didOpen: (toast) => {
-    //                 toast.onmouseenter = Swal.stopTimer;
-    //                 toast.onmouseleave = Swal.resumeTimer;
-    //             }
-    //         });
-    //         ToastTrue.fire({
-    //             icon: "success",
-    //             title: "เพิ่มข้อมูลสำเร็จแล้ว"
-    //         }).then(() => {
-    //             location.reload();
-    //         })
-    //     }).catch(err => {
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
 
-    //         const Toast = Swal.mixin({
-    //             toast: true,
-    //             position: "top-end",
-    //             showConfirmButton: false,
-    //             timer: 2000,
-    //             timerProgressBar: true,
-    //             didOpen: (toast) => {
-    //                 toast.onmouseenter = Swal.stopTimer;
-    //                 toast.onmouseleave = Swal.resumeTimer;
-    //             }
-    //         });
-    //         Toast.fire({
-    //             icon: "error",
-    //             title: err
-    //         })
-    //     });
-    // })
+        fetch('/projectsenior/admin/flashcard/import/' + deckId, {
+          method: 'POST',
+          body: formData
+        })
+          .then(res => res.json())
+          .then(() => {
+            // SweetAlert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1200,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Import successfully"
+            }).then(() => {
+              location.reload();
+            });
+          })
+      });
+
+      // Api Post InputManual Flashcard 
+      const textareaForm = document.getElementById('textareaForm');
+      textareaForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // ดึงข้อมูลจาก textarea ทั้งหมด
+        const questions = document.querySelectorAll('textarea[name="question"]');
+        const answers = document.querySelectorAll('textarea[name="answer"]');
+        const deckids = deckId;
+        const data = [];
+
+        // สร้างอาเรย์ของอ็อบเจ็กต์เพื่อเก็บข้อมูลจากทุก textarea
+        questions.forEach((question, index) => {
+          console.log(deckids);
+          data.push({
+            question: question.value,
+            answer: answers[index].value,
+            deckid: deckids
+          });
+        });
+        console.log(data)
+        // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
+        fetch('/projectsenior/admin/flashcard/' + deckId, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ data })
+        })
+          .then(response => response.json())
+          .then(() => {
+            // SweetAlert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1200,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Create Flashcard successfully"
+            }).then(() => {
+              location.reload();
+            });
+
+            // Reset textarea values
+            questions.forEach(question => (question.value = ''));
+            answers.forEach(answer => (answer.value = ''));
+          })
+          .catch(err => console.log(err));
+      });
+    }
+
+    // Funtion Button Add Textarea Question and Answer
+    function addForm() {
+      const addBtn = document.getElementById('addBtn');
+      const formQA = document.getElementById('formQA');
+      const div = document.createElement('div'); // create div
+
+      div.className = 'row'; // เป็นการเพิ่ม class ให้ div
+      div.innerHTML = `
+          <div class="col-md-5 my-2">
+              <div class="input-group">
+                <textarea name="question" class="form-control" aria-label="With textarea" id="importquestion" placeholder="Question"></textarea>
+              </div>
+          </div>
+          <div class="col-md-5 my-2">
+              <div class="input-group">
+                <textarea name="answer" class="form-control" aria-label="With textarea" id="importanswer" placeholder="Answer"></textarea>
+              </div>
+          </div>
+          <div class="col-md-1 col-3 my-2">
+              <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+          </div>
+          <div class="col-md-1 col-3 my-2">
+              <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+          </div>
+        `;
+      formQA.appendChild(div); // เป็นการเพิ่ม div ลงไปใน formQA
+    }
+
+    // Funtion Button Delete Textarea Question and Answer
+    function delForm() {
+      const formQA = document.getElementById('formQA');
+      formQA.removeChild(formQA.lastChild);
+    }
+
   </script>
 </body>
 
