@@ -186,7 +186,8 @@
                     <span for="nameroom" class="col-form-label">Nameroom</span>
                   </div>
                   <div class="col-md-3">
-                    <input type="text" class="form-control" id="nameroom" placeholder="Your classname">
+                    <input type="text" class="form-control" id="nameroom" placeholder="Your classname (Ex.CE000)">
+                    <label id="cr_regexNameroom" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -196,6 +197,7 @@
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="creator" placeholder="Firstname Lastname">
+                    <label id="cr_regexNamelast" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -205,6 +207,7 @@
                   </div>
                   <div class="col-md-3">
                     <textarea class="form-control" id="description" placeholder="Description"></textarea>
+                    <label id="cr_regexDescription" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -363,6 +366,104 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+    function regexClassroom() {
+      const classroomForm = document.getElementById('classroom');
+      classroomForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // ! Check Firstname
+        var reg = /^[a-zA-Z0-9]{1,5}$/;
+        let regexNameroom;
+        if (!reg.test(document.getElementById("nameroom").value)) {
+          regexNameroom = "กรุณากรอก ชื่อห้องเรียน.";
+        } else {
+          regexNameroom = "";
+        }
+        document.getElementById("cr_regexNameroom").innerHTML = regexNameroom;
+
+        // ! Check Lastname
+        var reg = /^[a-zA-Z\s]+$/;
+        let regexNamelast;
+        if (!reg.test(document.getElementById("creator").value)) {
+          regexNamelast = "กรุณากรอก ชื่อ - นามสกุล.";
+        } else {
+          regexNamelast = "";
+        }
+        document.getElementById("cr_regexNamelast").innerHTML = regexNamelast;
+
+        // ! Check Description
+        var reg = /^[ก-๏a-z\s]{0,40}$/;
+        let regexDescription;
+        if (!reg.test(document.getElementById("description").value)) {
+          regexDescription = "ข้อความเกินกำหนด";
+        } else {
+          regexDescription = "";
+        }
+        document.getElementById("cr_regexDescription").innerHTML = regexDescription;
+
+        if (regexNameroom === "" && regexNamelast === "" && regexDescription === "") {
+          const getNameRoom = document.getElementById("nameroom").value;
+          const namerooms = getNameRoom.toUpperCase();
+          const creatorName = document.getElementById('creator').value;
+          const classroomDes = document.getElementById('description').value;
+
+          const data = {
+            classroom_name: namerooms,
+            classroom_creator: creatorName,
+            classroom_des: classroomDes,
+            classroom_code: '',
+          }
+
+          fetch('/projectsenior/admin/classroom/create', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          }).then(() => {
+            // SweetAlert
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 1000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "เพิ่มข้อมูลสำเร็จแล้ว"
+            }).then(() => {
+              location.reload();
+            });
+          }).catch((err) => {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "error",
+              title: err
+            })
+          });
+        }
+
+      });
+    }
+    regexClassroom();
+  </script>
+
+  <script>
 
     // API Get Classroom
     fetch('/projectsenior/admin/classroom', {
@@ -450,66 +551,66 @@
     }
 
     // Api Post Classroom
-    const classroomForm = document.getElementById('classroom');
-    classroomForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // const classroomForm = document.getElementById('classroom');
+    // classroomForm.addEventListener('submit', (e) => {
+    //   e.preventDefault();
 
-      const getNameRoom = document.getElementById("nameroom").value;
-      const namerooms = getNameRoom.toUpperCase();
-      const creatorName = document.getElementById('creator').value;
-      const classroomDes = document.getElementById('description').value;
+    //   const getNameRoom = document.getElementById("nameroom").value;
+    //   const namerooms = getNameRoom.toUpperCase();
+    //   const creatorName = document.getElementById('creator').value;
+    //   const classroomDes = document.getElementById('description').value;
 
-      const data = {
-        classroom_name: namerooms,
-        classroom_creator: creatorName,
-        classroom_des: classroomDes,
-        classroom_code: '',
-      }
+    //   const data = {
+    //     classroom_name: namerooms,
+    //     classroom_creator: creatorName,
+    //     classroom_des: classroomDes,
+    //     classroom_code: '',
+    //   }
 
-      fetch('/projectsenior/admin/classroom/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      }).then(() => {
-        // SweetAlert
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title: "เพิ่มข้อมูลสำเร็จแล้ว"
-        }).then(() => {
-          location.reload();
-        });
-      }).catch((err) => {
+    //   fetch('/projectsenior/admin/classroom/create', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify(data)
+    //   }).then(() => {
+    //     // SweetAlert
+    //     const Toast = Swal.mixin({
+    //       toast: true,
+    //       position: "top-end",
+    //       showConfirmButton: false,
+    //       timer: 1000,
+    //       timerProgressBar: true,
+    //       didOpen: (toast) => {
+    //         toast.onmouseenter = Swal.stopTimer;
+    //         toast.onmouseleave = Swal.resumeTimer;
+    //       }
+    //     });
+    //     Toast.fire({
+    //       icon: "success",
+    //       title: "เพิ่มข้อมูลสำเร็จแล้ว"
+    //     }).then(() => {
+    //       location.reload();
+    //     });
+    //   }).catch((err) => {
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: err
-        })
-      })
-    })
+    //     const Toast = Swal.mixin({
+    //       toast: true,
+    //       position: "top-end",
+    //       showConfirmButton: false,
+    //       timer: 2000,
+    //       timerProgressBar: true,
+    //       didOpen: (toast) => {
+    //         toast.onmouseenter = Swal.stopTimer;
+    //         toast.onmouseleave = Swal.resumeTimer;
+    //       }
+    //     });
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: err
+    //     })
+    //   })
+    // })
 
 
     // Api Create Deck

@@ -113,4 +113,5 @@ function regexTeacher() {
 
   });
 }
-regexTeacher();
+
+

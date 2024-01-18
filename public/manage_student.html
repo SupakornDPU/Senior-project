@@ -180,12 +180,14 @@
                   </div>
                   <div class="col-md-3">
                     <input type="email" class="form-control" id="studentEmail" placeholder="Email">
+                    <label id="std_regexEmail" style="color: red; display: block;"></label>
                   </div>
                   <div class="col-md-1">
                     <span for="studentPassword" class="col-form-label">Password</span>
                   </div>
                   <div class="col-md-3">
                     <input type="password" class="form-control" id="studentPassword" placeholder="Password">
+                    <label id="std_regexPassword" style="color: red; display: block;"></label>
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center align-items-center text-center">
@@ -194,12 +196,14 @@
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="studentFirstname" placeholder="Firstname">
+                    <label id="std_regexFirstname" style="color: red; display: block;"></label>
                   </div>
                   <div class="col-md-1">
                     <span for="studentLastname" class="col-form-label">Lastname</span>
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="studentLastname" placeholder="Lastname">
+                    <label id="std_regexLastname" style="color: red; display: block;"></label>
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center align-items-center text-center">
@@ -290,6 +294,126 @@
       </div>
     </div>
   </div>
+
+
+  <script>
+    function regexStudent() {
+    const studentForm = document.getElementById('studentForm');
+    studentForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // ! Check Email
+      var reg = /^\S*[^0-9]$/;
+      let regexEmail;
+      if (!reg.test(document.getElementById("studentEmail").value)) {
+        regexEmail = "กรุณากรอก อีเมล.";
+        document.getElementById("studentEmail").style.color = "red";
+      } else {
+        regexEmail = "";
+        document.getElementById("studentEmail").style.color = "black";
+      }
+      document.getElementById("std_regexEmail").innerHTML = regexEmail;
+
+      // ! Check Password
+      // var regPassword = /^[a-zA-Z0-9]{1,30}$/;
+      var regPassword = /^[-\w]{1,30}$/;
+      let regexPassword;
+
+      if (!regPassword.test(document.getElementById("studentPassword").value)) {
+        regexPassword = "กรุณากรอก รหัสผ่าน.";
+      } else {
+        regexPassword = "";
+      }
+      document.getElementById("std_regexPassword").innerHTML = regexPassword;
+
+      // ! Check Firstname
+      var reg = /^[a-zA-Z]+$/;
+      let regexFirstname;
+      if (!reg.test(document.getElementById("studentFirstname").value)) {
+        regexFirstname = "กรุณากรอก ชื่อจริง.";
+      } else {
+        regexFirstname = "";
+      }
+      document.getElementById("std_regexFirstname").innerHTML = regexFirstname;
+
+      // ! Check Lastname
+      var reg = /^[a-zA-Z]+$/;
+      let regexLastname;
+      if (!reg.test(document.getElementById("studentLastname").value)) {
+        regexLastname = "กรุณากรอก นามสกุล.";
+      } else {
+        regexLastname = "";
+      }
+      document.getElementById("std_regexLastname").innerHTML = regexLastname;
+
+      if (regexEmail === "" && regexPassword === "" && regexFirstname === "" && regexLastname === "") {
+        const studentEmail = document.getElementById('studentEmail').value;
+        const studentPassword = document.getElementById('studentPassword').value;
+        const studentFirstname = document.getElementById('studentFirstname').value;
+        const studentLastname = document.getElementById('studentLastname').value;
+
+        fetch(`/projectsenior/admin/student/create`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "user_email": studentEmail,
+            "user_password": studentPassword,
+            "user_firstname": studentFirstname,
+            "user_lastname": studentLastname,
+            "user_role": 'Teacher',
+          })
+        }).then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.message);
+            });
+          }
+          return response.json();
+        }).then(() => {
+          // SweetAlert
+          const ToastTrue = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          ToastTrue.fire({
+            icon: "success",
+            title: "เพิ่มข้อมูลสำเร็จแล้ว"
+          }).then(() => {
+            location.reload();
+          })
+        }).catch(err => {
+
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: err
+          })
+        });
+      }
+
+    });
+  }
+    regexStudent();
+  </script>
 
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
@@ -390,72 +514,72 @@
     }
 
     // Api Post Student
-    const studentForm = document.getElementById('studentForm');
-    studentForm.addEventListener('submit', (e) => {
-      e.preventDefault();
+    // const studentForm = document.getElementById('studentForm');
+    // studentForm.addEventListener('submit', (e) => {
+    //   e.preventDefault();
 
-      const studentEmail = document.getElementById('studentEmail').value;
-      const studentPassword = document.getElementById('studentPassword').value;
-      const studentFirstname = document.getElementById('studentFirstname').value;
-      const studentLastname = document.getElementById('studentLastname').value;
+    //   const studentEmail = document.getElementById('studentEmail').value;
+    //   const studentPassword = document.getElementById('studentPassword').value;
+    //   const studentFirstname = document.getElementById('studentFirstname').value;
+    //   const studentLastname = document.getElementById('studentLastname').value;
 
-      fetch(`/projectsenior/admin/student/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          "user_email": studentEmail,
-          "user_password": studentPassword,
-          "user_firstname": studentFirstname,
-          "user_lastname": studentLastname,
-          "user_role": 'Student',
-        })
-      }).then(response => {
-        if (!response.ok) {
-          return response.json().then(data => {
-            throw new Error(data.message);
-          });
-        }
-        return response.json();
-      }).then(() => {
-        // SweetAlert
-        const ToastTrue = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        ToastTrue.fire({
-          icon: "success",
-          title: "เพิ่มข้อมูลสำเร็จแล้ว"
-        }).then(() => {
-          location.reload();
-        })
-      }).catch(err => {
+    //   fetch(`/projectsenior/admin/student/create`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify({
+    //       "user_email": studentEmail,
+    //       "user_password": studentPassword,
+    //       "user_firstname": studentFirstname,
+    //       "user_lastname": studentLastname,
+    //       "user_role": 'Student',
+    //     })
+    //   }).then(response => {
+    //     if (!response.ok) {
+    //       return response.json().then(data => {
+    //         throw new Error(data.message);
+    //       });
+    //     }
+    //     return response.json();
+    //   }).then(() => {
+    //     // SweetAlert
+    //     const ToastTrue = Swal.mixin({
+    //       toast: true,
+    //       position: "top-end",
+    //       showConfirmButton: false,
+    //       timer: 1500,
+    //       timerProgressBar: true,
+    //       didOpen: (toast) => {
+    //         toast.onmouseenter = Swal.stopTimer;
+    //         toast.onmouseleave = Swal.resumeTimer;
+    //       }
+    //     });
+    //     ToastTrue.fire({
+    //       icon: "success",
+    //       title: "เพิ่มข้อมูลสำเร็จแล้ว"
+    //     }).then(() => {
+    //       location.reload();
+    //     })
+    //   }).catch(err => {
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "error",
-          title: err
-        })
-      });
-    })
+    //     const Toast = Swal.mixin({
+    //       toast: true,
+    //       position: "top-end",
+    //       showConfirmButton: false,
+    //       timer: 2000,
+    //       timerProgressBar: true,
+    //       didOpen: (toast) => {
+    //         toast.onmouseenter = Swal.stopTimer;
+    //         toast.onmouseleave = Swal.resumeTimer;
+    //       }
+    //     });
+    //     Toast.fire({
+    //       icon: "error",
+    //       title: err
+    //     })
+    //   });
+    // })
   </script>
 
 </body>
