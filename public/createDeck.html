@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="css/classroom.css" />
   <link rel="stylesheet" href="css/footer.css">
 
+  <!-- Side-bar -->
+  <link rel="stylesheet" href="css/side-bar.css" />
+
   <style>
     .col-md-12 p {
       color: greenyellow;
@@ -65,62 +68,66 @@
 
 </head>
 
-<body id="body-pd" class="body-pd">
-  <header class="header body-pd" id="header">
-    <div class="header_toggle">
-      <i class="bx bx-menu bx-x" id="header-toggle"></i>
+<body>
+  <!-- !Side bar -->
+  <div class="menu-sidebar open">
+    <div class="logo-details">
+      <i class='bx bxl-python icon'></i>
+      <div class="logo_name">PyFlash</div>
+      <i class="bx bx-menu" id="btn"></i>
     </div>
-    <!-- <div class="header_img">
-         <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
-      </div> -->
-  </header>
-  <div class="l-navbar show" id="nav-bar">
-    <nav class="nav">
-      <div>
-        <a href="index" class="nav_logo">
-          <i class="bx bx-layer nav_logo-icon"></i>
-          <span class="nav_logo-name">Home</span>
+    <ul class="sidebarnav-list">
+      <li>
+        <a href="index">
+          <i class='bx bxs-home-alt-2'></i>
+          <span class="links_name">Home</span>
         </a>
-        <div class="nav_list">
-          <a href="classroom" class="nav_link active">
-            <i class="bx bx-grid-alt nav_icon"></i>
-            <span class="nav_name">Classroom</span>
-          </a>
+        <span class="tooltip">Home</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi bi-book-half"></i>
+          <span class="links_name">Classroom</span>
+        </a>
+        <span class="tooltip">Classroom</span>
+      </li>
+
+      <li class="profile">
+        <div class="profile-details">
+          <div class="name_job">
+            <div class="name">Prem Shahi</div>
+            <div class="job">Web designer</div>
+          </div>
         </div>
-      </div>
-      <a href="#" class="nav_link">
-        <i class="bx bx-log-out nav_icon"></i>
-        <span class="nav_name">SignOut</span>
-      </a>
-    </nav>
+        <i class="bx bx-log-out" id="log_out"></i>
+      </li>
+    </ul>
   </div>
 
   <!--!Container-->
-  <div class="height-100 bg-light">
-    <h1 class="text-center font-poppin" style="font-weight: bold;">Create Deck</h1>
+  <div class="home-section">
     <div class="row my-5">
       <div class="container-fluid ">
-        <div class="containers" style="margin-top: -30px; padding-left: 0px;padding-right: 0px;">
-          <div style="border-radius: 15px;background-color: #f5f5f5;">
+        <div class="container" style="margin-top: -30px; padding-left: 0px;padding-right: 0px;">
+          <h1 class="text-center font-poppin" style="font-weight: bold;">Create Deck</h1>
+          <div style="border-radius: 15px;">
             <div class="row  d-flex justify-content-center align-items-center text-center inline">
-              <div class=" bg-light">
-                <div class="row my-5">
-                  <div class="row">
-                    <div class="col-md-12" style="padding-left: 50px;">
-                      <div style="align-items: center;">
-                        <div class="content">
-                          <div class="container">
-                            <form id="createdeck">
-                              <label class="font-poppin">Deck Name</label>
-                              <input style="display: none;" for="" id="createdeckid">
-                              <input placeholder="Enter Your Deck name.." type="text" class="" value="" id="deckname"
-                                pattern="^[a-zA-Z0-9]{1,12}$" required>
-                              <input style="display: none;" value="" id="teacherid">
-                              <input style="display: none;" value="" id="adminid">
-                              <input type="submit" value="Create" class="btn-add" id="createdata"
-                                style="background-color :#4723D9 ;">
-                            </form>
-                          </div>
+              <div class="row my-5">
+                <div class="row">
+                  <div class="col-md-12" style="padding-left: 50px;">
+                    <div style="align-items: center;">
+                      <div class="content">
+                        <div class="container">
+                          <form id="createdeck">
+                            <label class="font-poppin" style="font-size: 25px;">Deck Name</label>
+                            <input style="display: none;" for="" id="createdeckid">
+                            <input placeholder="Enter Your Deck name.." type="text" class="" value="" id="deckname"
+                              pattern="^[a-zA-Z0-9]{1,12}$" required>
+                            <input style="display: none;" value="" id="teacherid">
+                            <input style="display: none;" value="" id="adminid">
+                            <input type="submit" value="Create" class="btn-add" id="createdata"
+                              style="background-color :#4723D9 ;">
+                          </form>
                         </div>
                       </div>
                     </div>
@@ -134,6 +141,8 @@
     </div>
   </div>
   <!--!Container-->
+  <!-- Side-bar -->
+  <script src="js/side-bar.js"></script>
 
   <!-- SCRIPT -->
   <script src="js/script.js"></script>

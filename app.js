@@ -17,11 +17,11 @@ const flashcardRouter = require('./router/flashcardRouter');
 
 // ! ตั้งค่าการเชื่อมต่อฐานข้อมูล
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/pyflash' , {
+mongoose.connect('mongodb+srv://644607030002:1234@cluster0.f8qfgb3.mongodb.net/pyflash', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
 }).then(() => console.log('MongoDB Connected...'))
-.catch(err => console.log(err));
+      .catch(err => console.log(err));
 
 const app = express();
 
@@ -36,7 +36,10 @@ app.use(express.urlencoded({ extended: false }));
 
 // ! Express session middleware เอาไว้เก็บ session ของ user เพื่อใช้ในการตรวจสอบสิทธิ์การเข้าถึงหน้าต่างๆ
 app.use(expressSession({
-      secret: "node secret"
+      secret: 'node secret',
+      resave: false,
+      saveUninitialized: true,
+      cookie: { maxAge: 3 * 60 * 60 * 1000 }
 }))
 app.use("*", (req, res, next) => {
       userName = req.session.userName;

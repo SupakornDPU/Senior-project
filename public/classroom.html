@@ -21,6 +21,9 @@
   <link rel="stylesheet" href="css/classroom.css" />
   <link rel="stylesheet" href="css/main.css" />
 
+  <!-- Side-bar -->
+  <link rel="stylesheet" href="css/side-bar.css" />
+
 
   <style>
     p {
@@ -52,41 +55,60 @@
     .col-lg-3 {
       width: fit-content !important;
     }
+
+    .header-section {
+      margin-bottom: 30px;
+    }
   </style>
 
 </head>
 
-<body id="body-pd" class="body-pd">
-  <header class="header body-pd" id="header">
-    <div class="header_toggle">
-      <i class="bx bx-menu bx-x" id="header-toggle"></i>
+<body>
+  <!-- !Side bar -->
+  <div class="menu-sidebar open">
+    <div class="logo-details">
+      <i class='bx bxl-python icon'></i>
+      <div class="logo_name">PyFlash</div>
+      <i class="bx bx-menu" id="btn"></i>
     </div>
-    <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
-  </header>
-  <div class="l-navbar show" id="nav-bar">
-    <nav class="nav">
-      <div>
-        <a href="index" class="nav_logo">
-          <i class="bx bx-layer nav_logo-icon"></i>
-          <span class="nav_logo-name">Home</span>
+    <ul class="sidebarnav-list">
+      <li>
+        <a href="index">
+          <i class='bx bxs-home-alt-2' ></i>
+          <span class="links_name">Home</span>
         </a>
-        <div class="nav_list">
-          <a href="classroom" class="nav_link active">
-            <i class="bx bx-grid-alt nav_icon"></i>
-            <span class="nav_name">Classroom</span>
-          </a>
+        <span class="tooltip">Home</span>
+      </li>
+      <li>
+        <a href="#">
+          <i class="bi bi-book-half"></i>
+          <span class="links_name">Classroom</span>
+        </a>
+        <span class="tooltip">Classroom</span>
+      </li>
+
+      <li class="profile">
+        <div class="profile-details">
+          <div class="name_job">
+            <div class="name">Prem Shahi</div>
+            <div class="job">Web designer</div>
+          </div>
         </div>
-      </div>
-      <a href="#" class="nav_link">
-        <i class="bx bx-log-out nav_icon"></i>
-        <span class="nav_name">SignOut</span>
-      </a>
-    </nav>
+        <i class="bx bx-log-out" id="log_out"></i>
+      </li>
+    </ul>
   </div>
 
-  <!--!Container-->
-  <div class="row" id="cardClassroom" style="margin-right: 50px;">
-  </div>
+  
+
+  <section class="home-section">
+    <header class="header-section justify-content-end row align-items-center header">
+      <div class="col-md-1 text-end">
+        <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
+      </div>
+    </header>
+    <div class="row" id="cardClassroom"></div>
+  </section>
 
   <!-- FORMPOP CREATE -->
   <div class="overlay" id="divOne">
@@ -145,6 +167,8 @@
   </div>
 
   <!--!Container-->
+  <!-- Side-bar -->
+  <script src="js/side-bar.js"></script>
 
   <!-- SCRIPT -->
   <script src="js/script.js"></script>
@@ -156,6 +180,7 @@
 
   <!-- Sweetalert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </body>
 
 </html>
