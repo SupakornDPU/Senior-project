@@ -72,7 +72,7 @@
   <div class="header-section">
     <div class="row d-flex justify-content-end align-items-center">
       <div class="col-md-12 m-0 p-0">
-        <a class="btn btn-primary font-poppin" role="button" style="font-weight: bold;" onclick="btncreatedeck()"
+        <a class="btn btn-primary font-poppin" role="button" href="#createdeck" style="font-weight: bold;" onclick="btncreatedeck()"
           id="btnCreateDeck">
           <i class="bi bi-plus-circle"></i>
           Create Deck
@@ -96,18 +96,23 @@
   </div>
 
   <!-- FORMPOP CREATE DECK -->
-  <div class="createdeck" id="createdeck">
+  <div class="overlay" id="createdeck">
     <div class="row">
       <div class="col-md-12" style="padding-left: 50px;">
-        <div class="updatedeckwrapper" style="align-items: center;">
-          <h2 class="font-poppin">Create Flashcard</h2><a class="close" href="#">&times;</a>
+        <div class="wrapper">
+          <h2>Create Deck</h2><a class="close" href="#">&times;</a>
           <div class="content">
             <div class="container">
-              <form id="joinroom">
-                <label class="font-poppin">Flashcard Name</label>
-                <input placeholder="Enter Your Flashcard name.." type="text" class="" value="" id="roomcode"
+              <form id="createdeck">
+                <input style="display: none;" for="" id="deckID"></input>
+                <label class="font-poppin" style="font-size: 25px;">Deck Name</label>
+                <input style="display: none;" for="" id="createdeckid">
+                <input placeholder="Enter Your Deck name.." type="text" class="" value="" id="deckname"
                   pattern="^[a-zA-Z0-9]{1,12}$" required>
-                <input type="submit" value="Create" class="btn-add" id="createdata" style="background-color :#4723D9 ;">
+                <input style="display: none;" value="" id="teacherid">
+                <input style="display: none;" value="" id="adminid">
+                <input type="submit" value="Create" class="btn-add" id="createdata"
+                  style="background-color :#4723D9 ;">
               </form>
             </div>
           </div>
@@ -142,6 +147,10 @@
     </div>
   </div>
 
+  <!-- FORMPOP EDIT -->
+  <div class="overlay" id="formcreatedeck">
+    
+  </div>
   <!--!Container-->
   <!-- Side-bar -->
   <script src="js/side-bar.js"></script>
