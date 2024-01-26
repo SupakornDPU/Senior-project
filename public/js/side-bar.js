@@ -15,3 +15,18 @@ function menuBtnChange() {
     
   }
 }
+
+window.addEventListener('resize', function() {
+  var width = window.innerWidth;
+
+  if (width <= 420) {
+    // ถ้าความกว้างของหน้าจอน้อยกว่าหรือเท่ากับ 420px, ลบ class 'open'
+    document.querySelector('.menu-sidebar').classList.remove('open');
+  } else {
+    // ถ้าความกว้างของหน้าจอมากกว่า 420px, เพิ่ม class 'open'
+    document.querySelector('.menu-sidebar').classList.add('open');
+  }
+});
+
+// ทำการตรวจสอบความกว้างของหน้าจอเมื่อหน้าเว็บโหลดเสร็จ
+window.dispatchEvent(new Event('resize'));
