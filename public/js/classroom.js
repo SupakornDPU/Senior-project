@@ -128,8 +128,8 @@ const formupdate = document.getElementById("updateroom");
 formupdate.addEventListener("submit", (e) => {
   e.preventDefault();
   const namerooms = document.getElementById("updatenameroom").value;
-  const creators = document.getElementById("updatecreator").value;
   const descriptions = document.getElementById("updatedescription").value;
+  const nameCreator = userName;
   const teacherids = document.getElementById("updateteacherid").value;
   const adminids = document.getElementById("updateadminid").value;
   const classroomID = document.getElementById("classroomID").value;
@@ -141,8 +141,8 @@ formupdate.addEventListener("submit", (e) => {
     },
     body: JSON.stringify({
       "classroom_name": namerooms,
-      "classroom_creator": creators,
       "classroom_des": descriptions,
+      "classroom_creator": nameCreator,
       "teacher_id": teacherids,
       "admin_id": adminids,
     })

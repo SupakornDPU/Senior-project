@@ -12,7 +12,7 @@
   top: 0;
   height: 100%;
   width: 78px;
-  background: #11101D;
+  background: #030637;
   padding: 6px 14px;
   z-index: 99;
   transition: all 0.5s ease;
@@ -141,7 +141,7 @@
   align-items: center;
   text-decoration: none;
   transition: all 0.4s ease;
-  background: #11101D;
+  background: #030637;
 }
 .menu-sidebar li a:hover{
   background: #FFF;
@@ -162,7 +162,7 @@
 .menu-sidebar li a:hover .links_name,
 .menu-sidebar li a:hover i{
   transition: all 0.5s ease;
-  color: #11101D;
+  color: #030637;
 }
 .menu-sidebar li i{
   height: 50px;
@@ -228,6 +228,7 @@
   min-height: 103vh;
   top: 0; 
   left: 78px;
+  margin: 0;
   padding-left: 20px; 
   padding-right: 20px; 
   padding-top: 20px;
@@ -237,7 +238,7 @@
 }
 .header-section {
   position: relative;
-  background: #11101D;
+  background: #3C0753;
   height: 80px;
   top: 0; 
   left: 78px;

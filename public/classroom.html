@@ -54,11 +54,7 @@
 
     .col-lg-3 {
       width: fit-content !important;
-    }
-
-    .header-section {
-      margin-bottom: 30px;
-    }
+    } 
   </style>
 
 </head>
@@ -99,16 +95,19 @@
     </ul>
   </div>
 
-  
-
-  <section class="home-section">
-    <header class="header-section justify-content-end row align-items-center header">
-      <div class="col-md-1 text-end">
+  <!--!Container-->
+  <div class="header-section d-flex justify-content-end align-items-center" style="padding-right: 4rem;">
+    <div class="row">
+      <div class="col-md-12 m-0 p-0">
         <a id="btnCreateClassroom" href="#divOne"><i class="bi bi-file-earmark-plus"></i></a>
       </div>
-    </header>
+    </div>
+  </div>
+
+  <div class="home-section">
     <div class="row" id="cardClassroom"></div>
-  </section>
+  </div>
+  <!-- !End Container -->
 
   <!-- FORMPOP CREATE -->
   <div class="overlay" id="divOne">
@@ -153,7 +152,6 @@
                 <label>Description</label>
                 <textarea id="updatedescription" value="" pattern="^[ก-๏a-z\s]{1,72}$" iplaceholder="Write something.."
                   required></textarea>
-                <input style="display: none;" value="" id="updatecreator">
                 <input style="display: none;" value="" id="updateteacherid">
                 <input style="display: none;" value="" id="updateadminid">
                 <input type="submit" value="Update" class="btn-add" id="updatedata">
