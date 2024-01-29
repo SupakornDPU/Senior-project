@@ -31,12 +31,11 @@ fetch('/projectsenior/classroom', {
               <div class="card-headers d-flex justify-content-between align-items-top">
                 <div><h3 class="card__title">${each.classroom_name}</h5>
                   <p class="fw-bold">${each.classroom_creator}</p>
-                  <p class="card__subtitle">${each.classroom_code}</p>
-                  
+                  <p class="card__subtitle">Code: ${each.classroom_code}</p>
                 </div>
                   <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear" style="color: black;"></i></a>
               </div>
-                
+              <hr>
               <p class="card__text">${each.classroom_des}</p>
             </div>
             <a href="deck?classroomID=${each._id}" class="button button--primary trade" type="button">Go</a>

@@ -17,31 +17,31 @@ fetch('/projectsenior/deck/' + classroomID, {
       const deckCol = document.createElement('div');
       deckCol.className = 'ag-courses_item';
       deckCol.innerHTML = `
-               <div href="#" class="ag-courses-item_link" id=${each._id}>
-                  <div class="ag-courses-item_bg"></div>
-                  <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center">
-                     ${each.deck_name} <a class="button gear-manage" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedeck('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
-                  </div>
-                  <div class="ag-courses-item_date-box">
-                     <div class="row mb-2">
-                        <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="flashcard?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
-                        </div>
-                     </div>
-                     <div class="row mb-2 btnManageFlashcard">
-                        <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
-                        </div>
-                     </div>
-                     <div class="row mb-2">
-                        <div class="col-md-12">
-                           <a class="btn btn-primary font-poppin" href="scoreboard" role="button" style="font-weight: bold;">Score Board</a>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         `;
+              <div href="#" class="ag-courses-item_link" id=${each._id}>
+                <div class="ag-courses-item_bg"></div>
+                <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center">
+                    ${each.deck_name} <a class="button gear-manage" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedeck('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
+                </div>
+                <div class="ag-courses-item_date-box">
+                    <div class="row mb-2">
+                      <div class="col-md-12">
+                          <a class="btn btn-primary font-poppin" href="flashcard?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
+                      </div>
+                    </div>
+                    <div class="row mb-2 btnManageFlashcard">
+                      <div class="col-md-12">
+                          <a class="btn btn-primary font-poppin" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-md-12">
+                          <a class="btn btn-primary font-poppin" href="scoreboard" role="button" style="font-weight: bold;">Score Board</a>
+                      </div>
+                    </div>
+                </div>
+              </div>
+          </div>
+        `;
       decks.appendChild(deckCol);
     });
   })
