@@ -18,15 +18,15 @@ fetch('/projectsenior/classroom', {
 })
   .then(response => response.json())
   .then(data => {
-    const cardClassroom = document.getElementById('rowclasscard');
+    const classroomCard = document.getElementById('classroomCard');
     console.log(data);
     data.forEach(each => {
       const classroomCol = document.createElement('div');
-      classroomCol.className = 'col-lg-3 col-md-12 my-2';
+      classroomCol.className = 'col-lg-3 col-md-12 my-2 cardItem';
       classroomCol.innerHTML = `
       <div class="gallery gallery--grid">
         <div class="gallery__item">
-          <div class="cards" id="classcard">
+          <div class="cards">
             <div class="card__block card__block--main" id=${each._id}>
               <div class="card-headers d-flex justify-content-between align-items-top">
                 <div><h3 class="card__title">${each.classroom_name}</h5>
@@ -44,7 +44,7 @@ fetch('/projectsenior/classroom', {
         </div>
       </div>
       `;
-      cardClassroom.appendChild(classroomCol);
+      classroomCard.appendChild(classroomCol);
     });
   })
   .catch(err => console.log(err))

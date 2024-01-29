@@ -66,14 +66,15 @@
       </li>
     </ul>
   </div>
+  <!-- !End Sidebar -->
 
   <!--!Container-->
   <!-- Button Create Flashcard -->
   <div class="header-section d-flex justify-content-end align-items-center" style="padding-right: 4rem;">
     <div class="row">
       <div class="col-md-12 m-0 p-0">
-        <a class="btn btn-primary font-poppin" role="button" href="#createdeck" style="font-weight: bold;" onclick="btncreatedeck()"
-          id="btnCreateDeck">
+        <a class="btn btn-primary font-poppin" role="button" href="#createdeck" style="font-weight: bold;"
+          onclick="btncreatedeck()" id="btnCreateDeck">
           <i class="bi bi-plus-circle"></i>
           Create Deck
         </a>
@@ -81,7 +82,7 @@
     </div>
   </div>
   <!-- Button Create Flashcard -->
-  
+
   <div class="home-section">
     <!-- Deck Card -->
     <div class="row">
@@ -93,6 +94,56 @@
       </div>
     </div>
     <!-- Deck Card -->
+  </div>
+
+  <div class="modal fade" id="addQuiz" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="flashcardLabel" aria-hidden="true">?
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="flashcardTitle">
+            Add Quiz
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- End Modal Header -->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form action="" id="formAddQuiz">
+            <div class="row my-5 align-items-center text-start">
+              <label for="formFile" class="form-label" style="font-weight: bold; margin: 0">Choose File</label>
+              <div class="col-md-6 my-3">
+                <input class="form-control" type="file" id="formFile" />
+              </div>
+              <div class="col-md-2 my-3">
+                <button type="submit" class="btn btn-primary" id="btnImport">
+                  Confirm
+                </button>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-10 my-2 d-flex justify-content-center align-items-center">
+                <button type="submit" class="btn btn-secondary" style="font-weight: bold">
+                  Submit
+                </button>
+              </div>
+            </div>
+            
+          </form>
+        </div>
+        <!-- End Modal Body -->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- !End Container -->
 
@@ -112,8 +163,7 @@
                   pattern="^[a-zA-Z0-9]{1,12}$" required>
                 <input style="display: none;" value="" id="teacherid">
                 <input style="display: none;" value="" id="adminid">
-                <input type="submit" value="Create" class="btn-add" id="createdata"
-                  style="background-color :#4723D9 ;">
+                <input type="submit" value="Create" class="btn-add" id="createdata" style="background-color :#4723D9 ;">
               </form>
             </div>
           </div>
@@ -150,7 +200,7 @@
 
   <!-- FORMPOP EDIT -->
   <div class="overlay" id="formcreatedeck">
-    
+
   </div>
   <!--!Container-->
   <!-- Side-bar -->

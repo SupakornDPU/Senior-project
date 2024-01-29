@@ -30,6 +30,14 @@ fetch('/projectsenior/deck/' + classroomID, {
                     </div>
                     <div class="row mb-2 btnManageFlashcard">
                       <div class="col-md-12">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuiz"
+                          onclick="" style="font-weight: bold;">
+                              Add Flashcards
+                          </button></td>
+                      </div>
+                    </div>
+                    <div class="row mb-2 btnManageFlashcard">
+                      <div class="col-md-12">
                           <a class="btn btn-primary font-poppin" href="manageFlashcard?deck=${each._id}" role="button" style="font-weight: bold;">Manage Flash card</a>
                       </div>
                     </div>
