@@ -132,8 +132,96 @@
                 </button>
               </div>
             </div>
-            
+
           </form>
+        </div>
+        <!-- End Modal Body -->
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- !End Container -->
+
+  <div class="modal fade" id="manageFlashcards" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="flashcardLabel" aria-hidden="true">?
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="flashcardTitle">
+            Manage Flashcard
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- End Modal Header -->
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Upload File</h4>
+                  <input  for="" id="deckID"></input>
+                  <form action="" id="formImport">
+                    <div class="row my-4">
+                      <label for="formFile" class="form-label" style="font-weight: bold;">Choose File</label>
+                      <div class="col-md-5 my-3">
+                        <input class="form-control" type="file" id="formFile">
+                      </div>
+                      <div class="col-md-2 my-3">
+                        <button type="submit" class="btn btn-primary" id="btnImport">Confirm</button>
+                      </div>
+                    </div>
+                  </form>
+                  <h4 class="card-title">Manual Create</h4>
+                  <div class="row">
+                    <div class="row text-center my-4">
+                      <div class="col-5">
+                        <span style="font-weight: bold;">Question</span>
+                      </div>
+                      <div class="col-5">
+                        <span style="font-weight: bold;">Answer</span>
+                      </div>
+                    </div>
+                    <form id="textareaForm">
+                      <div class="row" id="formQA">
+                        <div class="row">
+                          <div class="col-md-5 my-2">
+                            <div class="input-group">
+                              <textarea name="question" class="form-control" id="importquestion"
+                                aria-label="With textarea" placeholder="Question"></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-5 my-2">
+                            <div class="input-group">
+                              <textarea name="answer" class="form-control" id="importanswer" aria-label="With textarea"
+                                placeholder="Answer"></textarea>
+                            </div>
+                          </div>
+                          <div class="col-md-1 col-3 my-2">
+                            <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()"
+                              style="font-weight: bold;">
+                              <i class="bi bi-plus-circle"></i> Add
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-10 my-2 d-flex justify-content-center align-items-center">
+                        <button type="submit" class="btn btn-secondary" style="font-weight: bold;">Submit</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- End Modal Body -->
 
@@ -197,6 +285,41 @@
       </div>
     </div>
   </div>
+
+  <script>
+
+    function addForm() {
+      const addBtn = document.getElementById('addBtn');
+      const formQA = document.getElementById('formQA');
+      const div = document.createElement('div'); // create div
+
+      div.className = 'row'; // เป็นการเพิ่ม class ให้ div
+      div.innerHTML = `
+          <div class="col-md-5 my-2">
+              <div class="input-group">
+                <textarea name="question" class="form-control" aria-label="With textarea" id="importquestion" placeholder="Question"></textarea>
+              </div>
+          </div>
+          <div class="col-md-5 my-2">
+              <div class="input-group">
+                <textarea name="answer" class="form-control" aria-label="With textarea" id="importanswer" placeholder="Answer"></textarea>
+              </div>
+          </div>
+          <div class="col-md-1 col-3 my-2">
+              <button type="button" class="btn btn-success" id="addBtn" onclick="addForm()" style="font-weight: bold;"><i class="bi bi-plus-circle"></i> Add</button>
+          </div>
+          <div class="col-md-1 col-3 my-2">
+              <button type="button" class="btn btn-danger" id="addBtn" onclick="delForm()" style="font-weight: bold;"><i class="bi bi-trash"></i> Del</button>
+          </div>
+        `;
+      formQA.appendChild(div); // เป็นการเพิ่ม div ลงไปใน formQA
+    }
+
+    function delForm() {
+      const formQA = document.getElementById('formQA');
+      formQA.removeChild(formQA.lastChild);
+    }
+  </script>
 
   <!-- FORMPOP EDIT -->
   <div class="overlay" id="formcreatedeck">
