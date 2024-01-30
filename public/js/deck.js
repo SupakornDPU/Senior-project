@@ -286,7 +286,6 @@ function btn_manageFlashcard(id) {
   inputShowClassroomID.value = id;
 }
 
-
 // POST import excel file
 const fileInput = document.getElementById('formFile');
 const formImport = document.getElementById('formImport');
@@ -303,7 +302,7 @@ formImport.addEventListener('submit', (e) => {
     body: formData
   })
     .then(res => res.json())
-    .then(() => {
+    .then(data => {
       // SweetAlert
       const Toast = Swal.mixin({
         toast: true,
@@ -320,11 +319,8 @@ formImport.addEventListener('submit', (e) => {
         icon: "success",
         title: "Import successfully"
       }).then(() => {
-        window.location = "manageFlashcard?deck=" + deckId;
-      });
-    })
-    .then(() => {
-      console.log(data);
+        window.location.reload();
+      })
     })
 });
 
