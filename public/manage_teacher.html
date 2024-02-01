@@ -11,16 +11,22 @@
   <title>Admin</title>
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
   <link
     href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-    rel="stylesheet">
+    rel="stylesheet" />
+
+  <!-- Bootrap5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
 
   <!-- Custom styles for this template -->
-  <link href="css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="css/sb-admin-2.min.css" rel="stylesheet" />
 
   <!-- Custom styles for this page -->
-  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+  <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" />
 
 </head>
 
@@ -130,7 +136,6 @@
             </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
-
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
@@ -158,9 +163,7 @@
                 </a>
               </div>
             </li>
-
           </ul>
-
         </nav>
         <!-- End of Topbar -->
 
@@ -174,16 +177,15 @@
             </div>
             <div class="card-body">
               <form id="teacherForm">
-
                 <div class="row mb-4 d-flex justify-content-center text-center">
-                  <div class="col-md-1">
+                  <div class="col-3 col-lg-1">
                     <span for="teacherEmail" class="col-form-label">Email</span>
                   </div>
                   <div class="col-md-3">
                     <input type="email" class="form-control" id="typeEmail" placeholder="Email">
                     <label id="regexEmail" style="color: red; display: block;"></label>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-3 col-lg-1">
                     <span for="teacherPassword" class="col-form-label">Password</span>
                   </div>
                   <div class="col-md-3">
@@ -192,14 +194,14 @@
                   </div>
                 </div>
                 <div class="row d-flex justify-content-center text-center">
-                  <div class="col-md-1">
+                  <div class="col-3 col-lg-1">
                     <span for="teacherFirstname" class="col-form-label">Firstname</span>
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="typeFirstname" placeholder="Firstname">
                     <label id="regexFirstname" style="color: red; display: block;"></label>
                   </div>
-                  <div class="col-md-1">
+                  <div class="col-3 col-lg-1">
                     <span for="teacherLastname" class="col-form-label">Lastname</span>
                   </div>
                   <div class="col-md-3">
@@ -215,6 +217,61 @@
                 </div>
 
               </form>
+            </div>
+          </div>
+
+          <!-- Modal Edit Teacher -->
+          <div class="modal fade" id="editTeacher" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="flashcardLabel" aria-hidden="true">?
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editTitle">
+                    Edit Teachers
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editTeacherForm">
+                    <input type="hidden" id="inputTeacherId" value="">
+                    <div class="row mb-2 text-start">
+                      <div class="col-md-1">
+                        <span for="teacherEmail" class="col-form-label mb-1">Email:</span>
+                      </div>
+                      <div class="col-12">
+                        <input type="email" class="form-control" id="typeEditEmail" placeholder="Email">
+                        <label id="regexEditEmail" style="color: red; display: block;"></label>
+                      </div>
+                    </div>
+                    <div class="row text-start">
+                      <div class="col-md-1">
+                        <span for="teacherFirstname" class="col-form-label mb-1">Firstname: </span>
+                      </div>
+                      <div class="col-12">
+                        <input type="text" class="form-control" id="typeEditFirstname" placeholder="Firstname">
+                        <label id="regexEditFirstname" style="color: red; display: block;"></label>
+                      </div>
+                      <div class="col-md-1">
+                        <span for="teacherLastname" class="col-form-label mb-1">Lastname: </span>
+                      </div>
+                      <div class="col-12">
+                        <input type="text" class="form-control" id="typeEditLastname" placeholder="Lastname">
+                        <label id="regexEditLastname" style="color: red; display: block;"></label>
+                      </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center text-center">
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -235,6 +292,7 @@
                       <th>Email</th>
                       <th>Status</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -245,6 +303,7 @@
                       <th>Last name</th>
                       <th>Email</th>
                       <th>Status</th>
+                      <th></th>
                       <th></th>
                     </tr>
                   </tfoot>
@@ -300,128 +359,13 @@
     </div>
   </div>
 
-  <script>
-    function regexTeacher() {
-    const teacherForm = document.getElementById('teacherForm');
-    teacherForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      // ! Check Email
-      var reg = /^\S*[^0-9]$/;
-      let regexEmail;
-      if (!reg.test(document.getElementById("typeEmail").value)) {
-        regexEmail = "กรุณากรอก อีเมล.";
-        document.getElementById("typeEmail").style.color = "red";
-      } else {
-        regexEmail = "";
-        document.getElementById("typeEmail").style.color = "black";
-      }
-      document.getElementById("regexEmail").innerHTML = regexEmail;
-
-      // ! Check Password
-      // var regPassword = /^[a-zA-Z0-9]{1,30}$/;
-      var regPassword = /^[-\w]{1,30}$/;
-      let regexPassword;
-
-      if (!regPassword.test(document.getElementById("typePassword").value)) {
-        regexPassword = "กรุณากรอก รหัสผ่าน.";
-      } else {
-        regexPassword = "";
-      }
-      document.getElementById("regexPassword").innerHTML = regexPassword;
-
-      // ! Check Firstname
-      var reg = /^[a-zA-Z]+$/;
-      let regexFirstname;
-      if (!reg.test(document.getElementById("typeFirstname").value)) {
-        regexFirstname = "กรุณากรอก ชื่อจริง.";
-      } else {
-        regexFirstname = "";
-      }
-      document.getElementById("regexFirstname").innerHTML = regexFirstname;
-
-      // ! Check Lastname
-      var reg = /^[a-zA-Z]+$/;
-      let regexLastname;
-      if (!reg.test(document.getElementById("typeLastname").value)) {
-        regexLastname = "กรุณากรอก นามสกุล.";
-      } else {
-        regexLastname = "";
-      }
-      document.getElementById("regexLastname").innerHTML = regexLastname;
-
-      if (regexEmail === "" && regexPassword === "" && regexFirstname === "" && regexLastname === "") {
-        const teacherEmail = document.getElementById('typeEmail').value;
-        const teacherPassword = document.getElementById('typePassword').value;
-        const teacherFirstname = document.getElementById('typeFirstname').value;
-        const teacherLastname = document.getElementById('typeLastname').value;
-
-        fetch(`/projectsenior/admin/teacher/create`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            "user_email": teacherEmail,
-            "user_password": teacherPassword,
-            "user_firstname": teacherFirstname,
-            "user_lastname": teacherLastname,
-            "user_role": 'Teacher',
-          })
-        }).then(response => {
-          if (!response.ok) {
-            return response.json().then(data => {
-              throw new Error(data.message);
-            });
-          }
-          return response.json();
-        }).then(() => {
-          // SweetAlert
-          const ToastTrue = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 1500,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          ToastTrue.fire({
-            icon: "success",
-            title: "เพิ่มข้อมูลสำเร็จแล้ว"
-          }).then(() => {
-            location.reload();
-          })
-        }).catch(err => {
-
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "error",
-            title: err
-          })
-        });
-      }
-
-    });
-  }
-    regexTeacher();
-  </script>
-
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
 
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -440,9 +384,138 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
+    // SweetAlert Success
+    function showToast(titleText) {
+      const ToastTrue = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      ToastTrue.fire({
+        icon: "success",
+        title: titleText
+      }).then(() => {
+        location.reload();
+      })
+    }
+
+    // SweetAlert Error
+    function showToastError(err) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: err
+      })
+    }
+
+    function regexTeacher() {
+      const teacherForm = document.getElementById('teacherForm');
+      teacherForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // ! Check Email
+        var reg = /^\S*[^0-9]$/;
+        let regexEmail;
+        if (!reg.test(document.getElementById("typeEmail").value)) {
+          regexEmail = "กรุณากรอก อีเมล.";
+          document.getElementById("typeEmail").style.border = "1px solid red";
+        } else {
+          regexEmail = "";
+          document.getElementById("typeEmail").style.border = "1px solid #d1d3e2";
+        }
+        document.getElementById("regexEmail").innerHTML = regexEmail;
+
+        // ! Check Password
+        // var regPassword = /^[a-zA-Z0-9]{1,30}$/;
+        var regPassword = /^[-\w]{1,30}$/;
+        let regexPassword;
+
+        if (!regPassword.test(document.getElementById("typePassword").value)) {
+          regexPassword = "กรุณากรอก รหัสผ่าน.";
+          document.getElementById("typePassword").style.border = "1px solid red";
+        } else {
+          regexPassword = "";
+          document.getElementById("typePassword").style.border = "1px solid #d1d3e2";
+        }
+        document.getElementById("regexPassword").innerHTML = regexPassword;
+
+        // ! Check Firstname
+        var reg = /^[a-zA-Z]+$/;
+        let regexFirstname;
+        if (!reg.test(document.getElementById("typeFirstname").value)) {
+          regexFirstname = "กรุณากรอก ชื่อจริง.";
+          document.getElementById("typeFirstname").style.border = "1px solid red";
+        } else {
+          regexFirstname = "";
+          document.getElementById("typeFirstname").style.border = "1px solid #d1d3e2";
+        }
+        document.getElementById("regexFirstname").innerHTML = regexFirstname;
+
+        // ! Check Lastname
+        var reg = /^[a-zA-Z]+$/;
+        let regexLastname;
+        if (!reg.test(document.getElementById("typeLastname").value)) {
+          regexLastname = "กรุณากรอก นามสกุล.";
+          document.getElementById("typeLastname").style.border = "1px solid red";
+        } else {
+          regexLastname = "";
+          document.getElementById("typeLastname").style.border = "1px solid #d1d3e2";
+        }
+        document.getElementById("regexLastname").innerHTML = regexLastname;
+
+        if (regexEmail === "" && regexPassword === "" && regexFirstname === "" && regexLastname === "") {
+          const teacherEmail = document.getElementById('typeEmail').value;
+          const teacherPassword = document.getElementById('typePassword').value;
+          const teacherFirstname = document.getElementById('typeFirstname').value;
+          const teacherLastname = document.getElementById('typeLastname').value;
+
+          fetch(`/api/admin/teacher/create`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              "user_email": teacherEmail,
+              "user_password": teacherPassword,
+              "user_firstname": teacherFirstname,
+              "user_lastname": teacherLastname,
+              "user_role": 'Teacher',
+            })
+          }).then(response => {
+            if (!response.ok) {
+              return response.json().then(data => {
+                throw new Error(data.message);
+              });
+            }
+            return response.json();
+          }).then(() => {
+            showToast("เพิ่มข้อมูลสำเร็จแล้ว");
+          }).catch(err => {
+            showToastError(err);
+          });
+        }
+      });
+    }
+    regexTeacher();
 
     // API Get Teacher
-    fetch('/projectsenior/admin/teacher', {
+    fetch('/api/admin/teacher', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -461,7 +534,7 @@
                   <td>${item.user_firstname}</td>
                   <td>${item.user_lastname}</td>
                   <td>${item.user_email}</td>
-                  <td>
+                  <td class="text-center">
                       <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Set Status
                       </button>
                       <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
@@ -469,7 +542,13 @@
                           <a class="dropdown-item" href="#">Unapproved</a>
                       </div>
                   </td>
-                  <td>
+                  <td class="text-center">
+                      <button type="button" class="btn btn-primary" id="btnEdit" data-bs-toggle="modal" data-bs-target="#editTeacher"
+                        onclick="getDetailEditTeacher('${item._id}')">
+                              Edit
+                      </button>
+                  </td>
+                  <td class="text-center">
                       <a class="btn btn-danger btn-icon-split" onclick="deleteTeacher('${item._id}')">
                           <span class="icon text-white-50">
                               <i class="fas fa-trash"></i>
@@ -486,7 +565,95 @@
         });
       })
 
-    // Funtion API Delete Teacher
+    // Function API Get Teacher with Id
+    function getDetailEditTeacher(teacherId) {
+      fetch('/api/admin/teacher/' + teacherId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('inputTeacherId').value = data._id;
+          document.getElementById('typeEditEmail').value = data.user_email;
+          document.getElementById('typeEditFirstname').value = data.user_firstname;
+          document.getElementById('typeEditLastname').value = data.user_lastname;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    // API Edit Teacher
+    const editTeacherForm = document.getElementById('editTeacherForm');
+    editTeacherForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // ! Check Email
+      var reg = /^\S*[^0-9]$/;
+      let regexEditEmail;
+      if (!reg.test(document.getElementById("typeEditEmail").value)) {
+        regexEditEmail = "กรุณากรอก อีเมล.";
+        document.getElementById("typeEditEmail").style.color = "red";
+      } else {
+        regexEditEmail = "";
+        document.getElementById("typeEditEmail").style.color = "black";
+      }
+      document.getElementById("regexEditEmail").innerHTML = regexEditEmail;
+
+      // ! Check Firstname
+      var reg = /^[a-zA-Z]+$/;
+      let regexEditFirstname;
+      if (!reg.test(document.getElementById("typeEditFirstname").value)) {
+        regexEditFirstname = "กรุณากรอก ชื่อจริง.";
+      } else {
+        regexEditFirstname = "";
+      }
+      document.getElementById("regexEditFirstname").innerHTML = regexEditFirstname;
+
+      // ! Check Lastname
+      var reg = /^[a-zA-Z]+$/;
+      let regexEditLastname;
+      if (!reg.test(document.getElementById("typeEditLastname").value)) {
+        regexEditLastname = "กรุณากรอก นามสกุล.";
+      } else {
+        regexEditLastname = "";
+      }
+      document.getElementById("regexEditLastname").innerHTML = regexEditLastname;
+
+      if (regexEditEmail === "" && regexEditFirstname === "" && regexEditLastname === "") {
+        const teacherId = document.getElementById('inputTeacherId').value;
+        const teacherEmail = document.getElementById('typeEditEmail').value;
+        const teacherFirstname = document.getElementById('typeEditFirstname').value;
+        const teacherLastname = document.getElementById('typeEditLastname').value;
+
+        fetch('/api/admin/teacher/'+teacherId, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            "user_email": teacherEmail,
+            "user_firstname": teacherFirstname,
+            "user_lastname": teacherLastname,
+          })
+        }).then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.message);
+            });
+          }
+          return response.json();
+        }).then(() => {
+          showToast("แก้ไขข้อมูลสำเร็จแล้ว");
+        }).catch(err => {
+          showToastError(err);
+        });
+      }
+    })
+
+    // Function API Delete Teacher
     function deleteTeacher(teacherId) {
       Swal.fire({
         title: "ต้องการจะลบใช่หรือไม่?",
@@ -498,39 +665,15 @@
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch('/projectsenior/admin/teacher/' + teacherId, {
+          fetch('/api/admin/teacher/' + teacherId, {
             method: 'DELETE',
           }).then(response => response.json())
             .then(() => {
-              const ToastTrue = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-              });
-              ToastTrue.fire({
-                icon: "success",
-                title: "ลบข้อมูลสำเร็จแล้ว"
-              }).then(() => {
-                location.reload();
-              });
+              showToast("ลบข้อมูลสำเร็จแล้ว");
             })
         }
       });
     }
-
-    // // Api Post Teacher
-    // const teacherForm = document.getElementById('teacherForm');
-    // teacherForm.addEventListener('submit', (e) => {
-    //   e.preventDefault();
-
-      
-    // })
   </script>
 
 </body>

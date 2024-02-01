@@ -159,8 +159,8 @@
 
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          
-          <!-- Modal -->
+
+          <!-- Modal Add Flashcard -->
           <div class="modal fade" id="flashcard" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="flashcardLabel" aria-hidden="true">?
             <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -235,6 +235,45 @@
             </div>
           </div>
 
+          <!-- Modal Edit Deck -->
+          <div class="modal fade" id="editDeck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="formDeckLabel" aria-hidden="true">?
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="formDeckTitle">
+                    Edit Decks
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editDeck">
+                    <input type="hidden" id="inputDeckId" value="">
+                    <div class="row mb-4">
+                      <div class="col-md-3 mb-1">
+                        <span for="modalDeckName" class="col-form-label">Deck Name: </span>
+                      </div>
+                      <div class="col-md-12">
+                        <input type="text" class="form-control" id="modalDeckName" placeholder="Deck Name">
+                        <label id="regexEditDeckName" style="color: red; display: block;"></label>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center align-items-center text-center">
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -251,6 +290,7 @@
                       <th>ClassroomID</th>
                       <th></th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -259,6 +299,7 @@
                       <th>Id</th>
                       <th>Deck name</th>
                       <th>ClassroomID</th>
+                      <th></th>
                       <th></th>
                       <th></th>
                     </tr>
@@ -341,8 +382,48 @@
 
   <script>
 
+    // SweetAlert Success
+    function showToast(titleText) {
+      const ToastTrue = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      ToastTrue.fire({
+        icon: "success",
+        title: titleText
+      }).then(() => {
+        location.reload();
+      })
+    }
+
+    // SweetAlert Error
+    function showToastError(err) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: err
+      })
+    }
+
     // API GET DECK
-    fetch("/projectsenior/admin/deck", {
+    fetch("/api/admin/deck", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -361,11 +442,17 @@
                   <td>${item.deck_name}</td>
                   <td>${item.classroom_id}</td>
                   <td>
-                      <!-- Button trigger modal -->
                       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#flashcard"
                       onclick="importFile('${item._id}')">
                           Add Flashcards
                       </button></td>
+                  </td>
+                  <td>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDeck"
+                      onclick="getDetailEditDeck('${item._id}')">
+                          Edit
+                      </button>
+                  </td>
                   <td>
                       <a class="btn btn-danger btn-icon-split" onclick="deleteDeck('${item._id}')">
                           <span class="icon text-white-50">
@@ -395,27 +482,11 @@
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch("/projectsenior/admin/deck/delete/" + deckId, {
+          fetch("/api/admin/deck/delete/" + deckId, {
             method: "DELETE",
           }).then((response) => response.json())
             .then(() => {
-              const ToastTrue = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                },
-              });
-              ToastTrue.fire({
-                icon: "success",
-                title: "ลบข้อมูลสำเร็จแล้ว",
-              }).then(() => {
-                location.reload();
-              });
+              showToast("ลบข้อมูลสำเร็จแล้ว");
             });
         }
       });
@@ -432,31 +503,17 @@
         const formData = new FormData();
         formData.append('file', fileInput.files[0]);
 
-        fetch('/projectsenior/admin/flashcard/import/' + deckId, {
+        fetch('/api/admin/flashcard/import/' + deckId, {
           method: 'POST',
           body: formData
         })
           .then(res => res.json())
           .then(() => {
-            // SweetAlert
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 1200,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-              }
-            });
-            Toast.fire({
-              icon: "success",
-              title: "Import successfully"
-            }).then(() => {
-              location.reload();
-            });
+            showToast("เพิ่มข้อมูลสำเร็จแล้ว");
           })
+          .catch(err => {
+            showToastError(err);
+          });
       });
 
       // Api Post InputManual Flashcard 
@@ -481,7 +538,7 @@
         });
         console.log(data)
         // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
-        fetch('/projectsenior/admin/flashcard/' + deckId, {
+        fetch('/api/admin/flashcard/' + deckId, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -490,30 +547,15 @@
         })
           .then(response => response.json())
           .then(() => {
-            // SweetAlert
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 1200,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-              }
-            });
-            Toast.fire({
-              icon: "success",
-              title: "Create Flashcard successfully"
-            }).then(() => {
-              location.reload();
-            });
+            showToast("เพิ่มข้อมูลสำเร็จแล้ว");
 
             // Reset textarea values
             questions.forEach(question => (question.value = ''));
             answers.forEach(answer => (answer.value = ''));
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            showToastError(err);
+          });
       });
     }
 
@@ -550,6 +592,69 @@
       const formQA = document.getElementById('formQA');
       formQA.removeChild(formQA.lastChild);
     }
+
+    // Function Api Get Detail Edit Deck
+    function getDetailEditDeck(deckId) {
+      fetch('/api/admin/deck/' + deckId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('inputDeckId').value = data._id;
+          document.getElementById('modalDeckName').value = data.deck_name;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    // Function Api Edit Deck
+    const editDeck = document.getElementById('editDeck');
+    editDeck.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // Check Deck Name
+      var reg = /^[a-zA-Z0-9]{1,10}$/;
+      let regexEditDeckName;
+      if (!reg.test(document.getElementById("modalDeckName").value)) {
+        regexEditDeckName = "กรุณากรอก ชื่อเด็ค.";
+        document.getElementById("modalDeckName").style.border = "1px solid red";
+      } else {
+        regexEditDeckName = "";
+        document.getElementById("modalDeckName").style.border = "1px solid #d1d3e2";
+      }
+      document.getElementById("regexEditDeckName").innerHTML = regexEditDeckName;
+
+      
+      if (regexEditDeckName === "") {
+        const deckId = document.getElementById('inputDeckId').value;
+        const deckName = document.getElementById('modalDeckName').value;
+
+        fetch('/api/admin/deck/' + deckId, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            deck_name: deckName,
+          }),
+        }).then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.message);
+            });
+          }
+          return response.json();
+        }).then(() => {
+          showToast("แก้ไขข้อมูลสำเร็จแล้ว");
+        }).catch(err => {
+          showToastError(err);
+        });
+      }
+    });
 
   </script>
 </body>

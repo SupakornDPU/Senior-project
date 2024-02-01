@@ -13,7 +13,7 @@ classroomRouter.get('/', (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+    });
 });
 
 // Logic สำหรับสร้างรหัสสุ่ม 6 ตัวอักษร
@@ -54,7 +54,7 @@ classroomRouter.post('/', (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    }); // ใช้ method create() เพื่อสร้างข้อมูล และรับข้อมูลผ่าน req.body ที่ส่งมา
+    });
 });
 
 // Get Router สำหรับค้นหาห้องเรียนตาม id
@@ -65,7 +65,7 @@ classroomRouter.get('/:id', (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    }); // ใช้ method findById() เพื่อค้นหาข้อมูลตาม id ที่ส่งมา
+    });
 });
 
 // Put Router สำหรับอัพเดทข้อมูลห้องเรียน
@@ -76,7 +76,7 @@ classroomRouter.put('/:id', (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    }); // ใช้ method findByIdAndUpdate() เพื่อค้นหาข้อมูลตาม id และทำการอัพเดทข้อมูล
+    });
 });
 
 // Delete Router สำหรับลบข้อมูลห้องเรียน

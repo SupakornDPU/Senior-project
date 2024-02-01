@@ -75,7 +75,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Data tables:</h6>
             <a class="collapse-item" href="manage_teacher">Manage Teacher</a>
-            <a class="collapse-item" href="manage_student">Manage Student</a>
+            <a class="collapse-item" href="manage_classroom">Manage Student</a>
             <a class="collapse-item" href="manage_classroom">Manage Classroom</a>
             <a class="collapse-item" href="manage_deck">Manage Deck</a>
             <a class="collapse-item" href="manage_flashcard">Manage Flashcards</a>
@@ -178,16 +178,14 @@
               <h6 class="m-0 font-weight-bold text-primary">Manage Classroom</h6>
             </div>
             <div class="card-body">
-
               <form id="classroom">
-
                 <div class="row mb-4 d-flex justify-content-center align-items-center text-center">
                   <div class="col-md-1">
                     <span for="nameroom" class="col-form-label">Nameroom</span>
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="nameroom" placeholder="Your classname (Ex.CE000)">
-                    <label id="cr_regexNameroom" style="color: red; display: block;"></label>
+                    <label id="regexNameroom" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -197,7 +195,7 @@
                   </div>
                   <div class="col-md-3">
                     <input type="text" class="form-control" id="creator" placeholder="Firstname Lastname">
-                    <label id="cr_regexNamelast" style="color: red; display: block;"></label>
+                    <label id="regexCreatorName" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -207,7 +205,7 @@
                   </div>
                   <div class="col-md-3">
                     <textarea class="form-control" id="description" placeholder="Description"></textarea>
-                    <label id="cr_regexDescription" style="color: red; display: block;"></label>
+                    <label id="regexDescription" style="color: red; display: block;"></label>
                   </div>
                 </div>
 
@@ -221,7 +219,7 @@
             </div>
           </div>
 
-          <!-- Modal -->
+          <!-- Modal Add Deck -->
           <div class="modal fade" id="formDeck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
             aria-labelledby="formDeckLabel" aria-hidden="true">?
             <div class="modal-dialog">
@@ -256,6 +254,54 @@
             </div>
           </div>
 
+          <!-- Modal Edit Classroom -->
+          <div class="modal fade" id="modalClassroom" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="flashcardLabel" aria-hidden="true">?
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="editTitle">
+                    Edit Classroom
+                  </h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <form id="editClassroomForm">
+                    <input type="hidden" id="inputClassroomId" value="">
+                    <div class="row mb-4 d-flex justify-content-center align-items-center text-center">
+                      <div class="col-md-3">
+                        <span for="modalNameroom" class="col-form-label">Nameroom</span>
+                      </div>
+                      <div class="col-md-9">
+                        <input type="text" class="form-control" id="modalNameroom" placeholder="Your classname (Ex.CE000)">
+                        <label id="regexEditNameroom" style="color: red; display: block;"></label>
+                      </div>
+                    </div>
+                    <div class="row mb-4 d-flex justify-content-center align-items-center text-center">
+                      <div class="col-md-3">
+                        <span for="modalDescription" class="col-form-label">Description</span>
+                      </div>
+                      <div class="col-md-9">
+                        <textarea class="form-control" id="modalDescription" placeholder="Description"></textarea>
+                        <label id="regexEditDescription" style="color: red; display: block;"></label>
+                      </div>
+                    </div>
+                    <div class="row d-flex justify-content-center align-items-center text-center">
+                      <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -274,6 +320,7 @@
                       <th>Code</th>
                       <th></th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -284,6 +331,7 @@
                       <th>Creator</th>
                       <th>Description</th>
                       <th>Code</th>
+                      <th></th>
                       <th></th>
                       <th></th>
                     </tr>
@@ -311,7 +359,6 @@
 
     </div>
     <!-- End of Content Wrapper -->
-
   </div>
   <!-- End of Page Wrapper -->
 
@@ -366,42 +413,89 @@
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
-    function regexClassroom() {
+    // SweetAlert Success
+    function showToast(titleText) {
+      const ToastTrue = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      ToastTrue.fire({
+        icon: "success",
+        title: titleText
+      }).then(() => {
+        location.reload();
+      })
+    }
+
+    // SweetAlert Error
+    function showToastError(err) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: err
+      })
+    }
+
+    // Function Api Create Classroom
+    function createNewClassroom() {
       const classroomForm = document.getElementById('classroom');
       classroomForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
-        // ! Check Firstname
+        // ! Check Classroom Name
         var reg = /^[a-zA-Z0-9]{1,5}$/;
         let regexNameroom;
         if (!reg.test(document.getElementById("nameroom").value)) {
           regexNameroom = "กรุณากรอก ชื่อห้องเรียน.";
+          document.getElementById("nameroom").style.border = "1px solid red";
         } else {
           regexNameroom = "";
+          document.getElementById("nameroom").style.border = "1px solid #d1d3e2";
         }
-        document.getElementById("cr_regexNameroom").innerHTML = regexNameroom;
+        document.getElementById("regexNameroom").innerHTML = regexNameroom;
 
-        // ! Check Lastname
+        // ! Check Creatorname
         var reg = /^[a-zA-Z\s]+$/;
-        let regexNamelast;
+        let regexCreatorName;
         if (!reg.test(document.getElementById("creator").value)) {
-          regexNamelast = "กรุณากรอก ชื่อ - นามสกุล.";
+          regexCreatorName = "กรุณากรอก ชื่อ - นามสกุล.";
+          document.getElementById("creator").style.border = "1px solid red";
         } else {
-          regexNamelast = "";
+          regexCreatorName = "";
+          document.getElementById("creator").style.border = "1px solid #d1d3e2";
         }
-        document.getElementById("cr_regexNamelast").innerHTML = regexNamelast;
+        document.getElementById("regexCreatorName").innerHTML = regexCreatorName;
 
         // ! Check Description
         var reg = /^[ก-๏a-z\s]{0,40}$/;
         let regexDescription;
         if (!reg.test(document.getElementById("description").value)) {
           regexDescription = "ข้อความเกินกำหนด";
+          document.getElementById("description").style.border = "1px solid red";
         } else {
           regexDescription = "";
+          document.getElementById("description").style.border = "1px solid #d1d3e2";
         }
-        document.getElementById("cr_regexDescription").innerHTML = regexDescription;
+        document.getElementById("regexDescription").innerHTML = regexDescription;
 
-        if (regexNameroom === "" && regexNamelast === "" && regexDescription === "") {
+        if (regexNameroom === "" && regexCreatorName === "" && regexDescription === "") {
           const getNameRoom = document.getElementById("nameroom").value;
           const namerooms = getNameRoom.toUpperCase();
           const creatorName = document.getElementById('creator').value;
@@ -414,59 +508,25 @@
             classroom_code: '',
           }
 
-          fetch('/projectsenior/admin/classroom/create', {
+          fetch('/api/admin/classroom/create', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify(data)
           }).then(() => {
-            // SweetAlert
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 1000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-              }
-            });
-            Toast.fire({
-              icon: "success",
-              title: "เพิ่มข้อมูลสำเร็จแล้ว"
-            }).then(() => {
-              location.reload();
-            });
+            showToast("เพิ่มข้อมูลสำเร็จแล้ว");
           }).catch((err) => {
-            const Toast = Swal.mixin({
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              timer: 2000,
-              timerProgressBar: true,
-              didOpen: (toast) => {
-                toast.onmouseenter = Swal.stopTimer;
-                toast.onmouseleave = Swal.resumeTimer;
-              }
-            });
-            Toast.fire({
-              icon: "error",
-              title: err
-            })
+            showToastError(err);
           });
         }
 
       });
     }
-    regexClassroom();
-  </script>
-
-  <script>
+    createNewClassroom();
 
     // API Get Classroom
-    fetch('/projectsenior/admin/classroom', {
+    fetch('/api/admin/classroom', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -491,6 +551,13 @@
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#formDeck"
                     onclick="createDeck('${item._id}')">
                         Add Deck
+                    </button>
+                </td>
+                <td>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalClassroom"
+                    onclick="getDetailEditClassroom('${item._id}')">
+                        Edit
                     </button>
                 </td>
                 <td>
@@ -523,97 +590,101 @@
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch('/projectsenior/admin/classroom/' + classroomID, {
+          fetch('/api/admin/classroom/' + classroomID, {
             method: 'DELETE',
           })
             .then(response => response.json())
             .then(() => {
-              const ToastTrue = Swal.mixin({
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                timer: 1500,
-                timerProgressBar: true,
-                didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-                }
-              });
-              ToastTrue.fire({
-                icon: "success",
-                title: "ลบข้อมูลสำเร็จแล้ว"
-              }).then(() => {
-                location.reload();
-              });
+              showToast("ลบข้อมูลสำเร็จแล้ว");
+            })
+            .catch((err) => {
+              showToastError(err);
             })
         }
-      });
+      })
     }
 
-    // Api Post Classroom
-    // const classroomForm = document.getElementById('classroom');
-    // classroomForm.addEventListener('submit', (e) => {
-    //   e.preventDefault();
+    // Function Api Get Detail Edit Classroom
+    function getDetailEditClassroom(classroomId) {
+      fetch('/api/admin/classroom/' + classroomId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('inputClassroomId').value = data._id;
+          document.getElementById('modalNameroom').value = data.classroom_name;
+          document.getElementById('modalDescription').value = data.classroom_des;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
 
-    //   const getNameRoom = document.getElementById("nameroom").value;
-    //   const namerooms = getNameRoom.toUpperCase();
-    //   const creatorName = document.getElementById('creator').value;
-    //   const classroomDes = document.getElementById('description').value;
+    // API Edit Classroom
+    const editClassroomForm = document.getElementById('editClassroomForm');
+    editClassroomForm.addEventListener('submit', (e) => {
+      e.preventDefault();
 
-    //   const data = {
-    //     classroom_name: namerooms,
-    //     classroom_creator: creatorName,
-    //     classroom_des: classroomDes,
-    //     classroom_code: '',
-    //   }
+      // ! Check Classroom Name
+      var reg = /^[a-zA-Z0-9]{1,5}$/;
+      let regexEditNameroom;
+      if (!reg.test(document.getElementById("modalNameroom").value)) {
+        regexEditNameroom = "กรุณากรอก ชื่อห้องเรียน.";
+        document.getElementById("modalNameroom").style.border = "1px solid red";
+      } else {
+        regexEditNameroom = "";
+        document.getElementById("modalNameroom").style.border = "1px solid #d1d3e2";
+      }
+      document.getElementById("regexEditNameroom").innerHTML = regexEditNameroom;
 
-    //   fetch('/projectsenior/admin/classroom/create', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(data)
-    //   }).then(() => {
-    //     // SweetAlert
-    //     const Toast = Swal.mixin({
-    //       toast: true,
-    //       position: "top-end",
-    //       showConfirmButton: false,
-    //       timer: 1000,
-    //       timerProgressBar: true,
-    //       didOpen: (toast) => {
-    //         toast.onmouseenter = Swal.stopTimer;
-    //         toast.onmouseleave = Swal.resumeTimer;
-    //       }
-    //     });
-    //     Toast.fire({
-    //       icon: "success",
-    //       title: "เพิ่มข้อมูลสำเร็จแล้ว"
-    //     }).then(() => {
-    //       location.reload();
-    //     });
-    //   }).catch((err) => {
+      // ! Check Description
+      var reg = /^[ก-๏a-z\s]{0,40}$/;
+      let regexEditDescription;
+      if (!reg.test(document.getElementById("modalDescription").value)) {
+        regexEditDescription = "ข้อความเกินกำหนด";
+        document.getElementById("modalDescription").style.border = "1px solid red";
+      } else {
+        regexEditDescription = "";
+        document.getElementById("modalDescription").style.border = "1px solid #d1d3e2";
+      }
+      document.getElementById("regexEditDescription").innerHTML = regexEditDescription;
 
-    //     const Toast = Swal.mixin({
-    //       toast: true,
-    //       position: "top-end",
-    //       showConfirmButton: false,
-    //       timer: 2000,
-    //       timerProgressBar: true,
-    //       didOpen: (toast) => {
-    //         toast.onmouseenter = Swal.stopTimer;
-    //         toast.onmouseleave = Swal.resumeTimer;
-    //       }
-    //     });
-    //     Toast.fire({
-    //       icon: "error",
-    //       title: err
-    //     })
-    //   })
-    // })
+      if (regexEditNameroom === "" && regexEditDescription === "") {
+        const classroomId = document.getElementById('inputClassroomId').value;
+        const getNameRoom = document.getElementById("modalNameroom").value;
+        const namerooms = getNameRoom.toUpperCase();
+        const classroomDes = document.getElementById('modalDescription').value;
 
+        const data = {
+          classroom_name: namerooms,
+          classroom_des: classroomDes,
+        }
 
-    // Api Create Deck
+        fetch('/api/admin/classroom/' + classroomId, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.message);
+            });
+          }
+          return response.json();
+        }).then(() => {
+          showToast("แก้ไขข้อมูลสำเร็จแล้ว");
+        }).catch(err => {
+          showToastError(err);
+        });
+      }
+    });
+
+    // Function Api Create Deck
     function createDeck(classroomID) {
       const formDeck = document.getElementById('createDeck');
       const deckName = document.getElementById('deckName');
@@ -626,48 +697,16 @@
           classroom_id: classroomID,
         }
 
-        fetch('/projectsenior/admin/deck/create', {
+        fetch('/api/admin/deck/create', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(data)
         }).then(() => {
-          // SweetAlert
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 1000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "success",
-            title: "เพิ่มข้อมูลสำเร็จแล้ว"
-          }).then(() => {
-            location.reload();
-          });
+          showToast("เพิ่มข้อมูลสำเร็จแล้ว");
         }).catch((err) => {
-
-          const Toast = Swal.mixin({
-            toast: true,
-            position: "top-end",
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-              toast.onmouseenter = Swal.stopTimer;
-              toast.onmouseleave = Swal.resumeTimer;
-            }
-          });
-          Toast.fire({
-            icon: "error",
-            title: err
-          })
+          showToastError(err);
         })
       })
     }

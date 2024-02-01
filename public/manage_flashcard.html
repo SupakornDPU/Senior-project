@@ -6,9 +6,15 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
+  <meta name="Question" content="">
   <meta name="author" content="">
   <title>Admin</title>
+
+  <!-- Bootrap5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
 
   <!-- Custom fonts for this template -->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -160,9 +166,56 @@
         </nav>
         <!-- End of Topbar -->
 
+        <!-- Modal Edit Deck -->
+        <div class="modal fade" id="editDeck" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="formDeckLabel" aria-hidden="true">?
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="formDeckTitle">
+                  Edit Decks
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="editFlashcard">
+                  <input type="hidden" id="inputFlashcardId" value="">
+                  <div class="row mb-3">
+                    <div class="col-3 mb-2">
+                      <span for="modalQuestion" class="col-form-label">Question:</span>
+                    </div>
+                    <div class="col-12">
+                      <textarea class="form-control" id="modalQuestion" placeholder="Question"></textarea>
+                      <label id="regexEditQuestion" style="color: red; display: block;"></label>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-3 mb-2">
+                      <span for="modalAnswer" class="col-form-label">Answer:</span>
+                    </div>
+                    <div class="col-12">
+                      <textarea class="form-control" id="modalAnswer" placeholder="Answer"></textarea>
+                      <label id="regexEditAnswer" style="color: red; display: block;"></label>
+                    </div>
+                  </div>
+                  <div class="row text-center">
+                    <div class="col-md-12">
+                      <button type="submit" class="btn btn-primary mt-4">Submit</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- Begin Page Content -->
         <div class="container-fluid">
-
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
@@ -179,6 +232,7 @@
                       <th>Card Answer</th>
                       <th>Deck Id</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tfoot>
@@ -189,6 +243,7 @@
                       <th>Card Answer</th>
                       <th>Deck Id</th>
                       <th></th>
+                      <th></th>
                     </tr>
                   </tfoot>
                   <tbody id="teacherTableBody">
@@ -198,7 +253,6 @@
             </div>
           </div>
         </div>
-        <!-- /.container-fluid -->
       </div>
       <!-- End of Main Content -->
 
@@ -211,12 +265,8 @@
         </div>
       </footer>
       <!-- End of Footer -->
-
     </div>
-    <!-- End of Content Wrapper -->
-
   </div>
-  <!-- End of Page Wrapper -->
 
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
@@ -246,6 +296,9 @@
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 
   <!-- Core plugin JavaScript-->
   <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
@@ -260,10 +313,52 @@
   <!-- Page level custom scripts -->
   <script src="js/demo/datatables-demo.js"></script>
 
+  <!-- Sweetalert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <script>
+    // SweetAlert Success
+    function showToast(titleText) {
+      const ToastTrue = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      ToastTrue.fire({
+        icon: "success",
+        title: titleText
+      }).then(() => {
+        location.reload();
+      })
+    }
+
+    // SweetAlert Error
+    function showToastError(err) {
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: err
+      })
+    }
 
     // API Get Flashcard
-    fetch('/projectsenior/admin/flashcard', {
+    fetch('/api/admin/flashcard', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -277,11 +372,17 @@
           // console.log(item);
           html += `
             <tr>
-                  <td>${index + 1}</td>
-                  <td>${item._id}</td>
-                  <td>${item.card_question}</td>
-                  <td>${item.card_answer}</td>
-                  <td>${item.deck_id}</td>
+              <td>${index + 1}</td>
+              <td>${item._id}</td>
+              <td>${item.card_question}</td>
+              <td>${item.card_answer}</td>
+              <td>${item.deck_id}</td>
+              <td>
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDeck"
+                  onclick="getDetailEditFlashcard('${item._id}')">
+                      Edit
+                  </button>
+              </td>
               <td>
                     <a class="btn btn-danger btn-icon-split" onclick="deleteFlashcard('${item._id}')">
                         <span class="icon text-white-50">
@@ -301,7 +402,7 @@
 
     // Funtion Delete Flashcard
     function deleteFlashcard(flashcardId) {
-      fetch('/projectsenior/admin/flashcard/' + flashcardId, {
+      fetch('/api/admin/flashcard/' + flashcardId, {
         method: 'DELETE',
       })
         .then(response => response.json())
@@ -310,7 +411,83 @@
           location.reload();
         })
     }
-    
+
+    // Function Api Get Detail Edit Flashcard
+    function getDetailEditFlashcard(flashcardId) {
+      fetch('/api/admin/flashcard/' + flashcardId, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          document.getElementById('inputFlashcardId').value = data._id;
+          document.getElementById('modalQuestion').value = data.card_question;
+          document.getElementById('modalAnswer').value = data.card_answer;
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+
+    // Function Api Edit Flashcard
+    const editFlashcard = document.getElementById('editFlashcard');
+    editFlashcard.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      // ! Check Question
+      var reg = /^.*$/;
+      let regexEditQuestion;
+      if (!reg.test(document.getElementById("modalQuestion").value)) {
+        regexEditQuestion = "ข้อความเกินกำหนด";
+        document.getElementById("modalQuestion").style.border = "1px solid red";
+      } else {
+        regexEditQuestion = "";
+        document.getElementById("modalQuestion").style.border = "1px solid #d1d3e2";
+      }
+      document.getElementById("regexEditQuestion").innerHTML = regexEditQuestion;
+
+      // ! Check Answer
+      // var reg = /^.*$/;
+      // let regexEditAnswer;
+      // if (!reg.test(document.getElementById("modalAnswer").value)) {
+      //   regexEditAnswer = "ข้อความเกินกำหนด";
+      //   document.getElementById("modalAnswer").style.border = "1px solid red";
+      // } else {
+      //   regexEditAnswer = "";
+      //   document.getElementById("modalAnswer").style.border = "1px solid #d1d3e2";
+      // }
+      // document.getElementById("regexEditAnswer").innerHTML = regexEditAnswer;
+
+      if (regexEditQuestion === "") {
+        const flashcardId = document.getElementById('inputFlashcardId').value;
+        const question = document.getElementById('modalQuestion').value;
+        const answer = document.getElementById('modalAnswer').value;
+
+        fetch('/api/admin/flashcard/' + flashcardId, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            card_question: question,
+            card_answer: answer,
+          }),
+        }).then(response => {
+          if (!response.ok) {
+            return response.json().then(data => {
+              throw new Error(data.message);
+            });
+          }
+          return response.json();
+        }).then(() => {
+          showToast("แก้ไขข้อมูลสำเร็จแล้ว");
+        }).catch(err => {
+          showToastError(err);
+        });
+      }
+    });
   </script>
 
 </body>

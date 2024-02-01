@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const multer = require('multer');
 const fs = require('fs-extra');
 const excelToJson = require('convert-excel-to-json');
+const format = require('python-format')
+
 const Teacher = require('../models/Teacher');
 const Student = require('../models/Student');
 const Classroom = require('../models/Classroom');
@@ -21,11 +23,22 @@ adminRouter.get('/teacher', (req, res, next) => {
     }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
 
-// Delete Router สำหรับลบอาจารย์
-adminRouter.delete('/teacher/:id', (req, res, next) => {
-  Teacher.findByIdAndDelete(req.params.id)
+// Get ID Teacher
+adminRouter.get('/teacher/:id', (req, res, next) => {
+  Teacher.findById(req.params.id)
+    .then((teacher) => {
+      res.json(teacher);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Teacher
+adminRouter.put('/teacher/:id', (req, res, next) => {
+  Teacher.findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
-      res.json({ message: 'ลบอาจารย์เสร็จสิ้น' });
+      res.json({ message: 'Updated' });
     })
     .catch((err) => {
       next(err);
@@ -50,6 +63,17 @@ adminRouter.post('/teacher/create', (req, res, next) => {
     })
 });
 
+// Delete Router สำหรับลบอาจารย์
+adminRouter.delete('/teacher/:id', (req, res, next) => {
+  Teacher.findByIdAndDelete(req.params.id)
+    .then(() => {
+      res.json({ message: 'ลบอาจารย์เสร็จสิ้น' });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 // Get Router สำหรับค้นหานักเรียนทั้งหมด
 adminRouter.get('/student', (req, res, next) => {
   Student.find()
@@ -58,7 +82,29 @@ adminRouter.get('/student', (req, res, next) => {
     })
     .catch((err) => {
       next(err);
-    }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+    });
+});
+
+// Get Student With ID
+adminRouter.get('/student/:id', (req, res, next) => {
+  Student.findById(req.params.id)
+    .then((student) => {
+      res.json(student);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Student
+adminRouter.put('/student/:id', (req, res, next) => {
+  Student.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.json({ message: 'Updated' });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 // Delete Router สำหรับลบนักเรียน
@@ -102,6 +148,28 @@ adminRouter.get('/classroom', (req, res, next) => {
     .catch((err) => {
       next(err);
     }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
+});
+
+// Get Classroom With ID
+adminRouter.get('/classroom/:id', (req, res, next) => {
+  Classroom.findById(req.params.id)
+    .then((classroom) => {
+      res.json(classroom);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Classroom
+adminRouter.put('/classroom/:id', (req, res, next) => {
+  Classroom.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.json({ message: 'Updated' });
+    })
+    .catch((err) => {
+      next(err);
+    });
 });
 
 // Delete Router สำหรับ Delete Classroom
@@ -167,6 +235,28 @@ adminRouter.get('/deck', (req, res, next) => {
   Deck.find()
     .then((decks) => {
       res.json(decks);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Get Deck With ID
+adminRouter.get('/deck/:id', (req, res, next) => {
+  Deck.findById(req.params.id)
+    .then((deck) => {
+      res.json(deck);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Deck
+adminRouter.put('/deck/:id', (req, res, next) => {
+  Deck.findByIdAndUpdate(req.params.id, req.body)
+    .then(() => {
+      res.json({ message: 'Updated' });
     })
     .catch((err) => {
       next(err);
@@ -295,6 +385,28 @@ adminRouter.get('/flashcard', (req, res, next) => {
       next(err);
     }); // ใช้ method find() เพื่อค้นหาข้อมูลทั้งหมดใน collection
 });
+
+// Get Flashcard With ID
+adminRouter.get('/flashcard/:id', (req, res, next) => {
+  Flashcard.findById(req.params.id)
+  .then((flashcard) => {
+    res.json(flashcard);
+  })
+  .catch((err) => {
+    next(err);
+  });
+});
+
+// Put Flashcard
+adminRouter.put('/flashcard/:id', (req, res, next) => {
+  Flashcard.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+    res.json({ message: 'Updated' });
+  })
+  .catch(() => {
+    next(err);
+  })
+})
 
 // Delete Router สำหรับลบข้อมูล flashcard
 adminRouter.delete('/flashcard/:id', (req, res, next) => {
