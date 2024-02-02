@@ -400,72 +400,76 @@ function btn_addQuiz(id) {
   inputShowClassroomID = document.getElementById("deckID");
   inputShowClassroomID.value = id;
 }
-
 const formAddQuiz = document.getElementById('formAddQuiz');
 formAddQuiz.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const quizQuestion = document.querySelector('textarea[name="quizQuestion"]').value;
-  const quizChoice1 = document.querySelector('textarea[name="quizChoice1"]').value;
-  const quizChoice2 = document.querySelector('textarea[name="quizChoice2"]').value;
-  const quizChoice3 = document.querySelector('textarea[name="quizChoice3"]').value;
-  const quizChoice4 = document.querySelector('textarea[name="quizChoice4"]').value;
-  const selectedOption = document.getElementById('inputState').value;
+  const quizQuestion  = document.querySelectorAll('textarea[name="quizQuestion"]');
+  const quizchoices1 = document.querySelectorAll('textarea[name="quizChoice1"]');
+  const quizchoices2 = document.querySelectorAll('textarea[name="quizChoice2"]');
+  const quizchoices3 = document.querySelectorAll('textarea[name="quizChoice3"]');
+  const quizchoices4 = document.querySelectorAll('textarea[name="quizChoice4"]');
+  const selectedOptions = document.querySelectorAll('select[name="inputState"]');
   const deckId = document.getElementById("deckID").value;
-  // เช็คว่า textarea ไม่เป็นค่าว่าง
-  if (
-    quizQuestion.trim() === '' ||
-    quizChoice1.trim() === '' ||
-    quizChoice2.trim() === '' ||
-    quizChoice3.trim() === '' ||
-    quizChoice4.trim() === '' ||
-    selectedOption.trim() === ''
-  ) {
-    // แจ้งเตือนผู้ใช้ถ้ามี textarea ใด ๆ เป็นค่าว่าง
-    alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
-    return;  // หยุดการทำงานต่อไปถ้ามี textarea ใด ๆ เป็นค่าว่าง
+  const data = [];
+
+  let checkEmptyField = false;
+
+  quizQuestion.forEach((quizQuestion, index) => {
+    const quizChoice1 = quizchoices1[index].value.trim();
+    const quizChoice2 = quizchoices2[index].value.trim();
+    const quizChoice3 = quizchoices3[index].value.trim();
+    const quizChoice4 = quizchoices4[index].value.trim();
+    const selectedOption = selectedOptions[index].value.trim();
+
+    if (quizQuestion.value.trim() === '' || quizChoice1 === '' || quizChoice2 === '' || quizChoice3 === '' || quizChoice4 === '' || selectedOption === '') {
+      checkEmptyField = true;
+      return;
+    }
+
+    data.push({
+      quiz_question: quizQuestion.value.trim(),
+      quiz_choice: [quizChoice1, quizChoice2, quizChoice3, quizChoice4],
+      quiz_answerCorrect: selectedOption,
+      deck_id: deckId
+    });
+  });
+
+  if (checkEmptyField) {
+    alert('Please fill in all fields.');
+    return;
   }
 
-  // สร้างข้อมูล Quiz จากข้อมูลที่ได้จากฟอร์ม
-  const quizData = {
-    quiz_question: quizQuestion,
-    quiz_choice: [quizChoice1, quizChoice2, quizChoice3, quizChoice4],
-    quiz_answerCorrect: selectedOption,
-    deck_id: deckId,
-  };
-
   try {
-    // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
     fetch('/projectsenior/quiz/' + deckId, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ data: quizData })
+      body: JSON.stringify({ data: data })
     })
-      .then(response => response.json())
-      .then(() => {
-        // SweetAlert
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1200,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Create Flashcard successfully"
-        }).then(() => {
-          window.location = "deck?classroomID=" + classroomID;
-        });
-      })
-      .catch(err => console.log(err));
-
+    .then(response => response.json())
+    .then(() => {
+      // SweetAlert
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1200,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Create Flashcard successfully"
+      }).then(() => {
+        window.location = "deck?classroomID=" + classroomID;
+      });
+    })
+    .catch(err => console.log(err));
   } catch (error) {
     console.error('Error adding quiz:', error.message);
   }

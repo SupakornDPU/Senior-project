@@ -24,23 +24,49 @@ quizRouter.post('/', (req, res, next) => {
         }); 
 });
 
-quizRouter.post('/:deckId', async (req, res) => {
-    try {
-      const deckId = req.params.deckId;
-      const quizData = req.body.data;
+// quizRouter.post('/:deckId', async (req, res) => {
+//     try {
+//       const deckId = req.params.deckId;
+//       const quizData = req.body.data;
   
-      const newQuiz = new Quiz({
-        quiz_question: quizData.quiz_question,
-        quiz_choice: quizData.quiz_choice,
-        quiz_answerCorrect: quizData.quiz_answerCorrect,
-        deck_id: deckId,
-      });
+//       const newQuiz = new Quiz({
+//         quiz_question: quizData.quiz_question,
+//         quiz_choice: quizData.quiz_choice,
+//         quiz_answerCorrect: quizData.quiz_answerCorrect,
+//         deck_id: deckId,
+//       });
   
-      // บันทึกลงฐานข้อมูล
-      const savedQuiz = await newQuiz.save();
+//       // บันทึกลงฐานข้อมูล
+//       const savedQuiz = await newQuiz.save();
   
 
-      res.status(201).json(savedQuiz);
+//       res.status(201).json(savedQuiz);
+//     } catch (error) {
+//       console.error('Error adding quiz:', error.message);
+//       res.status(500).json({ error: 'Internal Server Error' });
+//     }
+//   });
+
+quizRouter.post('/:deckId', async (req, res) => {
+    const data = req.body.data;
+    const deckId = req.params.deckId;
+  
+    try {
+      const newQuizIds = [];
+  
+      for (const item of data) {
+        const newQuiz = new Quiz({
+          quiz_question: item.quiz_question,
+          quiz_choice: item.quiz_choice,
+          quiz_answerCorrect: item.quiz_answerCorrect,
+          deck_id: item.deck_id,
+        });
+  
+        const savedQuiz = await newQuiz.save();
+        newQuizIds.push(savedQuiz._id);
+      }
+  
+      res.status(201).json(newQuizIds); 
     } catch (error) {
       console.error('Error adding quiz:', error.message);
       res.status(500).json({ error: 'Internal Server Error' });
