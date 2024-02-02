@@ -159,7 +159,7 @@
                 <div class="col-12">
                   <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="addFormQuiz()"
                     style="font-weight: bold;">
-                    <i class="bi bi-plus-circle"></i>Add 
+                    <i class="bi bi-plus-circle"></i>Add
                   </button>
                 </div>
               </div>
@@ -177,7 +177,7 @@
 
         <!-- End Modal Body -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-secondary" onclick="resetForm();" data-bs-dismiss="modal">
             Close
           </button>
         </div>
@@ -264,9 +264,8 @@
           </div>
         </div>
         <!-- End Modal Body -->
-
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-secondary" onclick="resetForm();" data-bs-dismiss="modal">
             Close
           </button>
         </div>
@@ -360,14 +359,15 @@
 
     function updateDropdown() {
       // รับ reference ของ dropdown
-      var dropdown = document.getElementById('inputState');
+      const dropdown = document.querySelectorAll('select[id=inputState]')[document.querySelectorAll('select[id=inputState]').length - 1];
 
       // ลบตัวเลือกที่มีอยู่
       dropdown.innerHTML = '';
 
       // เพิ่มตัวเลือกใหม่ด้วยข้อความจาก input
       for (var i = 1; i <= 4; i++) {
-        var choiceInput = document.getElementById('Choice' + i);
+        // var choiceInput = document.getElementById('Choice' + i);
+        const choiceInput = document.querySelectorAll('textarea[id=Choice' + i + ']')[document.querySelectorAll('textarea[id=Choice' + i + ']').length - 1];
         var text = choiceInput.value.trim();
 
         if (text !== '') {
@@ -452,6 +452,18 @@
       const blockQuiz = document.getElementById('blockQuiz');
       blockQuiz.removeChild(blockQuiz.lastChild);
     }
+
+    // ปิด modal แล้ว reset form
+    function resetForm() {
+      // console.log('reset form');
+      const formQuiz = document.querySelector('form[id="formAddQuiz"]');
+      formQuiz.reset();
+
+      // ลบตัวเลือกที่มีอยู่
+      const dropdown = document.getElementById('inputState');
+      dropdown.innerHTML = '';
+    }
+
   </script>
 
   <!-- Side-bar -->
