@@ -368,10 +368,11 @@
       for (var i = 1; i <= 4; i++) {
         // var choiceInput = document.getElementById('Choice' + i);
         const choiceInput = document.querySelectorAll('textarea[id=Choice' + i + ']')[document.querySelectorAll('textarea[id=Choice' + i + ']').length - 1];
-        var text = choiceInput.value.trim();
+        const text = choiceInput.value.trim(); // นำข้อความจาก textarea มาใส่ในตัวเลือก
 
+        // ถ้าข้อความไม่ว่าง ให้เพิ่มตัวเลือก
         if (text !== '') {
-          var option = document.createElement('option');
+          const option = document.createElement('option');
           option.value = text;
           option.text = text;
           dropdown.add(option);
@@ -379,8 +380,9 @@
       }
     }
 
+    // แสดงตัวเลือกที่เลือก
     function displaySelectedOption() {
-      var selectedOption = document.getElementById('inputState').value;
+      const selectedOption = document.querySelectorAll('select[id=inputState]').item(document.querySelectorAll('select[id=inputState]').length - 1).value;
       console.log('Selected Option:', selectedOption);
       // นำข้อมูลที่เลือกไปใช้ต่อที่นี่
       // ตัวอย่างเช่น นำไปใช้ส่งข้อมูลไปยังเซิร์ฟเวอร์, บันทึกลงฐานข้อมูล, หรือทำงานอื่น ๆ
