@@ -359,7 +359,6 @@ textareaForm.addEventListener('submit', (e) => {
   }
 
   // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
-
   fetch('/projectsenior/flashcard/' + deckId, {
     method: 'POST',
     headers: {

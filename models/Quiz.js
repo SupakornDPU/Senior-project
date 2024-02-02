@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
 const QuizSchema = new mongoose.Schema({
-   quiz_question: String,
-   quiz_choice: [{
+   question: String,
+   choice: [{
       type: mongoose.Schema.Types.String, 
    }],
-   quiz_answerCorrect : String,
+   answerCorrect : String,
    deck_id : String,
 });
 

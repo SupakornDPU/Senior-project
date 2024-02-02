@@ -263,7 +263,7 @@ a {
 /* ! Deck Card */
 .ag-format-container {
    width: 1142px;
-   margin: 0 auto;
+   /* margin: 0 auto; */
 }
 
 .ag-courses_box {
@@ -379,49 +379,6 @@ a {
    background-color: #4c49ea;
 }
 
-
-
-@media only screen and (max-width: 979px) {
-   .ag-courses_item {
-      -ms-flex-preferred-size: calc(50% - 30px);
-      flex-basis: calc(50% - 30px);
-   }
-
-   .ag-courses-item_title {
-      font-size: 24px;
-   }
-}
-
-@media only screen and (max-width: 767px) {
-   .ag-format-container {
-      width: 96%;
-   }
-
-}
-
-@media only screen and (max-width: 639px) {
-   .ag-courses_item {
-      -ms-flex-preferred-size: 100%;
-      flex-basis: 100%;
-   }
-
-   .ag-courses-item_title {
-      min-height: 72px;
-      line-height: 1;
-      text-decoration: none;
-      font-size: 24px;
-   }
-
-   .ag-courses-item_link {
-      padding: 22px 40px;
-      text-decoration: none;
-   }
-
-   .ag-courses-item_date-box {
-      font-size: 16px;
-   }
-}
-
 /* ! form */
 
 .container {
@@ -459,4 +416,54 @@ textarea {
    margin-bottom: 1.5rem;
    text-shadow: 2px 7px 5px rgba(0,0,0,0.3), 
    0px -4px 10px rgba(255,255,255,0.3);
+}
+
+@media only screen and (max-width: 1024px) {
+   .ag-courses_item {
+      -ms-flex-preferred-size: calc(50% - 30px);
+      flex-basis: calc(50% - 30px);
+   }
+
+   .ag-format-container {
+      width: 96%;
+   }
+
+   .ag-courses-item_title {
+      font-size: 24px;
+   }
+}
+
+@media only screen and (max-width: 767px) {
+   .ag-format-container {
+      width: 96%;
+   }
+
+}
+
+@media only screen and (max-width: 639px) {
+   .btn {
+      font-size: 12px;
+      padding: 5px 10px;
+   }
+
+   .ag-courses_item {
+      -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
+   }
+
+   .ag-courses-item_title {
+      min-height: 72px;
+      line-height: 1;
+      text-decoration: none;
+      font-size: 20px;
+   }
+
+   .ag-courses-item_link {
+      padding: 22px 40px;
+      text-decoration: none;
+   }
+
+   .ag-courses-item_date-box {
+      font-size: 16px;
+   }
 }

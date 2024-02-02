@@ -268,7 +268,7 @@
 ul {
   padding: 0;
 }
-@media (max-width: 420px) {
+@media (max-width: 450px) {
   .menu-sidebar li .tooltip{
     display: none;
   }
