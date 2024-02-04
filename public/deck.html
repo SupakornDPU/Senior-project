@@ -150,7 +150,7 @@
               <div class="row mb-3">
                 <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
                 <div class="col-sm-10">
-                  <select id="inputState" class="form-select" onchange="displaySelectedOption()">
+                  <select id="inputState" name="inputState" class="form-select" >
                     <option selected="">Select...</option>
                   </select>
                 </div>
@@ -381,12 +381,12 @@
     }
 
     // แสดงตัวเลือกที่เลือก
-    function displaySelectedOption() {
-      const selectedOption = document.querySelectorAll('select[id=inputState]').item(document.querySelectorAll('select[id=inputState]').length - 1).value;
-      console.log('Selected Option:', selectedOption);
-      // นำข้อมูลที่เลือกไปใช้ต่อที่นี่
-      // ตัวอย่างเช่น นำไปใช้ส่งข้อมูลไปยังเซิร์ฟเวอร์, บันทึกลงฐานข้อมูล, หรือทำงานอื่น ๆ
-    }
+    // function displaySelectedOption() {
+    //   const selectedOptions = document.querySelectorAll('select[id=inputState]').item(document.querySelectorAll('select[id=inputState]').length - 1).value;
+    //   console.log('Selected Option:', selectedOptions);
+    //   // นำข้อมูลที่เลือกไปใช้ต่อที่นี่
+    //   // ตัวอย่างเช่น นำไปใช้ส่งข้อมูลไปยังเซิร์ฟเวอร์, บันทึกลงฐานข้อมูล, หรือทำงานอื่น ๆ
+    // }
 
     function addFormQuiz() {
       const btnAddFormQuiz = document.getElementById('btnAddFormQuiz');
@@ -430,7 +430,7 @@
         <div class="row mb-3">
           <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
           <div class="col-sm-10">
-            <select id="inputState" class="form-select" onchange="displaySelectedOption()">
+            <select id="inputState" class="form-select" >
               <option selected="">Select...</option>
             </select>
           </div>

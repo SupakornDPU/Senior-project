@@ -404,12 +404,12 @@ const formAddQuiz = document.getElementById('formAddQuiz');
 formAddQuiz.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const quizQuestion  = document.querySelectorAll('textarea[name="quizQuestion"]');
+  const quizQuestion = document.querySelectorAll('textarea[name="quizQuestion"]');
   const quizchoices1 = document.querySelectorAll('textarea[name="quizChoice1"]');
   const quizchoices2 = document.querySelectorAll('textarea[name="quizChoice2"]');
   const quizchoices3 = document.querySelectorAll('textarea[name="quizChoice3"]');
   const quizchoices4 = document.querySelectorAll('textarea[name="quizChoice4"]');
-  const selectedOptions = document.querySelectorAll('select[name="inputState"]');
+  const selectedOptions = document.querySelectorAll('.form-select');
   const deckId = document.getElementById("deckID").value;
   const data = [];
 
@@ -420,7 +420,8 @@ formAddQuiz.addEventListener('submit', async (e) => {
     const quizChoice2 = quizchoices2[index].value.trim();
     const quizChoice3 = quizchoices3[index].value.trim();
     const quizChoice4 = quizchoices4[index].value.trim();
-    const selectedOption = selectedOptions[index].value.trim();
+    const selectedOptionElement = selectedOptions[index];
+    const selectedOption = selectedOptionElement.value.trim();
 
     if (quizQuestion.value.trim() === '' || quizChoice1 === '' || quizChoice2 === '' || quizChoice3 === '' || quizChoice4 === '' || selectedOption === '') {
       checkEmptyField = true;
@@ -448,28 +449,28 @@ formAddQuiz.addEventListener('submit', async (e) => {
       },
       body: JSON.stringify({ data: data })
     })
-    .then(response => response.json())
-    .then(() => {
-      // SweetAlert
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Create Flashcard successfully"
-      }).then(() => {
-        window.location = "deck?classroomID=" + classroomID;
-      });
-    })
-    .catch(err => console.log(err));
+      .then(response => response.json())
+      .then(() => {
+        // SweetAlert
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1200,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "success",
+          title: "Create Flashcard successfully"
+        }).then(() => {
+          window.location = "deck?classroomID=" + classroomID;
+        });
+      })
+      .catch(err => console.log(err));
   } catch (error) {
     console.error('Error adding quiz:', error.message);
   }
