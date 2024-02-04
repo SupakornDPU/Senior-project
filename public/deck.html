@@ -115,55 +115,61 @@
         <div class="modal-body">
           <form action="" id="formAddQuiz">
             <div class="row my-5" id="blockQuiz">
-              <h3 style="text-align: center;">Question</h3>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Question</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="questionInput" name="quizQuestion"></textarea>
+              <div class="row">
+                <h3 style="text-align: center;">Question</h3>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Question</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="questionInput" name="quizQuestion"></textarea>
+                  </div>
                 </div>
-              </div>
-              <h3 style="text-align: center;">Answer</h3>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Choice 1.</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="Choice1" name="quizChoice1" oninput="updateDropdown()"></textarea>
+                <h3 style="text-align: center;">Answer</h3>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Choice 1.</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="Choice1" name="quizChoice1"
+                      oninput="updateDropdown()"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Choice 2.</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="Choice2" name="quizChoice2" oninput="updateDropdown()"></textarea>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Choice 2.</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="Choice2" name="quizChoice2"
+                      oninput="updateDropdown()"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Choice 3.</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="Choice3" name="quizChoice3" oninput="updateDropdown()"></textarea>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Choice 3.</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="Choice3" name="quizChoice3"
+                      oninput="updateDropdown()"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Choice 4.</label>
-                <div class="col-sm-10">
-                  <textarea class="form-control" id="Choice4" name="quizChoice4" oninput="updateDropdown()"></textarea>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Choice 4.</label>
+                  <div class="col-sm-10">
+                    <textarea class="form-control" id="Choice4" name="quizChoice4"
+                      oninput="updateDropdown()"></textarea>
+                  </div>
                 </div>
-              </div>
-              <div class="row mb-3">
-                <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
-                <div class="col-sm-10">
-                  <select id="inputState" class="form-select" onchange="displaySelectedOption()">
-                    <option selected="">Select...</option>
-                  </select>
+                <div class="row mb-3">
+                  <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
+                  <div class="col-sm-10">
+                    <select id="inputState" class="form-select" onchange="displaySelectedOption()">
+                      <option selected="" value="">Select...</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-              <div class="row text-end">
-                <div class="col-12">
-                  <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="addFormQuiz()"
-                    style="font-weight: bold;">
-                    <i class="bi bi-plus-circle"></i>Add
-                  </button>
+                <div class="row text-end">
+                  <div class="col-12">
+                    <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="checkQuizForm()"
+                      style="font-weight: bold;">
+                      <i class="bi bi-plus-circle"></i>Add
+                    </button>
+                  </div>
                 </div>
+                <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
               </div>
-              <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
             </div>
             <div class="row">
               <div class="col-md-12 my-2 d-flex justify-content-center align-items-center">
@@ -366,8 +372,8 @@
 
       // เพิ่มตัวเลือกใหม่ด้วยข้อความจาก input
       for (var i = 1; i <= 4; i++) {
-        // var choiceInput = document.getElementById('Choice' + i);
         const choiceInput = document.querySelectorAll('textarea[id=Choice' + i + ']')[document.querySelectorAll('textarea[id=Choice' + i + ']').length - 1];
+
         const text = choiceInput.value.trim(); // นำข้อความจาก textarea มาใส่ในตัวเลือก
 
         // ถ้าข้อความไม่ว่าง ให้เพิ่มตัวเลือก
@@ -378,14 +384,6 @@
           dropdown.add(option);
         }
       }
-    }
-
-    // แสดงตัวเลือกที่เลือก
-    function displaySelectedOption() {
-      const selectedOption = document.querySelectorAll('select[id=inputState]').item(document.querySelectorAll('select[id=inputState]').length - 1).value;
-      console.log('Selected Option:', selectedOption);
-      // นำข้อมูลที่เลือกไปใช้ต่อที่นี่
-      // ตัวอย่างเช่น นำไปใช้ส่งข้อมูลไปยังเซิร์ฟเวอร์, บันทึกลงฐานข้อมูล, หรือทำงานอื่น ๆ
     }
 
     function addFormQuiz() {
@@ -431,13 +429,13 @@
           <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
           <div class="col-sm-10">
             <select id="inputState" class="form-select" onchange="displaySelectedOption()">
-              <option selected="">Select...</option>
+              <option selected="" value="">Select...</option>
             </select>
           </div>
         </div>
         <div class="row text-end">
           <div class="col-12">
-            <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="addFormQuiz()"
+            <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="checkQuizForm()"
               style="font-weight: bold;">
               <i class="bi bi-plus-circle"></i>Add 
             </button>
@@ -455,17 +453,56 @@
       blockQuiz.removeChild(blockQuiz.lastChild);
     }
 
+    function checkQuizForm() {
+      // regEx เช็คทุกฟอร์มว่ามีข้อมูลหรือเปล่าห้ามเป็นค่าว่าง
+      const questionInput = document.querySelectorAll('textarea[id=questionInput]')[document.querySelectorAll('textarea[id=questionInput]').length - 1];
+
+      const choice1 = document.querySelectorAll('textarea[id=Choice1]')[document.querySelectorAll('textarea[id=Choice1]').length - 1];
+      const choice2 = document.querySelectorAll('textarea[id=Choice2]')[document.querySelectorAll('textarea[id=Choice2]').length - 1];
+      const choice3 = document.querySelectorAll('textarea[id=Choice3]')[document.querySelectorAll('textarea[id=Choice3]').length - 1];
+      const choice4 = document.querySelectorAll('textarea[id=Choice4]')[document.querySelectorAll('textarea[id=Choice4]').length - 1];
+
+      const inputState = document.querySelectorAll('select[id=inputState]')[document.querySelectorAll('select[id=inputState]').length - 1];
+
+      if (questionInput.value.trim() === '' || choice1.value.trim() === '' || choice2.value.trim() === '' || choice3.value.trim() === '' || choice4.value.trim() === '' || inputState.value === 'Select...') {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Please fill in all the fields!',
+        });
+      } else {
+        addFormQuiz();
+      }
+    }
+
     // ปิด modal แล้ว reset form
     function resetForm() {
       // console.log('reset form');
       const formQuiz = document.querySelector('form[id="formAddQuiz"]');
       formQuiz.reset();
+      const blockQuiz = document.getElementById('blockQuiz');
 
       // ลบตัวเลือกที่มีอยู่
       const dropdown = document.getElementById('inputState');
       dropdown.innerHTML = '';
+
+      // ลบ form ที่เพิ่มมา ยกเว้นตัวแรก
+      while (blockQuiz.children.length > 1) {
+        blockQuiz.removeChild(blockQuiz.lastChild);
+      }
     }
 
+    // Show Selected Option
+    // const formQuiz = document.querySelector('form[id="formAddQuiz"]');
+    // formQuiz.addEventListener('submit', function (e) {
+    //   e.preventDefault();
+
+    //   // โชว์ข้อมูลที่เลือกทั้งหมด
+    //   const selectedOption = document.querySelectorAll('select[id=inputState]');
+    //   selectedOption.forEach((option) => {
+    //     console.log('Selected Option:', option.value);
+    //   });
+    // });
   </script>
 
   <!-- Side-bar -->
