@@ -427,7 +427,7 @@ formAddQuiz.addEventListener('submit', async (e) => {
       checkEmptyField = true;
       return;
     }
-
+    
     data.push({
       quiz_question: quizQuestion.value.trim(),
       quiz_choice: [quizChoice1, quizChoice2, quizChoice3, quizChoice4],
