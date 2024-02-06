@@ -5,6 +5,7 @@ console.log(deckID);
 // Get the deck ID from the URL
 let counter = 0;
 let i = 0;
+let correctAnswer = 0;
 fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
     method: 'get',
     headers: {
@@ -15,25 +16,21 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
     .then(data => {
 
         const dataArray = [];
-
         // เพิ่มข้อมูลลงใน array ด้วย forEach
         data.quizzes.forEach(each => {
             dataArray.push(each);
         });
 
         // หรือใช้ spread operator เพื่อเพิ่มข้อมูลใน array
-        console.log(dataArray);
+        // console.log(dataArray);
         if (dataArray.length > 0) {
-            let i = 0;
-            let j = 0;
-            let k = 0;
             const Item = dataArray[i];
             const Choice = Item.quiz_choice;
 
 
-            console.log(i);
+            // console.log(i);
             // ให้แสดงข้อมูลในArray
-            console.log(Item);
+            // console.log(Item);
 
             // หรือให้แสดงข้อมูลบนหน้าเว็บ
             const decks = document.getElementById("innerhtmlQuiz");
@@ -58,7 +55,7 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
             <div class="row mb-5">
                 <div class="col-6 answer-block">
                     <div class="btn-wrapper">
-                        <button type="button" class="btn btn-secondary text-start"><i class="bi bi-1-square-fill"></i>
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice1" onclick="checkAnswer('btnChoice1')"><i class="bi bi-1-square-fill"></i>
                         <pre class="d-flex justify-content-start text-start">
 <code id="choice1" class="hljs" class="">${Choice[0]}</code>
                         </pre>
@@ -67,7 +64,7 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                 </div>
                 <div class="col-6 answer-block">
                     <div class="btn-wrapper">
-                        <button type="button" class="btn btn-secondary text-start"><i class="bi bi-2-square-fill"></i>
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice2" onclick="checkAnswer('btnChoice2')"><i class="bi bi-2-square-fill"></i>
                         <pre class="d-flex justify-content-start text-start">
 <code id="choice2" class="hljs" class="">${Choice[1]}</code>
                         </pre>
@@ -76,7 +73,7 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                 </div>
                 <div class="col-6 answer-block">
                     <div class="btn-wrapper">
-                        <button type="button" class="btn btn-secondary text-start"><i class="bi bi-3-square-fill"></i>
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice3" onclick="checkAnswer('btnChoice3')"><i class="bi bi-3-square-fill"></i>
                         <pre class="d-flex justify-content-start text-start">
 <code id="choice3" class="hljs" class="">${Choice[2]}</code>
                         </pre>
@@ -85,7 +82,7 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                 </div>
                 <div class="col-6 answer-block">
                     <div class="btn-wrapper">
-                        <button type="button" class="btn btn-secondary text-start"><i class="bi bi-4-square-fill"></i>
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice4" onclick="checkAnswer('btnChoice4')"><i class="bi bi-4-square-fill"></i>
                         <pre class="d-flex justify-content-start text-start">
 <code id="choice4" class="hljs" class="">${Choice[3]}</code>
                         </pre>
@@ -96,82 +93,127 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
         </div>
             `;
             decks.appendChild(deckCol);
-
-            // Initialize Highlight.js
-            // การเตรียมการใช้งานไลบรารี Highlight.js โดยการกำหนดค่าพื้นฐานและตั้งค่าต่าง ๆ เพื่อให้ไลบรารีพร้อมที่จะทำการเน้นไวยากรณ์ของโค้ด (syntax highlighting) ในเว็บไซต์
             hljs.highlightAll();
 
             const btnquiz = document.getElementById("btnnextquiz");
             btnquiz.addEventListener("click", () => {
-                i++;
-                let runIdNumber = 0;
+                // เช็คว่าถ้า i มากกว่าความยาวของ Array ให้แสดงข้อความว่า Alert Finish และหยุดการทำงาน
+                if (i >= dataArray.length - 1) {
+                    console.log('Finish');
+                    alert('Finish');
+                    return;
+                } else {
+                    i++;
+                    correctAnswer++;
+                    let runIdNumber = 0;
 
-                console.log('ค่านับใหม่:', i);
-                console.log('ค่านับใหม่:', k);
-                console.log('ค่านับใหม่:', runIdNumber);
+                    // console.log('ค่านับใหม่:', i);
+                    // console.log('ค่านับใหม่:', k);
+                    // console.log('ค่านับใหม่:', runIdNumber);
 
-                const newItem = dataArray[i];
-                const Choice = newItem.quiz_choice;
-                console.log('ค่านับใหม่:', Choice[0]);
-                console.log('ค่านับใหม่:', dataArray[i]);
-                // Create new elements for the question and answer
-                // สร้างองค์ประกอบ (elements) ใหม่สำหรับคำถาม (question) และคำตอบ (answer) โดยใช้ document.createElement('p')
-                // ทั้งสององค์ประกอบถูกสร้างขึ้นและกำหนดค่าต่าง ๆ แล้ว แต่ยังไม่ได้ถูกเพิ่มเข้าไปใน DOM (Document Object Model) ของเว็บ
-                const newQuizElement = document.createElement('p');
-                newQuizElement.id = 'quiz';
-                newQuizElement.innerHTML = newItem.quiz_question;
-
-                const newChoiceElement1 = document.createElement('p');
-                newChoiceElement1.id = 'choice1';
-                newChoiceElement1.innerHTML = Choice[0];
-
-                const newChoiceElement2 = document.createElement('p');
-                newChoiceElement2.id = 'choice2';
-                newChoiceElement2.innerHTML = Choice[1];
-
-                const newChoiceElement3 = document.createElement('p');
-                newChoiceElement3.id = 'choice3';
-                newChoiceElement3.innerHTML = Choice[2];
-
-                const newChoiceElement4 = document.createElement('p');
-                newChoiceElement4.id = 'choice4';
-                newChoiceElement4.innerHTML = Choice[3];
-
-                // ดึงข้อมูลขององค์ประกอบที่เป็นต้นแบบ (parent elements)"
-                // "Parent element" หมายถึง องค์ประกอบที่ต่ำกว่า (ติดต่อกันไป) ในลำดับของโครงสร้าง HTML หรือ DOM (Document Object Model)
-                const quizParent = document.getElementById('quiz').parentElement;
-                const choiceParent1 = document.getElementById('choice1').parentElement;
-                const choiceParent2 = document.getElementById('choice2').parentElement;
-                const choiceParent3 = document.getElementById('choice3').parentElement;
-                const choiceParent4 = document.getElementById('choice4').parentElement;
-
-                // Replace existing elements with the new ones
-                // การนี้มีไว้เพื่อทำการแทนที่ (replace) องค์ประกอบที่มี ID 'question' และ 'answer' ที่อยู่ใน DOM (Document Object Model) ของหน้าเว็บ ด้วยองค์ประกอบใหม่ที่ถูกสร้างขึ้นมา 
-                // หลังจากที่การแทนที่เสร็จสิ้น, องค์ประกอบใหม่จะถูกเพิ่มเข้าไปใน DOM และองค์ประกอบเดิมจะถูกลบทิ้ง.
-                quizParent.replaceChild(newQuizElement, document.getElementById('quiz'));
-                choiceParent1.replaceChild(newChoiceElement1, document.getElementById('choice1'));
-                choiceParent2.replaceChild(newChoiceElement2, document.getElementById('choice2'));
-                choiceParent3.replaceChild(newChoiceElement3, document.getElementById('choice3'));
-                choiceParent4.replaceChild(newChoiceElement4, document.getElementById('choice4'));
+                    // Clear class btn active
+                    const btnChoice1 = document.getElementById('btnChoice1');
+                    const btnChoice2 = document.getElementById('btnChoice2');
+                    const btnChoice3 = document.getElementById('btnChoice3');
+                    const btnChoice4 = document.getElementById('btnChoice4');
+                    btnChoice1.classList.remove('active');
+                    btnChoice1.classList.remove('btn-success');
+                    btnChoice1.classList.remove('btn-danger');
+                    btnChoice2.classList.remove('active');
+                    btnChoice2.classList.remove('btn-success');
+                    btnChoice2.classList.remove('btn-danger');
+                    btnChoice3.classList.remove('active');
+                    btnChoice3.classList.remove('btn-success');
+                    btnChoice3.classList.remove('btn-danger');
+                    btnChoice4.classList.remove('active');
+                    btnChoice4.classList.remove('btn-success');
+                    btnChoice4.classList.remove('btn-danger');
+                    
 
 
-                // Apply syntax highlighting to the new elements
-                // hljs.highlightElement() จากไลบรารี highlight.js เพื่อให้มีการเน้น (highlight) ไวยากรณ์ของโค้ด (syntax highlighting) บนองค์ประกอบ HTML ที่ถูกสร้างขึ้นใหม่สำหรับคำถามและคำตอบ.
-                hljs.highlightElement(newQuizElement);
-                hljs.highlightElement(newChoiceElement1);
-                hljs.highlightElement(newChoiceElement2);
-                hljs.highlightElement(newChoiceElement3);
-                hljs.highlightElement(newChoiceElement4);
+
+                    const newItem = dataArray[i];
+                    const Choice = newItem.quiz_choice;
+
+                    const newQuizElement = document.createElement('code');
+                    newQuizElement.id = 'quiz';
+                    newQuizElement.innerHTML = newItem.quiz_question;
+
+                    const newChoiceElement1 = document.createElement('code');
+                    newChoiceElement1.id = 'choice1';
+                    newChoiceElement1.innerHTML = Choice[0];
+
+                    const newChoiceElement2 = document.createElement('code');
+                    newChoiceElement2.id = 'choice2';
+                    newChoiceElement2.innerHTML = Choice[1];
+
+                    const newChoiceElement3 = document.createElement('code');
+                    newChoiceElement3.id = 'choice3';
+                    newChoiceElement3.innerHTML = Choice[2];
+
+                    const newChoiceElement4 = document.createElement('code');
+                    newChoiceElement4.id = 'choice4';
+                    newChoiceElement4.innerHTML = Choice[3];
+
+                    const quizParent = document.getElementById('quiz').parentElement;
+                    const choiceParent1 = document.getElementById('choice1').parentElement;
+                    const choiceParent2 = document.getElementById('choice2').parentElement;
+                    const choiceParent3 = document.getElementById('choice3').parentElement;
+                    const choiceParent4 = document.getElementById('choice4').parentElement;
+
+                    quizParent.replaceChild(newQuizElement, document.getElementById('quiz'));
+                    choiceParent1.replaceChild(newChoiceElement1, document.getElementById('choice1'));
+                    choiceParent2.replaceChild(newChoiceElement2, document.getElementById('choice2'));
+                    choiceParent3.replaceChild(newChoiceElement3, document.getElementById('choice3'));
+                    choiceParent4.replaceChild(newChoiceElement4, document.getElementById('choice4'));
+
+                    hljs.highlightElement(newQuizElement);
+                    hljs.highlightElement(newChoiceElement1);
+                    hljs.highlightElement(newChoiceElement2);
+                    hljs.highlightElement(newChoiceElement3);
+                    hljs.highlightElement(newChoiceElement4);
+                }
             });
+            // เทียบคำตอบ โดยนำค่าที่เลือกมาเทียบกับค่าที่อยู่ใน DB quiz_answerCorrect
+
         } else {
             console.log('ไม่มีข้อมูลใน dataArray');
         }
-
-        // data.flashcard.forEach(each => {
-        //     console.log(each);
-
     })
     .catch(err => console.log(err));
 
+function checkAnswer(buttonId) {
+    fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const dataArray = data.quizzes;
+            const item = dataArray[correctAnswer];
+            const answerCorrect = item.quiz_answerCorrect;
+            console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
+
+            // เลือกคำตอบที่ผู้ใช้เลือก
+            const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
+            // console.log(selectedChoice);
+
+            // เปรียบเทียบคำตอบที่ผู้ใช้เลือกกับคำตอบที่ถูกต้อง
+            if (selectedChoice === answerCorrect) {
+                console.log('คำตอบถูกต้อง!');
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
+                document.getElementById(buttonId).classList.add('btn-success');
+                document.getElementById(buttonId).classList.add('active');
+            } else {
+                console.log('คำตอบผิด!');
+                document.getElementById(buttonId).classList.add('btn-danger');
+                document.getElementById(buttonId).classList.add('active');
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
+            }
+        })
+        .catch(err => console.log(err));
+}
 
 
