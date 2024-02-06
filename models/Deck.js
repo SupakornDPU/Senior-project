@@ -9,6 +9,10 @@ const DeckSchema = new mongoose.Schema({
    flashcards: [{
       type: mongoose.Schema.Types.ObjectId, // กำหนดชนิดข้อมูลเป็น ObjectId
       ref: 'Flashcard' // อ้างอิงไปยังโมเดล Flashcard
+   }],
+   quizzes: [{
+      type: mongoose.Schema.Types.ObjectId, // กำหนดชนิดข้อมูลเป็น ObjectId
+      ref: 'Quiz' // อ้างอิงไปยังโมเดล Flashcard
    }]
 });
 

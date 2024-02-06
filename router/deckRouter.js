@@ -39,6 +39,18 @@ deckRouter.get('/getById/:id', (req, res, next) => {
     });
 });
 
+// Get Router สำหรับค้นหา Quiz ตาม id
+deckRouter.get('/getByIdQuiz/:id', (req, res, next) => {
+  Deck.findById(req.params.id)
+    .populate('quizzes') // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
+    .then((decks) => {
+      res.json(decks);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 // Post Router สำหรับสร้าง Deck
 deckRouter.post('/', (req, res, next) => {
   Deck.create(req.body)

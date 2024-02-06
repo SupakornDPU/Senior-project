@@ -2,6 +2,7 @@ const express = require('express');
 const quizRouter = express.Router();
 const Quiz = require('../models/Quiz');
 const mongoose = require('mongoose');
+const Deck = require('../models/Deck');
 
 quizRouter.get('/', (req, res, next) => {
     Quiz.find()
@@ -65,12 +66,21 @@ quizRouter.post('/:deckId', async (req, res) => {
         const savedQuiz = await newQuiz.save();
         newQuizIds.push(savedQuiz._id);
       }
-  
+      await Deck.findOneAndUpdate(
+        { _id: deckId },
+        { $push: { quizzes: { $each: newQuizIds } } },
+        { new: true }
+      );
       res.status(201).json(newQuizIds); 
+      
+      
+
+      // res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedDeck });
     } catch (error) {
-      console.error('Error adding quiz:', error.message);
-      res.status(500).json({ error: 'Internal Server Error' });
+      res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล' });
     }
   });
+
+
 
 module.exports = quizRouter;
