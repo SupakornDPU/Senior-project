@@ -128,9 +128,6 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                     btnChoice4.classList.remove('active');
                     btnChoice4.classList.remove('btn-success');
                     btnChoice4.classList.remove('btn-danger');
-                    
-
-
 
                     const newItem = dataArray[i];
                     const Choice = newItem.quiz_choice;
@@ -206,11 +203,30 @@ function checkAnswer(buttonId) {
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
+                for (let i = 1; i <= 4; i++) {
+                    const btnChoice = document.getElementById(`btnChoice${i}`);
+                    btnChoice.disabled = true;
+                }
             } else {
                 console.log('คำตอบผิด!');
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
+                // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
+                const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
+                    document.getElementById('btnChoice2').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice2') :
+                        document.getElementById('btnChoice3').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice3') :
+                            document.getElementById('btnChoice4').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice4') : null;
+
+                if (correctButton) {
+                    correctButton.classList.add('btn-success');
+                    for (let i = 1; i <= 4; i++) {
+                        const btnChoice = document.getElementById(`btnChoice${i}`);
+                        btnChoice.disabled = true;
+                    }
+                    document.getElementById('btnnextquiz').disabled = false;
+                }
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
+                // เมื่อเลือกคำตอบผิดให้ Disable ปุ่มทั้งหมดยกเว้นปุ่มที่เลือก และปุ่ม Next
             }
         })
         .catch(err => console.log(err));
