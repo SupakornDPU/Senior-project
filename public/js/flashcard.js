@@ -74,6 +74,11 @@ fetch('/projectsenior/deck/getById/' + deckID, {
 
       const btnquestion = document.getElementById("btnnextquestion");
       btnquestion.addEventListener("click", () => {
+        if (i >= dataArray.length - 1) {
+          console.log('Quiz');
+          window.location.href = "quiz?deck=" + deckID;
+          return;
+      } else {
         i++;
         console.log('ค่านับใหม่:', i);
 
@@ -105,7 +110,9 @@ fetch('/projectsenior/deck/getById/' + deckID, {
         // hljs.highlightElement() จากไลบรารี highlight.js เพื่อให้มีการเน้น (highlight) ไวยากรณ์ของโค้ด (syntax highlighting) บนองค์ประกอบ HTML ที่ถูกสร้างขึ้นใหม่สำหรับคำถามและคำตอบ.
         hljs.highlightElement(newQuestionElement);
         hljs.highlightElement(newAnswerElement);
+      }
       });
+
     } else {
       console.log('ไม่มีข้อมูลใน dataArray');
     }
