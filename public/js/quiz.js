@@ -101,6 +101,7 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                 if (i >= dataArray.length - 1) {
                     console.log('Finish');
                     alert('Finish');
+                    
                     return;
                 } else {
                     i++;
@@ -110,24 +111,6 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                     // console.log('ค่านับใหม่:', i);
                     // console.log('ค่านับใหม่:', k);
                     // console.log('ค่านับใหม่:', runIdNumber);
-
-                    // Clear class btn active
-                    const btnChoice1 = document.getElementById('btnChoice1');
-                    const btnChoice2 = document.getElementById('btnChoice2');
-                    const btnChoice3 = document.getElementById('btnChoice3');
-                    const btnChoice4 = document.getElementById('btnChoice4');
-                    btnChoice1.classList.remove('active');
-                    btnChoice1.classList.remove('btn-success');
-                    btnChoice1.classList.remove('btn-danger');
-                    btnChoice2.classList.remove('active');
-                    btnChoice2.classList.remove('btn-success');
-                    btnChoice2.classList.remove('btn-danger');
-                    btnChoice3.classList.remove('active');
-                    btnChoice3.classList.remove('btn-success');
-                    btnChoice3.classList.remove('btn-danger');
-                    btnChoice4.classList.remove('active');
-                    btnChoice4.classList.remove('btn-success');
-                    btnChoice4.classList.remove('btn-danger');
 
                     const newItem = dataArray[i];
                     const Choice = newItem.quiz_choice;
@@ -169,6 +152,21 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                     hljs.highlightElement(newChoiceElement2);
                     hljs.highlightElement(newChoiceElement3);
                     hljs.highlightElement(newChoiceElement4);
+                    // Clear class btn active
+                    for (let j = 0; j <= 4; j++) {
+                        const btnChoice = document.getElementById(`btnChoice${j}`);
+                        if (btnChoice) {
+                            if (btnChoice.classList.contains('btn')) {
+                                btnChoice.classList.remove('active');
+                                btnChoice.classList.remove('btn-success');
+                                btnChoice.classList.remove('btn-danger');
+                                btnChoice.disabled = false;
+
+                            }
+                        }
+
+                    }
+
                 }
             });
             // เทียบคำตอบ โดยนำค่าที่เลือกมาเทียบกับค่าที่อยู่ใน DB quiz_answerCorrect
@@ -179,7 +177,10 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
     })
     .catch(err => console.log(err));
 
+
+
 function checkAnswer(buttonId) {
+
     fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
         method: 'get',
         headers: {
@@ -228,6 +229,8 @@ function checkAnswer(buttonId) {
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
                 // เมื่อเลือกคำตอบผิดให้ Disable ปุ่มทั้งหมดยกเว้นปุ่มที่เลือก และปุ่ม Next
             }
+
+            answered = true;
         })
         .catch(err => console.log(err));
 }
