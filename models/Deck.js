@@ -12,7 +12,7 @@ const DeckSchema = new mongoose.Schema({
    }],
    quizzes: [{
       type: mongoose.Schema.Types.ObjectId, // กำหนดชนิดข้อมูลเป็น ObjectId
-      ref: 'Quiz' // อ้างอิงไปยังโมเดล Flashcard
+      ref: 'Quiz' 
    }]
 });
 

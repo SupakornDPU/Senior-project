@@ -1,6 +1,8 @@
 const urlParams = new URLSearchParams(window.location.search);
 const classroomID = urlParams.get('classroomID')
 console.log(classroomID);
+const deckID = urlParams.get('deck')
+console.log(deckID);
 
 // GET DATA CLASSROOM
 fetch('/projectsenior/deck/' + classroomID, {
@@ -399,12 +401,42 @@ textareaForm.addEventListener('submit', (e) => {
 function btn_addQuiz(id) {
   inputShowClassroomID = document.getElementById("deckID");
   inputShowClassroomID.value = id;
+
+  const selectElement = document.getElementById("questionInput");
+
+  selectElement.innerHTML = '<option selected value="">Select...</option>';
+
+  fetch('/projectsenior/deck/getById/' + id, {
+    method: 'get',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      const flashcards = data.flashcards;
+
+      flashcards.forEach(flashcard => {
+        console.log(flashcard);
+        const option = document.createElement('option');
+        option.value = flashcard.card_question;
+        option.text = flashcard.card_question;
+        selectElement.appendChild(option);
+      });
+
+      if (flashcards.length === 0) {
+        console.log('ไม่มีข้อมูลใน dataArray');
+      }
+
+    })
+    .catch(err => console.log(err));
+
 }
 const formAddQuiz = document.getElementById('formAddQuiz');
 formAddQuiz.addEventListener('submit', async (e) => {
   e.preventDefault();
 
-  const quizQuestion = document.querySelectorAll('textarea[name="quizQuestion"]');
+  const quizQuestion = document.querySelectorAll('select[name="quizQuestion"]');
   const quizchoices1 = document.querySelectorAll('textarea[name="quizChoice1"]');
   const quizchoices2 = document.querySelectorAll('textarea[name="quizChoice2"]');
   const quizchoices3 = document.querySelectorAll('textarea[name="quizChoice3"]');
@@ -427,7 +459,7 @@ formAddQuiz.addEventListener('submit', async (e) => {
       checkEmptyField = true;
       return;
     }
-    
+
     data.push({
       quiz_question: quizQuestion.value.trim(),
       quiz_choice: [quizChoice1, quizChoice2, quizChoice3, quizChoice4],

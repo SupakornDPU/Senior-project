@@ -3,6 +3,7 @@ const quizRouter = express.Router();
 const Quiz = require('../models/Quiz');
 const mongoose = require('mongoose');
 const Deck = require('../models/Deck');
+const Flashcard = require('../models/Flashcard');
 
 quizRouter.get('/', (req, res, next) => {
     Quiz.find()
@@ -65,7 +66,13 @@ quizRouter.post('/:deckId', async (req, res) => {
   
         const savedQuiz = await newQuiz.save();
         newQuizIds.push(savedQuiz._id);
+
+        const checkFlashcard = await Flashcard.findOne({ card_question: item.quiz_question });
+        if (checkFlashcard) {
+          await Flashcard.findByIdAndUpdate(checkFlashcard._id, { $push: { quiz_id: savedQuiz._id } });
+        }
       }
+      
       await Deck.findOneAndUpdate(
         { _id: deckId },
         { $push: { quizzes: { $each: newQuizIds } } },
@@ -80,7 +87,7 @@ quizRouter.post('/:deckId', async (req, res) => {
       res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล' });
     }
   });
-
+ 
 
 
 module.exports = quizRouter;
