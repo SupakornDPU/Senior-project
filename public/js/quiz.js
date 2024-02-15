@@ -6,6 +6,8 @@ console.log(deckID);
 let counter = 0;
 let i = 0;
 let correctAnswer = 0;
+let wrongAnswers = [];
+
 fetch('/api/deck/getByIdQuiz/' + deckID, {
     method: 'get',
     headers: {
