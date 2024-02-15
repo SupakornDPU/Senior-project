@@ -7,6 +7,7 @@ const QuizSchema = new mongoose.Schema({
    }],
    quiz_answerCorrect : String,
    deck_id : String,
+   flashcard_id: String,
 });
 
 module.exports = mongoose.model('Quiz', QuizSchema);

@@ -18,6 +18,16 @@ flashcardRouter.get('/', (req, res, next) => {
     });
 });
 
+flashcardRouter.get('/getByIds/:id', (req, res, next) => {
+  Flashcard.findById(req.params.id)
+    .then((flashcards) => {
+      res.json(flashcards);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 const upload = multer({ dest: "data/" }); // เป็นการบอกว่าไฟล์ที่อัพโหลดจะถูกเก็บไว้ที่โฟลเดอร์ไหน
 
 // Post Router สำหรับสร้าง FlashCard และอัปโหลดไฟล์ excel
