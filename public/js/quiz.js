@@ -6,7 +6,7 @@ console.log(deckID);
 let counter = 0;
 let i = 0;
 let correctAnswer = 0;
-fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
+fetch('/api/deck/getByIdQuiz/' + deckID, {
     method: 'get',
     headers: {
         'Content-Type': 'application/json'
@@ -46,7 +46,6 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                     </svg><br>Next
                     </a>
                 </div>
-            </div>
             <div class = "row">
                 <div class="col-12 mb-5">
                     <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Item.quiz_question}</p>
@@ -101,7 +100,6 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
                 if (i >= dataArray.length - 1) {
                     console.log('Finish');
                     alert('Finish');
-                    
                     return;
                 } else {
                     i++;
@@ -178,10 +176,9 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
     .catch(err => console.log(err));
 
 
-
 function checkAnswer(buttonId) {
 
-    fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
+    fetch('/api/deck/getByIdQuiz/' + deckID, {
         method: 'get',
         headers: {
             'Content-Type': 'application/json'

@@ -10,7 +10,7 @@ createdeck.addEventListener("submit", (e) => {
   const teacherids = document.getElementById("teacherid").value;
   const adminids = document.getElementById("adminid").value;
 
-  fetch('/projectsenior/deck', {
+  fetch('/api/deck', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

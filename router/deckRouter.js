@@ -3,6 +3,8 @@ const deckRouter = express.Router();
 const mongoose = require('mongoose');
 const Deck = require('../models/Deck');
 const Classroom = require('../models/Classroom');
+const Flashcard = require('../models/Flashcard');
+const Quiz = require('../models/Quiz');
 
 // Get Router สำหรับค้นหา deck ทั้งหมด
 deckRouter.get('/', (req, res, next) => {
@@ -83,5 +85,74 @@ deckRouter.put('/:id', (req, res, next) => {
       next(err);
     });
 });
+
+// Flashcard Router
+
+// Get Flashcard ด้วย Deck ID
+deckRouter.get('/flashcard/:deck_id', (req, res, next) => {
+  Flashcard.find({ deck_id: req.params.deck_id })
+    .then((flashcards) => {
+      res.json(flashcards);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Get Flashcard With ID
+deckRouter.get('/flashcard/getById/:id', (req, res, next) => {
+  Flashcard.findById(req.params.id)
+    .then((flashcards) => {
+      res.json(flashcards);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Flashcard
+deckRouter.put('/flashcard/:id', (req, res, next) => {
+  Flashcard.findByIdAndUpdate(req.params.id, req.body)
+  .then(() => {
+    res.json({ message: 'Updated' });
+  })
+  .catch(() => {
+    next(err);
+  })
+})
+
+// Delete Flashcard
+deckRouter.delete('/flashcard/:id', (req, res, next) => {
+  Flashcard.findByIdAndRemove(req.params.id, req.body)
+    .then(() => {
+      res.json({ message: 'Deleted' });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Get Quiz With DeckId
+deckRouter.get('/quiz/:deck_id', (req, res, next) => {
+  Quiz.find({ deck_id: req.params.deck_id })
+    .then((quizzes) => {
+      res.json(quizzes);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Get Quiz With ID
+deckRouter.get('/quiz/getById/:id', (req, res, next) => {
+  Quiz.findById(req.params.id)
+    .then((quizzes) => {
+      res.json(quizzes);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 
 module.exports = deckRouter;

@@ -57,7 +57,7 @@ app.use('/projectsenior/register', registerRouter);  // เรียกใช้
 app.use('/projectsenior/loginUser', loginUserRouter);  // เรียกใช้ loginUserRouter
 app.use('/projectsenior/logout', loginRouter);  // เรียกใช้ loginRouter เพื่อทำการ logout
 app.use('/projectsenior/classroom', classroomRouter);  // เรียกใช้ classroomRouter
-app.use('/projectsenior/deck', deckRouter);  // เรียกใช้ deckRouter
+app.use('/api/deck', deckRouter);  // เรียกใช้ deckRouter
 app.use('/projectsenior/student', studentRouter);  // เรียกใช้ studentRouter
 app.use('/api/admin', adminRouter);  // เรียกใช้ adminRouter
 app.use('/projectsenior/flashcard', flashcardRouter);  // เรียกใช้ flashcardRouter

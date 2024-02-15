@@ -4,8 +4,10 @@ console.log(classroomID);
 const deckID = urlParams.get('deck')
 console.log(deckID);
 
+// ! Deck
+
 // GET DATA CLASSROOM
-fetch('/projectsenior/deck/' + classroomID, {
+fetch('/api/deck/' + classroomID, {
   method: 'GET',
   headers: {
     'Content-Type': 'application/json'
@@ -32,18 +34,7 @@ fetch('/projectsenior/deck/' + classroomID, {
                     </div>
                     <div class="row mb-2 btnManageFlashcard">
                       <div class="col-md-12">
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQuiz"
-                          onclick="btn_addQuiz('${each._id}')" style="font-weight: bold;">
-                            Add Quiz
-                          </button></td>
-                      </div>
-                    </div>
-                    <div class="row mb-2 btnManageFlashcard">
-                      <div class="col-md-12">
-                          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#manageFlashcards"
-                          onclick="btn_manageFlashcard('${each._id}')" style="font-weight: bold;">
-                          Manage Flashcard
-                          </button></td>
+                      <a class="btn btn-primary font-poppin" href="manageDeck?deck=${each._id}" role="button" style="font-weight: bold;">Manage Deck</a>
                       </div>
                     </div>
                     <div class="row mb-2">
@@ -101,7 +92,7 @@ function btnupdatedeck(id) {
   const inputShowClassroomID = document.getElementById("deckID");
   inputShowClassroomID.value = id;
 
-  fetch('/projectsenior/deck/getById/' + id, {
+  fetch('/api/deck/getById/' + id, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -127,7 +118,7 @@ function btndeletedeck() {
     confirmButtonText: "Yes, delete it!",
   }).then((result) => {
     if (result.isConfirmed) {
-      fetch('/projectsenior/deck/' + DeckID, {
+      fetch('/api/deck/' + DeckID, {
         method: 'DELETE',
       })
         .then(response => response.json())
@@ -162,7 +153,7 @@ formupdatedeck.addEventListener("submit", (e) => {
   const teacherids = document.getElementById("updateteacherid").value;
   const adminids = document.getElementById("updateadminid").value;
 
-  fetch('/projectsenior/deck/' + DeckID, {
+  fetch('/api/deck/' + DeckID, {
     method: 'put',
     headers: {
       'Content-Type': 'application/json'
@@ -225,7 +216,7 @@ createdeck.addEventListener("submit", (e) => {
   const teacherids = document.getElementById("teacherid").value;
   const adminids = document.getElementById("adminid").value;
 
-  fetch('/projectsenior/deck', {
+  fetch('/api/deck', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -280,230 +271,4 @@ createdeck.addEventListener("submit", (e) => {
     })
   document.getElementById("deckname").value = "";
 })
-
-/////////////////// manageFlashcard //////////////////////
-
-function btn_manageFlashcard(id) {
-  inputShowClassroomID = document.getElementById("deckID");
-  inputShowClassroomID.value = id;
-}
-
-// POST import excel file
-const fileInput = document.getElementById('formFile');
-const formImport = document.getElementById('formImport');
-
-formImport.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const deckId = document.getElementById("deckID").value;
-  console.log(deckId);
-  const formData = new FormData();
-  formData.append('file', fileInput.files[0]);
-
-  fetch('/projectsenior/flashcard/import/' + deckId, {
-    method: 'POST',
-    body: formData
-  })
-    .then(res => res.json())
-    .then(data => {
-      // SweetAlert
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Import successfully"
-      }).then(() => {
-        window.location.reload();
-      })
-    })
-});
-
-// POST import textarea
-const textareaForm = document.getElementById('textareaForm');
-textareaForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-
-  const questions = document.querySelectorAll('textarea[name="question"]');
-  const answers = document.querySelectorAll('textarea[name="answer"]');
-  const deckId = document.getElementById("deckID").value;
-  const data = [];
-
-  //เช็คค่าว่าง ถ้าเป็นจริงจะรีเทิร์นกลับแล้วจบIF ถ้าเป็นเท็จจะทำการบันทึกทั้งหมด
-  let CheckEmptyField = false;
-
-  // สร้างอาเรย์ของอ็อบเจ็กต์เพื่อเก็บข้อมูลจากทุก textarea
-  // ใช้ trim() เพื่อลบช่องว่างที่อาจจะมี).
-  questions.forEach((question, index) => {
-    if (question.value.trim() === '' || answers[index].value.trim() === '') {
-      CheckEmptyField = true;
-      return;
-    }
-
-    data.push({
-      question: question.value,
-      answer: answers[index].value,
-      deckid: deckId
-    });
-  });
-  //เมื่อ CheckEmptyField เป็นจริงจะทำการแจ้งเตือนและจบการทำงาน
-  if (CheckEmptyField) {
-    // แสดงการแจ้งเตือนถ้ามี textarea ว่าง
-    alert('กรุณากรอกข้อมูลให้ครบทุกช่อง');
-    return;
-  }
-
-  // ทำ Fetch เพื่อส่งข้อมูลไปยังเซิร์ฟเวอร์ Node.js
-  fetch('/projectsenior/flashcard/' + deckId, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ data })
-  })
-    .then(response => response.json())
-    .then(() => {
-      // SweetAlert
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1200,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      });
-      Toast.fire({
-        icon: "success",
-        title: "Create Flashcard successfully"
-      }).then(() => {
-        window.location = "deck?classroomID=" + classroomID;
-      });
-
-      // Reset textarea values
-      questions.forEach(question => (question.value = ''));
-      answers.forEach(answer => (answer.value = ''));
-    })
-    .catch(err => console.log(err));
-});
-
-/////////////////// addQuiz //////////////////////
-
-function btn_addQuiz(id) {
-  inputShowClassroomID = document.getElementById("deckID");
-  inputShowClassroomID.value = id;
-
-  const selectElement = document.getElementById("questionInput");
-
-  selectElement.innerHTML = '<option selected value="">Select...</option>';
-
-  fetch('/projectsenior/deck/getById/' + id, {
-    method: 'get',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
-    .then(response => response.json())
-    .then(data => {
-      const flashcards = data.flashcards;
-
-      flashcards.forEach(flashcard => {
-        console.log(flashcard);
-        const option = document.createElement('option');
-        option.value = flashcard.card_question;
-        option.text = flashcard.card_question;
-        selectElement.appendChild(option);
-      });
-
-      if (flashcards.length === 0) {
-        console.log('ไม่มีข้อมูลใน dataArray');
-      }
-
-    })
-    .catch(err => console.log(err));
-
-}
-const formAddQuiz = document.getElementById('formAddQuiz');
-formAddQuiz.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const quizQuestion = document.querySelectorAll('select[name="quizQuestion"]');
-  const quizchoices1 = document.querySelectorAll('textarea[name="quizChoice1"]');
-  const quizchoices2 = document.querySelectorAll('textarea[name="quizChoice2"]');
-  const quizchoices3 = document.querySelectorAll('textarea[name="quizChoice3"]');
-  const quizchoices4 = document.querySelectorAll('textarea[name="quizChoice4"]');
-  const selectedOptions = document.querySelectorAll('.form-select');
-  const deckId = document.getElementById("deckID").value;
-  const data = [];
-
-  let checkEmptyField = false;
-
-  quizQuestion.forEach((quizQuestion, index) => {
-    const quizChoice1 = quizchoices1[index].value.trim();
-    const quizChoice2 = quizchoices2[index].value.trim();
-    const quizChoice3 = quizchoices3[index].value.trim();
-    const quizChoice4 = quizchoices4[index].value.trim();
-    const selectedOptionElement = selectedOptions[index];
-    const selectedOption = selectedOptionElement.value.trim();
-
-    if (quizQuestion.value.trim() === '' || quizChoice1 === '' || quizChoice2 === '' || quizChoice3 === '' || quizChoice4 === '' || selectedOption === '') {
-      checkEmptyField = true;
-      return;
-    }
-
-    data.push({
-      quiz_question: quizQuestion.value.trim(),
-      quiz_choice: [quizChoice1, quizChoice2, quizChoice3, quizChoice4],
-      quiz_answerCorrect: selectedOption,
-      deck_id: deckId
-    });
-  });
-
-  if (checkEmptyField) {
-    alert('Please fill in all fields.');
-    return;
-  }
-
-  try {
-    fetch('/projectsenior/quiz/' + deckId, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ data: data })
-    })
-      .then(response => response.json())
-      .then(() => {
-        // SweetAlert
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1200,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-        Toast.fire({
-          icon: "success",
-          title: "Create Flashcard successfully"
-        }).then(() => {
-          window.location = "deck?classroomID=" + classroomID;
-        });
-      })
-      .catch(err => console.log(err));
-  } catch (error) {
-    console.error('Error adding quiz:', error.message);
-  }
-});
+// ! End Deck

@@ -5,7 +5,7 @@ console.log(deckID);
 // Get the deck ID from the URL
 let counter = 0;
 let i = 0;
-fetch('/projectsenior/deck/getById/' + deckID, {
+fetch('/api/deck/getById/' + deckID, {
   method: 'get',
   headers: {
     'Content-Type': 'application/json'
