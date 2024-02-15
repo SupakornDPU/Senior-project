@@ -6,6 +6,7 @@ console.log(deckID);
 let counter = 0;
 let i = 0;
 let correctAnswer = 0;
+let wrongAnswers = [];
 fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
     method: 'get',
     headers: {
@@ -99,10 +100,19 @@ fetch('/projectsenior/deck/getByIdQuiz/' + deckID, {
             btnquiz.addEventListener("click", () => {
                 // เช็คว่าถ้า i มากกว่าความยาวของ Array ให้แสดงข้อความว่า Alert Finish และหยุดการทำงาน
                 if (i >= dataArray.length - 1) {
-                    console.log('Finish');
-                    alert('Finish');
-                    
-                    return;
+                    // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
+                    if (wrongAnswers.length > 0) {
+                        console.log('แสดงข้อความที่ตอบผิดอีกรอบ');
+                        console.log(wrongAnswers);
+                        callbackwrongAnswers(wrongAnswers);
+                        // แสดงข้อความที่ตอบผิดโดยเรียกใช้ฟังก์ชันหรือทำการปรับปรุงตามความต้องการ
+                        // โดยที่ต้องแสดง Flashcards หรือแบบทดสอบข้อผิดพลาดของผู้ใช้ก่อน
+                        // จึงจะแสดงคำถามต่อไป
+                    } else {
+                        console.log('Finish');
+                        alert('Finish');
+                        return;
+                    }
                 } else {
                     i++;
                     correctAnswer++;
@@ -209,6 +219,7 @@ function checkAnswer(buttonId) {
                     btnChoice.disabled = true;
                 }
             } else {
+                wrongAnswers.push(item);
                 console.log('คำตอบผิด!');
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
@@ -234,5 +245,93 @@ function checkAnswer(buttonId) {
         })
         .catch(err => console.log(err));
 }
+
+
+function callbackwrongAnswers(wrongAnswers) {
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
+    // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
+    const wrongFlashcardIds = wrongAnswers.map(wrongAnswer => wrongAnswer.flashcard_id);
+    console.log(wrongFlashcardIds);
+
+    let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
+
+    const decks = document.getElementById("innerhtmlQuiz");
+
+    function displayNextFlashcard() {
+        if (currentIndex < wrongFlashcardIds.length) {
+            const currentFlashcardId = wrongFlashcardIds[currentIndex];
+
+            // ดึงข้อมูล Flashcards จากเซิร์ฟเวอร์โดยใช้ currentFlashcardId
+            fetch('/projectsenior/flashcard/getByIds/' + currentFlashcardId, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // แสดงข้อมูลของ flashcard
+                    displayFlashcard(data);
+
+                    currentIndex++; // เพิ่ม index สำหรับการดึงข้อมูล flashcard ถัดไป
+                })
+                .catch(err => console.log(err));
+        } else {
+            console.log('ไม่มีข้อมูลใน wrongAnswers แล้ว');
+        }
+    }
+
+    function displayFlashcard(flashcardData) {
+        // สร้าง HTML เพื่อแสดง Flashcard
+        decks.innerHTML = '';
+
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
+        deckCol.innerHTML = `
+            <div class="row justify-content-end">
+                <div class="col-3" style="width: fit-content;" ">
+                    <button id="btnnextquestion" class="button btn btn-lg btn-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                            <path
+                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                        </svg><br>Next
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px;"><ins> Question</ins></h1>
+                </div>
+                <pre class="d-flex justify-content-center text-start">
+                    <code id="question" class="hljs">${flashcardData.card_question}</code>
+                </pre>
+            </div>
+            <hr class="style">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
+                </div>
+                <div class="col-md-12">
+                    <pre class="d-flex justify-content-center text-start">
+                        <code id="answer" class="hljs">${flashcardData.card_answer}</code>
+                    </pre>
+                </div>
+            </div>
+            `;
+        decks.appendChild(deckCol);
+
+        // เพิ่ม event listener ให้กับปุ่ม Next
+        const btnNextQuestion = document.getElementById("btnnextquestion");
+        btnNextQuestion.addEventListener("click", displayNextFlashcard);
+    }
+
+    // แสดง flashcard แรก
+    displayNextFlashcard();
+}
+
+
+
+
 
 
