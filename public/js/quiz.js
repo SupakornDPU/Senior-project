@@ -5,6 +5,10 @@ console.log(deckID);
 // Get the deck ID from the URL
 let counter = 0;
 let i = 0;
+let q = 0;
+let point = 0;
+let countCorrect = 0;
+let countWrong = 0;
 let correctAnswer = 0;
 let wrongAnswers = [];
 
@@ -110,7 +114,9 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                         // จึงจะแสดงคำถามต่อไป
                     } else {
                         console.log('Finish');
+                        console.log(point);
                         alert('Finish');
+                        displayScore(point, countCorrect, countWrong);
                         return;
                     }
                 } else {
@@ -187,65 +193,6 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
     })
     .catch(err => console.log(err));
 
-
-function checkAnswer(buttonId) {
-
-    fetch('/api/deck/getByIdQuiz/' + deckID, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            const dataArray = data.quizzes;
-            const item = dataArray[correctAnswer];
-            const answerCorrect = item.quiz_answerCorrect;
-            console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
-
-            // เลือกคำตอบที่ผู้ใช้เลือก
-            const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
-            // console.log(selectedChoice);
-
-            // เปรียบเทียบคำตอบที่ผู้ใช้เลือกกับคำตอบที่ถูกต้อง
-            if (selectedChoice === answerCorrect) {
-                console.log('คำตอบถูกต้อง!');
-                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
-                document.getElementById(buttonId).classList.add('btn-success');
-                document.getElementById(buttonId).classList.add('active');
-                for (let i = 1; i <= 4; i++) {
-                    const btnChoice = document.getElementById(`btnChoice${i}`);
-                    btnChoice.disabled = true;
-                }
-            } else {
-                wrongAnswers.push(item);
-                console.log('คำตอบผิด!');
-                document.getElementById(buttonId).classList.add('btn-danger');
-                document.getElementById(buttonId).classList.add('active');
-                // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
-                const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
-                    document.getElementById('btnChoice2').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice2') :
-                        document.getElementById('btnChoice3').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice3') :
-                            document.getElementById('btnChoice4').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice4') : null;
-
-                if (correctButton) {
-                    correctButton.classList.add('btn-success');
-                    for (let i = 1; i <= 4; i++) {
-                        const btnChoice = document.getElementById(`btnChoice${i}`);
-                        btnChoice.disabled = true;
-                    }
-                    document.getElementById('btnnextquiz').disabled = false;
-                }
-                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
-                // เมื่อเลือกคำตอบผิดให้ Disable ปุ่มทั้งหมดยกเว้นปุ่มที่เลือก และปุ่ม Next
-            }
-
-            answered = true;
-        })
-        .catch(err => console.log(err));
-}
-
-
 function callbackwrongAnswers(wrongAnswers) {
     console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
 
@@ -254,7 +201,7 @@ function callbackwrongAnswers(wrongAnswers) {
     console.log(wrongFlashcardIds);
 
     let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
-
+    let currentIndexQuiz = 0;
     const decks = document.getElementById("innerhtmlQuiz");
 
     function displayNextFlashcard() {
@@ -278,7 +225,101 @@ function callbackwrongAnswers(wrongAnswers) {
                 .catch(err => console.log(err));
         } else {
             console.log('ไม่มีข้อมูลใน wrongAnswers แล้ว');
+            displayNextQuiz(wrongAnswers);
         }
+    }
+
+    // wrongQuiz
+    function displayNextQuiz(wrongQuiz) {
+
+        if (q >= wrongQuiz.length) {
+            // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
+
+            console.log('Finish');
+            console.log(point);
+            alert('Finish');
+            displayScore(point, countCorrect, countWrong);
+            return;
+
+        } else {
+            const Item = wrongQuiz[q];
+            console.log(q);
+            console.log(wrongQuiz);
+            displayQuiz(Item);
+
+        }
+    }
+
+    // wrongQuiz
+    function displayQuiz(Quizdata) {
+        console.log(Quizdata);
+        const decks = document.getElementById("innerhtmlQuiz");
+        decks.innerHTML = '';
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row justify-content-end';
+        deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <a id="btnnextquiz" class="button btn btn-lg btn-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                        <path
+                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                    </svg><br>Next
+                    </a>
+                </div>
+            <div class = "row">
+                <div class="col-12 mb-5">
+                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata.quiz_question}</p>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice1" onclick="checkAnswers('btnChoice1', '${Quizdata._id}')"><i class="bi bi-1-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice1" class="hljs" class="">${Quizdata.quiz_choice[0]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice2" onclick="checkAnswers('btnChoice2','${Quizdata._id}')"><i class="bi bi-2-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice2" class="hljs" class="">${Quizdata.quiz_choice[1]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice3" onclick="checkAnswers('btnChoice3','${Quizdata._id}')"><i class="bi bi-3-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice3" class="hljs" class="">${Quizdata.quiz_choice[2]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice4" onclick="checkAnswers('btnChoice4','${Quizdata._id}')"><i class="bi bi-4-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice4" class="hljs" class="">${Quizdata.quiz_choice[3]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        decks.appendChild(deckCol);
+        hljs.highlightAll();
+        const btnquiz = document.getElementById("btnnextquiz");
+        btnquiz.addEventListener("click", () => {
+            q++;
+            displayNextQuiz(wrongAnswers);
+        });
+
+
     }
 
     function displayFlashcard(flashcardData) {
@@ -329,8 +370,176 @@ function callbackwrongAnswers(wrongAnswers) {
     displayNextFlashcard();
 }
 
+function checkAnswer(buttonId) {
 
+    fetch('/api/deck/getByIdQuiz/' + deckID, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const dataArray = data.quizzes;
+            const item = dataArray[correctAnswer];
+            const answerCorrect = item.quiz_answerCorrect;
+            console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
 
+            // เลือกคำตอบที่ผู้ใช้เลือก
+            const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
+            // console.log(selectedChoice);
 
+            // เปรียบเทียบคำตอบที่ผู้ใช้เลือกกับคำตอบที่ถูกต้อง
+            if (selectedChoice === answerCorrect) {
+                console.log('คำตอบถูกต้อง!');
+                point += 3;
+                countCorrect++;
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
+                document.getElementById(buttonId).classList.add('btn-success');
+                document.getElementById(buttonId).classList.add('active');
+                for (let i = 1; i <= 4; i++) {
+                    const btnChoice = document.getElementById(`btnChoice${i}`);
+                    btnChoice.disabled = true;
+                }
 
+            } else {
+                wrongAnswers.push(item);
+                console.log('คำตอบผิด!');
+                point--;
+                countWrong++;
+                document.getElementById(buttonId).classList.add('btn-danger');
+                document.getElementById(buttonId).classList.add('active');
+                // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
+                const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
+                    document.getElementById('btnChoice2').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice2') :
+                        document.getElementById('btnChoice3').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice3') :
+                            document.getElementById('btnChoice4').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice4') : null;
+
+                if (correctButton) {
+                    correctButton.classList.add('btn-success');
+                    for (let i = 1; i <= 4; i++) {
+                        const btnChoice = document.getElementById(`btnChoice${i}`);
+                        btnChoice.disabled = true;
+                    }
+                    document.getElementById('btnnextquiz').disabled = false;
+                }
+
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
+                // เมื่อเลือกคำตอบผิดให้ Disable ปุ่มทั้งหมดยกเว้นปุ่มที่เลือก และปุ่ม Next
+            }
+
+            answered = true;
+        })
+        .catch(err => console.log(err));
+}
+
+function checkAnswers(buttonId, Quizdata) {
+
+    fetch('/projectsenior/quiz/getById/' + Quizdata, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const answerCorrect = data.quiz_answerCorrect;
+            console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
+
+            // เลือกคำตอบที่ผู้ใช้เลือก
+            const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
+            // console.log(selectedChoice);
+
+            // เปรียบเทียบคำตอบที่ผู้ใช้เลือกกับคำตอบที่ถูกต้อง
+            if (selectedChoice === answerCorrect) {
+                console.log('คำตอบถูกต้อง!');
+                point += 3;
+                countCorrect++;
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
+                document.getElementById(buttonId).classList.add('btn-success');
+                document.getElementById(buttonId).classList.add('active');
+                for (let i = 1; i <= 4; i++) {
+                    const btnChoice = document.getElementById(`btnChoice${i}`);
+                    btnChoice.disabled = true;
+                }
+
+            } else {
+                console.log('คำตอบผิด!');
+                point -= 0.5;
+                countWrong++;
+                document.getElementById(buttonId).classList.add('btn-danger');
+                document.getElementById(buttonId).classList.add('active');
+                // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
+                const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
+                    document.getElementById('btnChoice2').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice2') :
+                        document.getElementById('btnChoice3').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice3') :
+                            document.getElementById('btnChoice4').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice4') : null;
+
+                if (correctButton) {
+                    correctButton.classList.add('btn-success');
+                    for (let i = 1; i <= 4; i++) {
+                        const btnChoice = document.getElementById(`btnChoice${i}`);
+                        btnChoice.disabled = true;
+                    }
+                    document.getElementById('btnnextquiz').disabled = false;
+                }
+
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบผิด
+                // เมื่อเลือกคำตอบผิดให้ Disable ปุ่มทั้งหมดยกเว้นปุ่มที่เลือก และปุ่ม Next
+            }
+
+            answered = true;
+        })
+        .catch(err => console.log(err));
+}
+
+function displayScore(point, countCorrect, countWrong) {
+    const score = document.getElementById("innerhtmlQuiz");
+    score.innerHTML = '';
+    const scoreCol = document.createElement('div');
+    scoreCol.className = 'container';
+    scoreCol.innerHTML = `
+            <div class="row justify-content-end">
+                <div class="col-3" style="width: fit-content;" ">
+                    <button id="btnNextdone" class="button btn btn-lg btn-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                            <path
+                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                        </svg><br>Next
+                    </button>
+                </div>
+            </div>
+            <div class="text-center" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;height: 550px;">
+                <h1 class="font-poppin fw-bold">Your Score</h1>
+                <h2 class="font-poppin fw-medium">${point}</h2>
+                <div class="row justify-content-center align-items-center text-center p-lg-5">
+                    <div class="col-6" style="border: 2px solid black;border-radius: 10px 0px 0px 10px;">
+                        <h2 class="font-poppin fw-bold">Correct</h2>
+                        <h3 class="font-poppin fw-medium">${countCorrect}</h3>
+                    </div>
+                    <div class="col-6" style="border: 2px solid black;border-radius: 0px 10px 10px 0px;">
+                        <h2 class="font-poppin fw-bold">Wrong</h2>
+                        <h3 class="font-poppin fw-medium">${countWrong}</h3>
+                    </div>
+                </div>
+            </div>
+            `;
+    score.appendChild(scoreCol);
+
+    fetch('/api/deck/ById/' + deckID, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const btnNextdone = document.getElementById("btnNextdone");
+            btnNextdone.addEventListener("click", () => {
+                window.location = "deck?classroomID=" + data.classroom_id;
+            });
+        })
+        .catch(err => console.log(err));
+
+}
 
