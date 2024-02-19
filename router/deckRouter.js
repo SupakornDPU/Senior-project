@@ -18,16 +18,6 @@ deckRouter.get('/', (req, res, next) => {
     });
 });
 
-deckRouter.get('/ById/:id', (req, res, next) => {
-  Deck.findById(req.params.id)
-    .then((Deck) => {
-      res.json(Deck);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
 // Get Router สำหรับค้นหา Deck ตาม classroom_id
 deckRouter.get('/:classroom_id', (req, res, next) => {
   Deck.find({ classroom_id: req.params.classroom_id })

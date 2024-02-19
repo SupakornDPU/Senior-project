@@ -15,16 +15,6 @@ quizRouter.get('/', (req, res, next) => {
         });
 });
 
-quizRouter.get('/getById/:id', (req, res, next) => {
-  Quiz.findById(req.params.id)
-    .then((Quiz) => {
-      res.json(Quiz);
-    })
-    .catch((err) => {
-      next(err);
-    });
-});
-
 // Post Router สำหรับสร้าง Deck
 quizRouter.post('/', (req, res, next) => {
     Quiz.create(req.body)
