@@ -394,12 +394,12 @@ fetch('/api/deck/quiz/' + deckId, {
             <tr id="quizRow_${item._id}">
                <td>${index + 1}</td>
                <td>${item._id}</td>
-               <td>${item.quiz_question}</td>
-               <td>${item.quiz_choice[0]}</td>
-               <td>${item.quiz_choice[1]}</td>
-               <td>${item.quiz_choice[2]}</td>
-               <td>${item.quiz_choice[3]}</td>
-               <td>${item.quiz_answerCorrect}</td>
+               <td class="quizQuestion">${item.quiz_question}</td>
+               <td class="quizChoice1">${item.quiz_choice[0]}</td>
+               <td class="quizChoice2">${item.quiz_choice[1]}</td>
+               <td class="quizChoice3">${item.quiz_choice[2]}</td>
+               <td class="quizChoice4">${item.quiz_choice[3]}</td>
+               <td class="quizAnsCorrect">${item.quiz_answerCorrect}</td>
                <td>${item.deck_id}</td>
                <td>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editQuiz"
@@ -490,14 +490,14 @@ function getDetailEditQuiz(quizId) {
 
 
 // Funtion Delete Flashcard
-function deleteFlashcard(flashcardId) {
-   fetch('/api/deck/flashcard/' + flashcardId, {
+function deleteQuiz(quizId) {
+   fetch('/api/deck/quiz/del/' + quizId, {
       method: 'DELETE',
    })
       .then(response => response.json())
       .then(data => {
          console.log(data);
-         const deletedRow = document.getElementById('flashcardRow_' + flashcardId);
+         const deletedRow = document.getElementById('quizRow_' + quizId);
          if (deletedRow) {
             deletedRow.remove();
          }
@@ -508,12 +508,12 @@ const formModalAddQuiz = document.getElementById('formModalAddQuiz');
 formModalAddQuiz.addEventListener('submit', async (e) => {
    e.preventDefault();
 
+   const quizId = document.getElementById('inputQuizId').value;
    const quizQuestion = document.querySelectorAll('select[name="quizModalQuestion"]');
    const quizchoices1 = document.querySelectorAll('textarea[name="modalQuizChoice1"]');
    const quizchoices2 = document.querySelectorAll('textarea[name="modalQuizChoice2"]');
    const quizchoices3 = document.querySelectorAll('textarea[name="modalQuizChoice3"]');
    const quizchoices4 = document.querySelectorAll('textarea[name="modalQuizChoice4"]');
-   // const selectedOptions = document.querySelectorAll('.form-select');
    const selectedOptions = document.querySelectorAll('select[name="modalQuizAnswer"]');
    const data = [];
 
@@ -544,17 +544,40 @@ formModalAddQuiz.addEventListener('submit', async (e) => {
       return;
    }
 
-   try {
-      fetch('/projectsenior/quiz/' + deckId, {
-         method: 'POST',
-         headers: {
-            'Content-Type': 'application/json'
-         },
-         body: JSON.stringify({ data: data })
+   // Extracting the data from the first element since we're updating only one quiz
+   const quiz_question = data[0].quiz_question;
+   const quiz_choice = data[0].quiz_choice;
+   const quiz_answerCorrect = data[0].quiz_answerCorrect;
+
+   fetch('/api/deck/quiz/update/' + quizId, {
+      method: 'PUT',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+         quiz_question: quiz_question,
+         quiz_choice: quiz_choice,
+         quiz_answerCorrect: quiz_answerCorrect,
       })
-         .then(response => response.json())
-         .then(() => {
-            // SweetAlert
+   })
+      .then(response => {
+         if (!response.ok) {
+            throw new Error('Failed to update quiz');
+         }
+         return response.json();
+      })
+      .then(() => {
+         // ํUpdate the table row with the edited data
+         const editedRow = document.getElementById('quizRow_' + quizId);
+         $('#editQuiz').modal('hide');
+         if (editedRow) {
+            editedRow.querySelector('.quizQuestion').textContent = quiz_question;
+            editedRow.querySelector('.quizChoice1').textContent = quiz_choice[0];
+            editedRow.querySelector('.quizChoice2').textContent = quiz_choice[1];
+            editedRow.querySelector('.quizChoice3').textContent = quiz_choice[2];
+            editedRow.querySelector('.quizChoice4').textContent = quiz_choice[3];
+            editedRow.querySelector('.quizAnsCorrect').textContent = quiz_answerCorrect;
+         }
             const Toast = Swal.mixin({
                toast: true,
                position: "top-end",
@@ -569,16 +592,12 @@ formModalAddQuiz.addEventListener('submit', async (e) => {
             Toast.fire({
                icon: "success",
                title: "Update Quiz successfully"
-            }).then(() => {
-               window.location.reload();
-            });
+            })
          })
-         .catch(err => console.log(err));
-   } catch (error) {
-      console.error('Error adding quiz:', error.message);
-   }
+      .catch(err => {
+         console.error('Error update quiz:', err.message);
+      });
 });
-
 // ! End Quiz
 
 // SweetAlert Success

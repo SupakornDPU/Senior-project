@@ -113,12 +113,12 @@ deckRouter.get('/flashcard/getById/:id', (req, res, next) => {
 // Put Flashcard
 deckRouter.put('/flashcard/:id', (req, res, next) => {
   Flashcard.findByIdAndUpdate(req.params.id, req.body)
-  .then(() => {
-    res.json({ message: 'Updated' });
-  })
-  .catch(() => {
-    next(err);
-  })
+    .then(() => {
+      res.json({ message: 'Updated' });
+    })
+    .catch(() => {
+      next(err);
+    })
 })
 
 // Delete Flashcard
@@ -148,6 +148,28 @@ deckRouter.get('/quiz/getById/:id', (req, res, next) => {
   Quiz.findById(req.params.id)
     .then((quizzes) => {
       res.json(quizzes);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Put Quiz - Update Quiz by ID
+deckRouter.put('/quiz/update/:id', (req, res, next) => {
+  Quiz.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .then(() => {
+      res.json({ message: 'Quiz updated' });
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
+// Delete Quiz
+deckRouter.delete('/quiz/del/:id', (req, res, next) => {
+  Quiz.findByIdAndRemove(req.params.id, req.body)
+    .then(() => {
+      res.json({ message: 'Deleted' });
     })
     .catch((err) => {
       next(err);
