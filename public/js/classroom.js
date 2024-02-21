@@ -33,7 +33,7 @@ fetch('/projectsenior/classroom', {
                   <p class="fw-bold">${each.classroom_creator}</p>
                   <p class="card__subtitle">Code: ${each.classroom_code}</p>
                 </div>
-                  <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="fa-solid fa-gear" style="color: black;"></i></a>
+                  <a id="btnupdate" href="#formedit" onclick="btnupdatedata('${each._id}')" ><i class="bi bi-gear-fill" style="color: black;"></i></a>
               </div>
               <hr>
               <p class="card__text">${each.classroom_des}</p>

@@ -19,26 +19,31 @@ fetch(`/projectsenior/index`, {})
       .then(data => {
         data.classroom.forEach(each => {
           console.log(each);
+          const classroomCard = document.getElementById('classroomCard');
           const classroomCol = document.createElement('div');
-          classroomCol.className = 'col-lg-3 col-md-12 my-2';
+          classroomCol.className = 'col-lg-3 col-md-12 my-2 cardItem';
           classroomCol.innerHTML = `
-            <div class="card" id=${each._id}>
-              <div class="card-header d-flex justify-content-between align-items-center">
-              <div><h5 class="fw-bold">${each.classroom_name}<p>${each.classroom_creator}</p></h5></div>
-              <a id="btn_std_delete_class" onclick="btn_std_delete_class('${each._id}')" ><i class="fa-solid fa-x"></i></a>
-              </div>
-              <div class="card-body d-flex justify-content-between"> 
-                  <div class="row card-text">
-                    <div class="col-md-12">
-                        <p class="card-text">${each.classroom_des}</p>
+            <div class="gallery gallery--grid">
+            <div class="gallery__item">
+              <div class="cards">
+                <div class="card__block card__block--main" id=${each._id}>
+                  <div class="card-headers d-flex justify-content-between align-items-top">
+                    <div><h3 class="card__title">${each.classroom_name}</h5>
+                      <p class="fw-bold">${each.classroom_creator}</p>
+                      <p class="card__subtitle">Code: ${each.classroom_code}</p>
                     </div>
-                    <div class="col-md-12 d-flex align-items-end">
-                        <a href="deck.html?classroomID=${each._id}" class="btn btn-primary fw-bold">Go</a>
-                    </div>
+                    <a id="btn_std_delete_class" href="#" onclick="btn_std_delete_class('${each._id}')" ><i class="fa-solid fa-x"></i></a>
                   </div>
+                  <hr>
+                  <p class="card__text">${each.classroom_des}</p>
+                </div>
+                <a href="deck?classroomID=${each._id}" class="button button--primary trade" type="button">Go</a>
+                </button>
               </div>
-            </div>`;
-          cardClassroom.appendChild(classroomCol);
+            </div>
+          </div>
+            `;
+          classroomCard.appendChild(classroomCol);
         })
       })
       .catch(err => console.log(err));
@@ -73,8 +78,24 @@ joinclass.addEventListener("submit", (e) => {
       return response.json();
     })
     .then(() => {
-      alert("เพิ่มห้องเรียนเรียบร้อย")
-      window.location.href = " classroom_student "
+      // SweetAlert
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1200,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "success",
+        title: "Add classroom successfully"
+      }).then(() => {
+        window.location.href = "classroom_student";
+      });
     })
     .catch(err => {
       swal.fire({
@@ -117,7 +138,7 @@ function btn_std_delete_class(id) {
             showConfirmButton: false,
             timer: 900,
           }).then(() => {
-            location.reload();
+            window.location.reload();
           });
         }).catch((err) => console.log(err));
     }

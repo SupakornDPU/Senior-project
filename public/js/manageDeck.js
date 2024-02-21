@@ -271,8 +271,6 @@ editFlashcard.addEventListener('submit', (e) => {
 // ! End Manage Flashcard
 
 // ! Quiz
-
-
 const selectElement = document.getElementById("questionInput");
 selectElement.innerHTML = '<option selected value="">Select...</option>';
 

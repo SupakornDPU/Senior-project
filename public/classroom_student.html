@@ -20,6 +20,7 @@
   <!-- CSS -->
   <link rel="stylesheet" href="css/classroom.css" />
   <link rel="stylesheet" href="css/main.css" />
+  <link rel="stylesheet" href="css/classroomcard.css">
 
   <!-- Side-bar -->
   <link rel="stylesheet" href="css/side-bar.css" />
@@ -30,34 +31,17 @@
       margin-bottom: 0;
     }
 
-    .card-text {
-      margin-bottom: 10px;
-    }
-
     .col-md-3 {
       margin-top: 30px;
       margin-bottom: 30px;
-    }
-
-    .card-header {
-      background-color: #f5f5f5;
-    }
-
-    .card {
-      width: 278px !important;
-      height: 240px !important;
-    }
-
-    .card-text {
-      max-width: 17rem;
     }
 
     .col-lg-3 {
       width: fit-content !important;
     }
 
-    .header-section {
-      margin-bottom: 30px;
+    .btn_std_delete_class {
+      cursor: pointer;
     }
   </style>
 
@@ -99,15 +83,17 @@
     </ul>
   </div>
 
+  <header class="header-section justify-content-end row align-items-center header">
+    <div class="col-md-1 text-end">
+      <a id="btnJoinClassroom" href="#joinclasspop"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a>
+    </div>
+  </header>
 
   <section class="home-section">
-    <header class="header-section justify-content-end row align-items-center header">
-      <div class="col-md-1 text-end">
-        <a id="btnJoinClassroom" href="#joinclasspop"><i class="fa-solid fa-plus" style="color: #ffffff;"></i></a>
-      </div>
-    </header>
     <input style="display: none;" type="text" id="studentId">
-    <div class="row" id="cardClassroom"></div>
+    <div class="row" id="classroomCard">
+    </div>
+  </section>
 
 
     <!-- FORMPOP JOIN CLASSROOM -->
