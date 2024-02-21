@@ -24,7 +24,7 @@ fetch('/api/deck/' + classroomID, {
               <div href="#" class="ag-courses-item_link" id=${each._id}>
                 <div class="ag-courses-item_bg"></div>
                 <div class="ag-courses-item_title card-header d-flex justify-content-between align-items-center">
-                    ${each.deck_name} <a class="button gear-manage" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedeck('${each._id}')" ><i class="fa-solid fa-gear"></i></a>
+                    ${each.deck_name} <a class="button gear-manage" id="btnupdatedeck" href="#formeditdeck" onclick="btnupdatedeck('${each._id}')" ><i class="bi bi-gear-fill"></i></a>
                 </div>
                 <div class="ag-courses-item_date-box">
                     <div class="row mb-2">
