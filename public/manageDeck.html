@@ -530,7 +530,9 @@
         <div class="row mb-3">
           <label for="inputText" class="col-sm-2 col-form-label">Question</label>
           <div class="col-sm-10">
-            <textarea class="form-control" id="questionInput" name="quizQuestion"></textarea>
+            <select id="modalQuestionInput" name="quizModalQuestion" class="form-select">
+              <option selected="" value="">Select...</option>
+            </select>
           </div>
         </div>
         <h3 style="text-align: center;">Answer</h3>
@@ -579,6 +581,8 @@
         <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
       `
       blockQuiz.appendChild(div);
+
+        
     }
 
     function delFormQuiz() {
@@ -648,72 +652,6 @@
           dropdownModal.add(option);
         }
       }
-    }
-
-    function addFormModalQuiz() {
-      const btnAddFormQuiz = document.getElementById('btnModalAddFormQuiz');
-      const blockQuiz = document.getElementById('blockModalQuiz');
-      const div = document.createElement('div');
-
-      div.className = 'row'; // เป็นการเพิ่ม class ให้ div
-      div.innerHTML = `
-          <h3 style="text-align: center;">Question</h3>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Question</label>
-            <div class="col-sm-10">
-              <select id="questionInput" name="quizModalQuestion" class="form-select">
-                <option selected="" value="">Select...</option>
-              </select>
-            </div>
-          </div>
-          <h3 style="text-align: center;">Answer</h3>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Choice 1.</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" id="modalChoice1" name="modalQuizChoice1"
-                oninput="updateModalDropdown()"></textarea>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Choice 2.</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" id="modalChoice2" name="modalQuizChoice2"
-                oninput="updateModalDropdown()"></textarea>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Choice 3.</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" id="modalChoice3" name="modalQuizChoice3"
-                oninput="updateModalDropdown()"></textarea>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Choice 4.</label>
-            <div class="col-sm-10">
-              <textarea class="form-control" id="modalChoice4" name="modalQuizChoice4"
-                oninput="updateModalDropdown()"></textarea>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
-            <div class="col-sm-10">
-              <select id="inputModalState" class="form-select" name="modalQuizAnswer">
-                <option selected="" value="">Select...</option>
-              </select>
-            </div>
-          </div>
-          <div class="row text-end">
-            <div class="col-12">
-              <button type="button" class="btn btn-success" id="btnModalAddFormQuiz"
-                onclick="checkModalQuizForm()" style="font-weight: bold;">
-                <i class="bi bi-plus-circle"></i>Add
-              </button>
-            </div>
-          </div>
-          <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
-      `
-      blockQuiz.appendChild(div);
     }
 
     function delModalFormQuiz() {
