@@ -299,6 +299,94 @@ fetch('/api/deck/getById/' + deckId, {
    })
    .catch(err => console.log(err));
 
+function addFormQuiz() {
+   const blockQuiz = document.getElementById('blockQuiz');
+   const div = document.createElement('div');
+   div.className = 'row'; // เป็นการเพิ่ม class ให้ div
+   div.innerHTML = `
+      <h3 style="text-align: center;">Question</h3>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Question</label>
+      <div class="col-sm-10">
+         <select id="questionInput" name="quizQuestion" class="form-select">
+            <option selected="" value="">Select...</option>
+         </select>
+      </div>
+      </div>
+      <h3 style="text-align: center;">Answer</h3>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Choice 1.</label>
+      <div class="col-sm-10">
+         <textarea class="form-control" id="Choice1" name="quizChoice1" oninput="updateDropdown()"></textarea>
+      </div>
+      </div>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Choice 2.</label>
+      <div class="col-sm-10">
+         <textarea class="form-control" id="Choice2" name="quizChoice2" oninput="updateDropdown()"></textarea>
+      </div>
+      </div>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Choice 3.</label>
+      <div class="col-sm-10">
+         <textarea class="form-control" id="Choice3" name="quizChoice3" oninput="updateDropdown()"></textarea>
+      </div>
+      </div>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Choice 4.</label>
+      <div class="col-sm-10">
+         <textarea class="form-control" id="Choice4" name="quizChoice4" oninput="updateDropdown()"></textarea>
+      </div>
+      </div>
+      <div class="row mb-3">
+      <label for="inputText" class="col-sm-2 col-form-label">Correct Answer</label>
+      <div class="col-sm-10">
+         <select id="inputState" name="quizAnswerCorrect" class="form-select">
+            <option selected="" value="">Select...</option>
+         </select>
+      </div>
+      </div>
+      <div class="row text-end">
+      <div class="col-12">
+         <button type="button" class="btn btn-success" id="btnAddFormQuiz" onclick="checkQuizForm()"
+            style="font-weight: bold;">
+            <i class="bi bi-plus-circle"></i>Add 
+         </button>
+         <button type="button" class="btn btn-danger" id="addBtn" onclick="delFormQuiz()" style="font-weight: bold;"><i  class="bi bi-trash"></i> Del
+         </button>
+      </div>
+      </div>
+      <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
+      `;
+   blockQuiz.appendChild(div);
+
+   // Fetch data and populate the newly created select element
+   fetch('/api/deck/getById/' + deckId, {
+      method: 'get',
+      headers: {
+         'Content-Type': 'application/json'
+      },
+   })
+      .then(response => response.json())
+      .then(data => {
+         const selectElement = div.querySelector('#questionInput');
+         const flashcards = data.flashcards;
+
+         flashcards.forEach(flashcard => {
+            const option = document.createElement('option');
+            option.value = flashcard.card_question;
+            option.text = flashcard.card_question;
+            selectElement.appendChild(option);
+         });
+
+         if (flashcards.length === 0) {
+            console.log('ไม่มีข้อมูลใน dataArray');
+         }
+      })
+      .catch(err => console.log(err));
+}
+
+
 const formAddQuiz = document.getElementById('formAddQuiz');
 formAddQuiz.addEventListener('submit', async (e) => {
    e.preventDefault();
