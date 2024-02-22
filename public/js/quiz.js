@@ -360,6 +360,7 @@ function callbackwrongAnswers(wrongAnswers) {
             </div>
             `;
         decks.appendChild(deckCol);
+        hljs.highlightAll();
 
         // เพิ่ม event listener ให้กับปุ่ม Next
         const btnNextQuestion = document.getElementById("btnnextquestion");
