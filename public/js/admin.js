@@ -114,4 +114,42 @@ function regexTeacher() {
   });
 }
 
+// SweetAlert Success
+function showToast(titleText) {
+  const ToastTrue = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  ToastTrue.fire({
+    icon: "success",
+    title: titleText
+  }).then(() => {
+    location.reload();
+  })
+}
 
+// SweetAlert Error
+function showToastError(err) {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "error",
+    title: err
+  })
+}

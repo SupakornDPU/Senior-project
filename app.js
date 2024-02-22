@@ -53,7 +53,7 @@ app.use("*", (req, res, next) => {
 app.use(logger);  // เรียกใช้ logger middleware
 
 app.use('/projectsenior/index', indexRouter);  // เรียกใช้ indexRouter เพื่อส่งตัวแปร global loggedIn ไปให้หน้า index
-app.use('/projectsenior/register', registerRouter);  // เรียกใช้ registerRouter
+app.use('/api/register', registerRouter);  // เรียกใช้ registerRouter
 app.use('/projectsenior/loginUser', loginUserRouter);  // เรียกใช้ loginUserRouter
 app.use('/projectsenior/logout', loginRouter);  // เรียกใช้ loginRouter เพื่อทำการ logout
 app.use('/projectsenior/classroom', classroomRouter);  // เรียกใช้ classroomRouter
