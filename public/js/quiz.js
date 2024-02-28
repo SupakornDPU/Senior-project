@@ -6,6 +6,7 @@ console.log(deckID);
 let counter = 0;
 let i = 0;
 let q = 0;
+let q1 = 0;
 let point = 0;
 let countCorrect = 0;
 let countWrong = 0;
@@ -225,12 +226,16 @@ function callbackwrongAnswers(wrongAnswers) {
 
         if (q >= wrongQuiz.length) {
             // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
-
+            if(wrongAnswers1.length > 0){
+                callbackwrongAnswers2(wrongAnswers1);
+            }else{
             console.log('Finish');
             console.log(point);
             alert('Finish');
             displayScore(point, countCorrect, countWrong);
             return;
+            }
+            
 
         } else {
             const Item = wrongQuiz[q];
@@ -454,6 +459,7 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 }
 
             } else {
+                wrongAnswers1.push(data);
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
@@ -530,3 +536,181 @@ function displayScore(point, countCorrect, countWrong) {
 
 }
 
+///////////////////////////////////////////////// WrongaAswerRound 2 ////////////////////////////////////////////////////////
+
+function callbackwrongAnswers2(wrongAnswers1) {
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
+    // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
+    const wrongFlashcardIds = wrongAnswers.map(wrongAnswer => wrongAnswer.flashcard_id);
+    console.log(wrongFlashcardIds);
+
+    let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
+    let currentIndexQuiz = 0;
+    const decks = document.getElementById("innerhtmlQuiz");
+
+    function displayNextFlashcard2() {
+        if (currentIndex < wrongFlashcardIds.length) {
+            const currentFlashcardId = wrongFlashcardIds[currentIndex];
+
+            // ดึงข้อมูล Flashcards จากเซิร์ฟเวอร์โดยใช้ currentFlashcardId
+            fetch('/projectsenior/flashcard/getByIds/' + currentFlashcardId, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // แสดงข้อมูลของ flashcard
+                    displayFlashcard2(data);
+
+                    currentIndex++; // เพิ่ม index สำหรับการดึงข้อมูล flashcard ถัดไป
+                })
+                .catch(err => console.log(err));
+        } else {
+            console.log('ไม่มีข้อมูลใน wrongAnswers แล้ว');
+            displayNextQuiz2(wrongAnswers1);
+        }
+    }
+
+    // wrongQuiz
+    function displayNextQuiz2(wrongQuiz2) {
+
+        if (q1 >= wrongQuiz2.length) {
+            // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
+            console.log('Finish');
+            console.log(point);
+            alert('Finish');
+            displayScore(point, countCorrect, countWrong);
+            return;
+
+        } else {
+            const Item = wrongQuiz2[q1];
+            console.log(q);
+            console.log(wrongQuiz2);
+            displayQuiz2(Item);
+
+        }
+    }
+
+    // wrongQuiz
+    function displayQuiz2(Quizdata2) {
+        console.log(Quizdata2);
+        const decks = document.getElementById("innerhtmlQuiz");
+        decks.innerHTML = '';
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row justify-content-end';
+        deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <a id="btnnextquiz" class="button btn btn-lg btn-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                        <path
+                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                    </svg><br>Next
+                    </a>
+                </div>
+            <div class = "row">
+                <div class="col-12 mb-5">
+                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata2.quiz_question}</p>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice1" onclick="checkAnswersWrongAnswer('btnChoice1', '${Quizdata2._id}')"><i class="bi bi-1-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice1" class="hljs" class="">${Quizdata2.quiz_choice[0]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice2" onclick="checkAnswersWrongAnswer('btnChoice2','${Quizdata2._id}')"><i class="bi bi-2-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice2" class="hljs" class="">${Quizdata2.quiz_choice[1]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice3" onclick="checkAnswersWrongAnswer('btnChoice3','${Quizdata2._id}')"><i class="bi bi-3-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice3" class="hljs" class="">${Quizdata2.quiz_choice[2]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice4" onclick="checkAnswersWrongAnswer('btnChoice4','${Quizdata2._id}')"><i class="bi bi-4-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice4" class="hljs" class="">${Quizdata2.quiz_choice[3]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        decks.appendChild(deckCol);
+        hljs.highlightAll();
+        const btnquiz = document.getElementById("btnnextquiz");
+        btnquiz.addEventListener("click", () => {
+            q1++;
+            displayNextQuiz2(wrongAnswers1);
+        });
+
+
+    }
+
+    function displayFlashcard2(flashcardData) {
+        // สร้าง HTML เพื่อแสดง Flashcard
+        decks.innerHTML = '';
+
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
+        deckCol.innerHTML = `
+            <div class="row justify-content-end">
+                <div class="col-3" style="width: fit-content;" ">
+                    <button id="btnnextquestion" class="button btn btn-lg btn-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                            <path
+                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                        </svg><br>Next
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px;"><ins> Question</ins></h1>
+                </div>
+                <pre class="d-flex justify-content-center text-start">
+                    <code id="question" class="hljs">${flashcardData.card_question}</code>
+                </pre>
+            </div>
+            <hr class="style">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
+                </div>
+                <div class="col-md-12">
+                    <pre class="d-flex justify-content-center text-start">
+                        <code id="answer" class="hljs">${flashcardData.card_answer}</code>
+                    </pre>
+                </div>
+            </div>
+            `;
+        decks.appendChild(deckCol);
+        hljs.highlightAll();
+
+        // เพิ่ม event listener ให้กับปุ่ม Next
+        const btnNextQuestion = document.getElementById("btnnextquestion");
+        btnNextQuestion.addEventListener("click", displayNextFlashcard2);
+    }
+
+    // แสดง flashcard แรก
+    displayNextFlashcard2();
+}
