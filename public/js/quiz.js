@@ -7,15 +7,19 @@ let counter = 0;
 let i = 0;
 let q = 0;
 let q1 = 0;
+let q2 = 0;
 let point = 0;
 let countCorrect = 0;
 let countWrong = 0;
 let correctAnswer = 0;
 let correctAnswer1 = 0;
+let correctAnswer2 = 0;
 let wrongAnswers = [];
 let correctAnswersArr = [];
 let correctAnswersArr1 = [];
+let correctAnswersArr2 = [];
 let wrongAnswers1 = [];
+let wrongAnswers2 = [];
 
 fetch('/api/deck/getByIdQuiz/' + deckID, {
     method: 'get',
@@ -222,18 +226,18 @@ function callbackwrongAnswers(wrongAnswers) {
 
         if (q >= wrongQuiz.length) {
             // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
-            if(wrongAnswers1.length > 0){
+            if (wrongAnswers1.length > 0) {
                 // นำ correctAnswersArr1 ไปต่อท้าย wrongAnswers
                 wrongAnswers1.push(...correctAnswersArr1);
                 callbackwrongAnswers2(wrongAnswers1);
-            }else{
-            console.log('Finish');
-            console.log(point);
-            alert('Finish');
-            displayScore(point, countCorrect, countWrong);
-            return;
+            } else {
+                console.log('Finish');
+                console.log(point);
+                alert('Finish');
+                displayScore(point, countCorrect, countWrong);
+                return;
             }
-            
+
 
         } else {
             const Item = wrongQuiz[q];
@@ -573,11 +577,17 @@ function callbackwrongAnswers2(wrongAnswers1) {
 
         if (q1 >= wrongQuiz2.length) {
             // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
-            console.log('Finish');
-            console.log(point);
-            alert('Finish');
-            displayScore(point, countCorrect, countWrong);
-            return;
+            if (wrongAnswers1.length > 0) {
+                // นำ correctAnswersArr1 ไปต่อท้าย wrongAnswers
+                wrongAnswers2.push(...correctAnswersArr2);
+                callbackwrongAnswers3(wrongAnswers2);
+            } else {
+                console.log('Finish');
+                console.log(point);
+                alert('Finish');
+                displayScore(point, countCorrect, countWrong);
+                return;
+            }
 
         } else {
             const Item = wrongQuiz2[q1];
@@ -710,6 +720,240 @@ function callbackwrongAnswers2(wrongAnswers1) {
 }
 
 function checkAnswersWrongAnswer1(buttonId, Quizdata) {
+
+    fetch('/projectsenior/quiz/getById/' + Quizdata, {
+        method: 'get',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            const answerCorrect = data.quiz_answerCorrect;
+            // console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
+
+            // เลือกคำตอบที่ผู้ใช้เลือก
+            const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
+
+            if (selectedChoice === answerCorrect) {
+                console.log('คำตอบถูกต้อง!');
+                point += 3;
+                countCorrect++;
+                correctAnswersArr2.push(data);
+                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
+                document.getElementById(buttonId).classList.add('btn-success');
+                document.getElementById(buttonId).classList.add('active');
+                for (let i = 1; i <= 4; i++) {
+                    const btnChoice = document.getElementById(`btnChoice${i}`);
+                    btnChoice.disabled = true;
+                }
+
+            } else {
+                console.log('คำตอบผิด!');
+                point -= 0.5;
+                countWrong++;
+                wrongAnswers2.push(data);
+                document.getElementById(buttonId).classList.add('btn-danger');
+                document.getElementById(buttonId).classList.add('active');
+                const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
+                    document.getElementById('btnChoice2').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice2') :
+                        document.getElementById('btnChoice3').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice3') :
+                            document.getElementById('btnChoice4').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice4') : null;
+
+                if (correctButton) {
+                    correctButton.classList.add('btn-success');
+                    for (let i = 1; i <= 4; i++) {
+                        const btnChoice = document.getElementById(`btnChoice${i}`);
+                        btnChoice.disabled = true;
+                    }
+                    document.getElementById('btnnextquiz').disabled = false;
+                }
+            }
+
+            answered = true;
+        })
+        .catch(err => console.log(err));
+}
+
+///////////////////////////////////////////////// WrongaAswerRound 3 ////////////////////////////////////////////////////////
+
+function callbackwrongAnswers3(wrongAnswers2) {
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
+    // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
+    const wrongFlashcardIds = wrongAnswers2.map(wrongAnswers2 => wrongAnswers2.flashcard_id);
+    console.log(wrongFlashcardIds);
+
+    let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
+    const decks = document.getElementById("innerhtmlQuiz");
+
+    function displayNextFlashcard3() {
+        if (currentIndex < wrongFlashcardIds.length) {
+            const currentFlashcardId = wrongFlashcardIds[currentIndex];
+
+            // ดึงข้อมูล Flashcards จากเซิร์ฟเวอร์โดยใช้ currentFlashcardId
+            fetch('/projectsenior/flashcard/getByIds/' + currentFlashcardId, {
+                method: 'get',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // แสดงข้อมูลของ flashcard
+                    displayFlashcard3(data);
+
+                    currentIndex++; // เพิ่ม index สำหรับการดึงข้อมูล flashcard ถัดไป
+                })
+                .catch(err => console.log(err));
+        } else {
+            console.log('ไม่มีข้อมูลใน wrongAnswers แล้ว');
+            displayNextQuiz3(wrongAnswers2);
+        }
+    }
+
+    // wrongQuiz
+    function displayNextQuiz3(wrongQuiz3) {
+
+        if (q2 >= wrongQuiz3.length) {
+            // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
+            console.log('Finish');
+            console.log(point);
+            alert('Finish');
+            displayScore(point, countCorrect, countWrong);
+            return;
+
+        } else {
+            const Item = wrongQuiz3[q2];
+            console.log(q2);
+            console.log(wrongQuiz3);
+            displayQuiz3(Item);
+
+        }
+    }
+
+    // wrongQuiz
+    function displayQuiz3(Quizdata3) {
+        console.log(Quizdata3);
+        const decks = document.getElementById("innerhtmlQuiz");
+        decks.innerHTML = '';
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row justify-content-end';
+        deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <a id="btnnextquiz" class="button btn btn-lg btn-next">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                        <path
+                            d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                    </svg><br>Next
+                    </a>
+                </div>
+            <div class = "row">
+                <div class="col-12 mb-5">
+                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata3.quiz_question}</p>
+                </div>
+            </div>
+            <div class="row mb-5">
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice1" onclick="checkAnswersWrongAnswer2('btnChoice1', '${Quizdata3._id}')"><i class="bi bi-1-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice1" class="hljs" class="">${Quizdata3.quiz_choice[0]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice2" onclick="checkAnswersWrongAnswer2('btnChoice2','${Quizdata3._id}')"><i class="bi bi-2-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice2" class="hljs" class="">${Quizdata3.quiz_choice[1]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice3" onclick="checkAnswersWrongAnswer2('btnChoice3','${Quizdata3._id}')"><i class="bi bi-3-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice3" class="hljs" class="">${Quizdata3.quiz_choice[2]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+                <div class="col-6 answer-block">
+                    <div class="btn-wrapper">
+                        <button type="button" class="btn btn-secondary text-start" id="btnChoice4" onclick="checkAnswersWrongAnswer2('btnChoice4','${Quizdata3._id}')"><i class="bi bi-4-square-fill"></i>
+                        <pre class="d-flex justify-content-start text-start">
+<code id="choice4" class="hljs" class="">${Quizdata3.quiz_choice[3]}</code>
+                        </pre>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            `;
+        decks.appendChild(deckCol);
+        hljs.highlightAll();
+        const btnquiz = document.getElementById("btnnextquiz");
+        btnquiz.addEventListener("click", () => {
+            q2++;
+            displayNextQuiz3(wrongAnswers2);
+        });
+
+
+    }
+
+    function displayFlashcard3(flashcardData2) {
+        // สร้าง HTML เพื่อแสดง Flashcard
+        decks.innerHTML = '';
+
+        const deckCol = document.createElement('div');
+        deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
+        deckCol.innerHTML = `
+            <div class="row justify-content-end">
+                <div class="col-3" style="width: fit-content;" ">
+                    <button id="btnnextquestion" class="button btn btn-lg btn-next">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
+                            <path
+                                d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" />
+                        </svg><br>Next
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px;"><ins> Question</ins></h1>
+                </div>
+                <pre class="d-flex justify-content-center text-start">
+                    <code id="question" class="hljs">${flashcardData2.card_question}</code>
+                </pre>
+            </div>
+            <hr class="style">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="font-poppin" style="font-weight: Bold; padding-bottom: 50px; padding-top: 50px;"><ins> Answer </ins></h1>
+                </div>
+                <div class="col-md-12">
+                    <pre class="d-flex justify-content-center text-start">
+                        <code id="answer" class="hljs">${flashcardData2.card_answer}</code>
+                    </pre>
+                </div>
+            </div>
+            `;
+        decks.appendChild(deckCol);
+        hljs.highlightAll();
+
+        // เพิ่ม event listener ให้กับปุ่ม Next
+        const btnNextQuestion = document.getElementById("btnnextquestion");
+        btnNextQuestion.addEventListener("click", displayNextFlashcard3);
+    }
+
+    // แสดง flashcard แรก
+    displayNextFlashcard3();
+}
+
+function checkAnswersWrongAnswer2(buttonId, Quizdata) {
 
     fetch('/projectsenior/quiz/getById/' + Quizdata, {
         method: 'get',
