@@ -14,9 +14,10 @@ let countWrong = 0;
 let correctAnswer = 0;
 let correctAnswer1 = 0;
 let correctAnswer2 = 0;
+let wrongAnswers = [];
 let correctAnswersArr = [];
 let correctAnswersArr1 = [];
-let wrongAnswers = [];
+let correctAnswersArr2 = [];
 let wrongAnswers1 = [];
 let wrongAnswers2 = [];
 
@@ -35,6 +36,8 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
             dataArray.push(each);
         });
 
+        // หรือใช้ spread operator เพื่อเพิ่มข้อมูลใน array
+        // console.log(dataArray);
         if (dataArray.length > 0) {
             const Item = dataArray[i];
             const Choice = Item.quiz_choice;
@@ -105,7 +108,8 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                 if (i >= dataArray.length - 1) {
                     // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
                     if (wrongAnswers.length > 0) {
-                        // console.log('แสดงข้อความที่ตอบผิดอีกรอบ');
+                        console.log('แสดงข้อความที่ตอบผิดอีกรอบ');
+                        console.log(wrongAnswers);
                         // นำ correctAnswersArr ไปต่อท้าย wrongAnswers
                         wrongAnswers.push(...correctAnswersArr);
                         callbackwrongAnswers(wrongAnswers);
@@ -182,8 +186,11 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
     .catch(err => console.log(err));
 
 function callbackwrongAnswers(wrongAnswers) {
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
     // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
     const wrongFlashcardIds = wrongAnswers.map(wrongAnswer => wrongAnswer.flashcard_id);
+    console.log(wrongFlashcardIds);
 
     let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
     let currentIndexQuiz = 0;
@@ -235,7 +242,7 @@ function callbackwrongAnswers(wrongAnswers) {
         } else {
             const Item = wrongQuiz[q];
             console.log(q);
-            // console.log(wrongQuiz);
+            console.log(wrongQuiz);
             displayQuiz(Item);
 
         }
@@ -243,6 +250,7 @@ function callbackwrongAnswers(wrongAnswers) {
 
     // wrongQuiz
     function displayQuiz(Quizdata) {
+        console.log(Quizdata);
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -374,6 +382,8 @@ function checkAnswer(buttonId) {
             const dataArray = data.quizzes;
             const item = dataArray[correctAnswer];
             const answerCorrect = item.quiz_answerCorrect;
+            // console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
+            console.log('item : ', item);
 
             // เลือกคำตอบที่ผู้ใช้เลือก
             const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
@@ -428,8 +438,9 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
     })
         .then(response => response.json())
         .then(data => {
+            // console.log('dataArray : ', data);
             const answerCorrect = data.quiz_answerCorrect;
-            // console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
+            console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
             const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
 
 
@@ -438,7 +449,7 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 point += 3;
                 countCorrect++;
                 correctAnswersArr1.push(data);
-                // console.log('correctAnswersArr : ', correctAnswersArr);
+                console.log('correctAnswersArr : ', correctAnswersArr);
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
                 for (let i = 1; i <= 4; i++) {
@@ -527,9 +538,11 @@ function displayScore(point, countCorrect, countWrong) {
 ///////////////////////////////////////////////// WrongaAswerRound 2 ////////////////////////////////////////////////////////
 
 function callbackwrongAnswers2(wrongAnswers1) {
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
     // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
     const wrongFlashcardIds = wrongAnswers1.map(wrongAnswers1 => wrongAnswers1.flashcard_id);
-    // console.log(wrongFlashcardIds);
+    console.log(wrongFlashcardIds);
 
     let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
     const decks = document.getElementById("innerhtmlQuiz");
@@ -563,8 +576,10 @@ function callbackwrongAnswers2(wrongAnswers1) {
     function displayNextQuiz2(wrongQuiz2) {
 
         if (q1 >= wrongQuiz2.length) {
-
+            // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
             if (wrongAnswers1.length > 0) {
+                // นำ correctAnswersArr1 ไปต่อท้าย wrongAnswers
+                wrongAnswers2.push(...correctAnswersArr2);
                 callbackwrongAnswers3(wrongAnswers2);
             } else {
                 console.log('Finish');
@@ -576,6 +591,8 @@ function callbackwrongAnswers2(wrongAnswers1) {
 
         } else {
             const Item = wrongQuiz2[q1];
+            console.log(q);
+            console.log(wrongQuiz2);
             displayQuiz2(Item);
 
         }
@@ -583,7 +600,7 @@ function callbackwrongAnswers2(wrongAnswers1) {
 
     // wrongQuiz
     function displayQuiz2(Quizdata2) {
-        // console.log(Quizdata2);
+        console.log(Quizdata2);
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -649,6 +666,8 @@ function callbackwrongAnswers2(wrongAnswers1) {
             q1++;
             displayNextQuiz2(wrongAnswers1);
         });
+
+
     }
 
     function displayFlashcard2(flashcardData) {
@@ -720,6 +739,7 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+                correctAnswersArr2.push(data);
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
@@ -758,16 +778,20 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
 ///////////////////////////////////////////////// WrongaAswerRound 3 ////////////////////////////////////////////////////////
 
 function callbackwrongAnswers3(wrongAnswers2) {
-    let wrongFlashcardIds = wrongAnswers2.map(wrongAnswers2 => wrongAnswers2.flashcard_id);
-    console.log("wrongFlashcardIds : ", wrongFlashcardIds);
-    let currentIndex = 0;
+    console.log('แสดง Flashcards ที่ตอบผิดอีกครั้ง');
+
+    // สร้างอาร์เรย์เพื่อเก็บ flashcard_id ของคำถามที่ตอบผิด
+    const wrongFlashcardIds = wrongAnswers2.map(wrongAnswers2 => wrongAnswers2.flashcard_id);
+    console.log(wrongFlashcardIds);
+
+    let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
     const decks = document.getElementById("innerhtmlQuiz");
 
     function displayNextFlashcard3() {
-        wrongFlashcardIds = wrongAnswers2.map(wrongAnswers => wrongAnswers.flashcard_id);
         if (currentIndex < wrongFlashcardIds.length) {
             const currentFlashcardId = wrongFlashcardIds[currentIndex];
 
+            // ดึงข้อมูล Flashcards จากเซิร์ฟเวอร์โดยใช้ currentFlashcardId
             fetch('/projectsenior/flashcard/getByIds/' + currentFlashcardId, {
                 method: 'get',
                 headers: {
@@ -776,8 +800,10 @@ function callbackwrongAnswers3(wrongAnswers2) {
             })
                 .then(response => response.json())
                 .then(data => {
+                    // แสดงข้อมูลของ flashcard
                     displayFlashcard3(data);
-                    currentIndex++;
+
+                    currentIndex++; // เพิ่ม index สำหรับการดึงข้อมูล flashcard ถัดไป
                 })
                 .catch(err => console.log(err));
         } else {
@@ -790,6 +816,7 @@ function callbackwrongAnswers3(wrongAnswers2) {
     function displayNextQuiz3(wrongQuiz3) {
 
         if (q2 >= wrongQuiz3.length) {
+            // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
             console.log('Finish');
             console.log(point);
             alert('Finish');
@@ -801,12 +828,13 @@ function callbackwrongAnswers3(wrongAnswers2) {
             console.log(q2);
             console.log(wrongQuiz3);
             displayQuiz3(Item);
+
         }
     }
 
     // wrongQuiz
     function displayQuiz3(Quizdata3) {
-        // console.log(Quizdata3);
+        console.log(Quizdata3);
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -870,12 +898,16 @@ function callbackwrongAnswers3(wrongAnswers2) {
         const btnquiz = document.getElementById("btnnextquiz");
         btnquiz.addEventListener("click", () => {
             q2++;
-            displayNextFlashcard3();
+            displayNextQuiz3(wrongAnswers2);
         });
+
+
     }
 
     function displayFlashcard3(flashcardData2) {
+        // สร้าง HTML เพื่อแสดง Flashcard
         decks.innerHTML = '';
+
         const deckCol = document.createElement('div');
         deckCol.className = 'row  d-flex justify-content-center align-items-center text-center inline';
         deckCol.innerHTML = `
@@ -912,18 +944,16 @@ function callbackwrongAnswers3(wrongAnswers2) {
         decks.appendChild(deckCol);
         hljs.highlightAll();
 
+        // เพิ่ม event listener ให้กับปุ่ม Next
         const btnNextQuestion = document.getElementById("btnnextquestion");
-        btnNextQuestion.addEventListener("click", () => {
-            console.log('Function displayNextQuiz3 Inside function');
-            displayNextQuiz3(wrongAnswers2);
-        });
+        btnNextQuestion.addEventListener("click", displayNextFlashcard3);
     }
-    console.log('Function displayNextQuiz3 Outside function');
-    displayNextQuiz3(wrongAnswers2);
+
+    // แสดง flashcard แรก
+    displayNextFlashcard3();
 }
 
 function checkAnswersWrongAnswer2(buttonId, Quizdata) {
-    // console.log(Quizdata);
 
     fetch('/projectsenior/quiz/getById/' + Quizdata, {
         method: 'get',
@@ -934,6 +964,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
         .then(response => response.json())
         .then(data => {
             const answerCorrect = data.quiz_answerCorrect;
+            // console.log('คำตอบที่ถูกต้องคือ:', answerCorrect);
 
             // เลือกคำตอบที่ผู้ใช้เลือก
             const selectedChoice = document.getElementById(buttonId).querySelector('code').textContent;
@@ -969,8 +1000,6 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                     }
                     document.getElementById('btnnextquiz').disabled = false;
                 }
-                wrongAnswers2.push(data);
-                wrongFlashcardIds = wrongAnswers2.map(wrongAnswers => wrongAnswers.flashcard_id);
             }
 
             answered = true;
