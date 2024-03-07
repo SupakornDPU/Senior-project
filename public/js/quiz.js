@@ -4,6 +4,7 @@ console.log(deckID);
 
 // Get the deck ID from the URL
 let counter = 0;
+let play = 0;
 let i = 0;
 let q = 0;
 let q1 = 0;
@@ -20,6 +21,9 @@ let wrongAnswers = [];
 let wrongAnswers1 = [];
 let wrongAnswers2 = [];
 
+var playcard = localStorage.getItem('selectedPlay');
+console.log(playcard);
+
 fetch('/api/deck/getByIdQuiz/' + deckID, {
     method: 'get',
     headers: {
@@ -34,6 +38,10 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
         data.quizzes.forEach(each => {
             dataArray.push(each);
         });
+
+        // if (playcard < dataArray.length) {
+        //     dataArray.splice(playcard); // ตัดตำแหน่งที่มากกว่า playcard ออก
+        // }
 
         if (dataArray.length > 0) {
             const Item = dataArray[i];
@@ -188,6 +196,10 @@ function callbackwrongAnswers(wrongAnswers) {
     let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
     let currentIndexQuiz = 0;
     const decks = document.getElementById("innerhtmlQuiz");
+
+
+
+    console.log(wrongFlashcardIds);
 
     function displayNextFlashcard() {
         if (currentIndex < wrongFlashcardIds.length) {
@@ -788,8 +800,14 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
     // wrongQuiz
     function displayNextQuiz3(wrongQuiz3) {
-
-        if (q2 >= wrongQuiz3.length) {
+        if (play >= playcard) {
+            console.log('Finish');
+            console.log(point);
+            alert('Finish');
+            displayScore(point, countCorrect, countWrong);
+            return;
+        }
+        else if (q2 >= wrongQuiz3.length) {
             console.log('Finish');
             console.log(point);
             alert('Finish');
@@ -812,6 +830,9 @@ function callbackwrongAnswers3(wrongAnswers2) {
         const deckCol = document.createElement('div');
         deckCol.className = 'row justify-content-end';
         deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <p id="play-value"></p>
+                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -954,6 +975,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
+                play++;
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
                 const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
@@ -971,9 +993,15 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 }
                 wrongAnswers2.push(data);
                 wrongFlashcardIds = wrongAnswers2.map(wrongAnswers => wrongAnswers.flashcard_id);
+                updatePlayDisplay();
             }
 
             answered = true;
         })
         .catch(err => console.log(err));
+}
+
+function updatePlayDisplay() {
+    const playElement = document.getElementById('play-value');
+    playElement.textContent = play;
 }
