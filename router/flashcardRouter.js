@@ -61,7 +61,7 @@ flashcardRouter.post('/import/:deckId', (upload.single('file')), (req, res, next
 
       // Insert data to database
       const deck_id = req.params.deckId;
-      allData = allData.map(item => ({ ...item, deck_id }));
+      allData = allData.map(item => ({ ...item, deck_id, stat: 0 }));
       Flashcard.insertMany(allData)
         .then((insertedDocuments) => {
           console.log(insertedDocuments);
@@ -98,6 +98,7 @@ flashcardRouter.post('/:deckId', async (req, res) => {
         "card_question": item.question,
         "card_answer": item.answer,
         "deck_id": item.deckid,
+        "stat": 0
       });
 
       // บันทึกแฟลชการ์ดและบันทึกรหัสที่สร้างขึ้น
@@ -115,6 +116,38 @@ flashcardRouter.post('/:deckId', async (req, res) => {
     res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedDeck });
   } catch (error) {
     res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล' });
+  }
+});
+
+// Put Router สำหรับบวกค่า stat ของ FlashCard
+flashcardRouter.put('/stat', async (req, res) => {
+  try {
+    // สร้างอาร์เรย์เพื่อเก็บผลลัพธ์ของการอัปเดต Flashcard แต่ละตัว
+    const updates = [];
+
+    // Loop เพื่อแยก Key และ Value ของ req.body
+    for (const [key, value] of Object.entries(req.body)) {
+      console.log(`${key}: ${value}`);
+      const flashcardId = key;
+      console.log(flashcardId);
+      
+      const flashcard = await Flashcard.findById(flashcardId); // ค้นหา Flashcard โดยใช้ await
+
+      if (!flashcard) { // ถ้าไม่พบ flashcard ให้ส่งคืนข้อผิดพลาด
+        return res.status(404).json({ success: false, message: 'ไม่พบข้อมูล flashcard' });
+      }
+      // คำนวณค่าสถิติใหม่
+      const newStat = flashcard.stat + value;
+      // อัปเดต Flashcard และเก็บ Promise ไว้ในอาร์เรย์ updates
+      updates.push(Flashcard.findByIdAndUpdate(flashcardId, { stat: newStat }, { new: true }));
+    }
+    // รอให้ทุก Promise ในอาร์เรย์ updates เสร็จสิ้น
+    const updatedFlashcards = await Promise.all(updates);
+    // ส่งคำตอบกลับไปยัง client พร้อมกับข้อมูล Flashcard ที่ถูกอัปเดตแล้ว
+    res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedFlashcards });
+  } catch (error) {
+    // ส่งคำตอบกลับไปยัง client ในกรณีเกิดข้อผิดพลาด
+    res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล', error: error.message });
   }
 });
 

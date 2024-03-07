@@ -20,6 +20,7 @@ let correctAnswersArr1 = [];
 let wrongAnswers = [];
 let wrongAnswers1 = [];
 let wrongAnswers2 = [];
+let answerStats = {};
 
 var playcard = localStorage.getItem('selectedPlay');
 console.log(playcard);
@@ -486,7 +487,7 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
         .catch(err => console.log(err));
 }
 
-function displayScore(point, countCorrect, countWrong) {
+async function displayScore(point, countCorrect, countWrong) {
     const score = document.getElementById("innerhtmlQuiz");
     score.innerHTML = '';
     const scoreCol = document.createElement('div');
@@ -519,20 +520,37 @@ function displayScore(point, countCorrect, countWrong) {
             `;
     score.appendChild(scoreCol);
 
-    fetch('/api/deck/ById/' + deckID, {
-        method: 'get',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            const btnNextdone = document.getElementById("btnNextdone");
-            btnNextdone.addEventListener("click", () => {
-                window.location = "deck?classroomID=" + data.classroom_id;
-            });
-        })
-        .catch(err => console.log(err));
+    // Api Update Stats
+    try {
+        const response = await fetch('/projectsenior/flashcard/stat', {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(answerStats)
+        });
+        const data = await response.json();
+        console.log(data);
+    } catch (err) {
+        console.log(err);
+    }
+
+    // Api get deckID
+    try {
+        const response = await fetch('/api/deck/ById/' + deckID, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        });
+        const data = await response.json();
+        const btnNextdone = document.getElementById("btnNextdone");
+        btnNextdone.addEventListener("click", () => {
+            window.location = "deck?classroomID=" + data.classroom_id;
+        });
+    } catch (err) {
+        console.log(err);
+    }
 
 }
 
@@ -816,8 +834,8 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
         } else {
             const Item = wrongQuiz3[q2];
-            console.log(q2);
-            console.log(wrongQuiz3);
+            // console.log(q2);
+            // console.log(wrongQuiz3);
             displayQuiz3(Item);
         }
     }
@@ -830,9 +848,6 @@ function callbackwrongAnswers3(wrongAnswers2) {
         const deckCol = document.createElement('div');
         deckCol.className = 'row justify-content-end';
         deckCol.innerHTML = `
-                <div class="col-3" style="width: fit-content;" ">
-                    <p id="play-value"></p>
-                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -963,7 +978,13 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
-                // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
+                // Answer Stat
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = 1;
+                } else {
+                    answerStats[data.flashcard_id]++;
+                }
+                
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
                 for (let i = 1; i <= 4; i++) {
@@ -976,6 +997,14 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 point -= 0.5;
                 countWrong++;
                 play++;
+
+                // Answer Stat
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = -1;
+                } else {
+                    answerStats[data.flashcard_id]--;
+                }
+
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
                 const correctButton = document.getElementById('btnChoice1').querySelector('code').textContent === answerCorrect ? document.getElementById('btnChoice1') :
@@ -993,15 +1022,15 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 }
                 wrongAnswers2.push(data);
                 wrongFlashcardIds = wrongAnswers2.map(wrongAnswers => wrongAnswers.flashcard_id);
-                updatePlayDisplay();
+                // updatePlayDisplay();
             }
-
+            console.log(answerStats);
             answered = true;
         })
         .catch(err => console.log(err));
 }
 
-function updatePlayDisplay() {
-    const playElement = document.getElementById('play-value');
-    playElement.textContent = play;
-}
+// function updatePlayDisplay() {
+//     const playElement = document.getElementById('play-value');
+//     playElement.textContent = play;
+// }
