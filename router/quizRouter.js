@@ -72,6 +72,7 @@ quizRouter.post('/:deckId', async (req, res) => {
           quiz_choice: item.quiz_choice,
           quiz_answerCorrect: item.quiz_answerCorrect,
           deck_id: item.deck_id,
+          stat: 0
         });
   
         const savedQuiz = await newQuiz.save();
@@ -97,7 +98,5 @@ quizRouter.post('/:deckId', async (req, res) => {
       res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล' });
     }
   });
- 
-
 
 module.exports = quizRouter;

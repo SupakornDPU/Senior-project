@@ -1,3 +1,4 @@
+const { stat } = require('fs-extra');
 const mongoose = require('mongoose');
 
 const QuizSchema = new mongoose.Schema({
@@ -8,6 +9,7 @@ const QuizSchema = new mongoose.Schema({
    quiz_answerCorrect : String,
    deck_id : String,
    flashcard_id: String,
+   stat: Number
 });
 
 module.exports = mongoose.model('Quiz', QuizSchema);

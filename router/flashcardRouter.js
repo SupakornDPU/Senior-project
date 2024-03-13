@@ -6,6 +6,7 @@ const fs = require('fs-extra');
 const excelToJson = require('convert-excel-to-json');
 const Flashcard = require('../models/Flashcard');
 const Deck = require('../models/Deck');
+const Quiz = require('../models/Quiz');
 
 // Get Router สำหรับค้นหาข้อมูล FlashCard ทั้งหมด
 flashcardRouter.get('/', (req, res, next) => {
@@ -122,7 +123,7 @@ flashcardRouter.post('/:deckId', async (req, res) => {
 // Put Router สำหรับบวกค่า stat ของ FlashCard
 flashcardRouter.put('/stat', async (req, res) => {
   try {
-    // สร้างอาร์เรย์เพื่อเก็บผลลัพธ์ของการอัปเดต Flashcard แต่ละตัว
+    // สร้างอาร์เรย์เพื่อเก็บผลลัพธ์ของการอัปเดต Flashcard และ Quiz แต่ละตัว
     const updates = [];
 
     // Loop เพื่อแยก Key และ Value ของ req.body
@@ -130,21 +131,23 @@ flashcardRouter.put('/stat', async (req, res) => {
       console.log(`${key}: ${value}`);
       const flashcardId = key;
       console.log(flashcardId);
-      
-      const flashcard = await Flashcard.findById(flashcardId); // ค้นหา Flashcard โดยใช้ await
 
-      if (!flashcard) { // ถ้าไม่พบ flashcard ให้ส่งคืนข้อผิดพลาด
-        return res.status(404).json({ success: false, message: 'ไม่พบข้อมูล flashcard' });
+      const flashcard = await Flashcard.findById(flashcardId); // ค้นหา Flashcard โดยใช้ await
+      const quiz = await Quiz.findOne({ flashcard_id: flashcardId });
+
+      if (!flashcard || !quiz) { // ถ้าไม่พบ flashcard หรือ quiz ให้ส่งคืนข้อผิดพลาด
+        return res.status(404).json({ success: false, message: 'ไม่พบข้อมูล flashcard หรือ quiz' });
       }
       // คำนวณค่าสถิติใหม่
       const newStat = flashcard.stat + value;
-      // อัปเดต Flashcard และเก็บ Promise ไว้ในอาร์เรย์ updates
+      // อัปเดต Flashcard และ Quiz และเก็บ Promise ไว้ในอาร์เรย์ updates
       updates.push(Flashcard.findByIdAndUpdate(flashcardId, { stat: newStat }, { new: true }));
+      updates.push(Quiz.findByIdAndUpdate(quiz._id, { stat: newStat }, { new: true }));
     }
     // รอให้ทุก Promise ในอาร์เรย์ updates เสร็จสิ้น
-    const updatedFlashcards = await Promise.all(updates);
-    // ส่งคำตอบกลับไปยัง client พร้อมกับข้อมูล Flashcard ที่ถูกอัปเดตแล้ว
-    res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedFlashcards });
+    const updatedFlashcardsAndQuizzes = await Promise.all(updates);
+    // ส่งคำตอบกลับไปยัง client พร้อมกับข้อมูล Flashcard และ Quiz ที่ถูกอัปเดตแล้ว
+    res.json({ success: true, message: 'บันทึกข้อมูลสำเร็จ', updatedFlashcardsAndQuizzes });
   } catch (error) {
     // ส่งคำตอบกลับไปยัง client ในกรณีเกิดข้อผิดพลาด
     res.status(500).json({ success: false, message: 'เกิดข้อผิดพลาดในการบันทึกข้อมูล', error: error.message });
