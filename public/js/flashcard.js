@@ -5,9 +5,11 @@ console.log(deckID);
 // Get the deck ID from the URL
 let counter = 0;
 let i = 0;
-let playcard = 0;
 
-function getFlashcard() {
+
+
+
+function getFlashcard(selectplay) {
   fetch('/api/deck/getById/' + deckID, {
     method: 'get',
     headers: {
@@ -23,6 +25,10 @@ function getFlashcard() {
       data.flashcards.forEach(each => {
         dataArray.push(each);
       });
+      console.log(selectplay);
+      if (selectplay < dataArray.length) {
+        dataArray.splice(selectplay); // ตัดตำแหน่งที่มากกว่า playcard ออก
+      }
 
       // หรือใช้ spread operator เพื่อเพิ่มข้อมูลใน array
       console.log(dataArray);
