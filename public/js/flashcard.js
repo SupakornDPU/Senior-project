@@ -24,6 +24,9 @@ function getFlashcard() {
         dataArray.push(each);
       });
 
+      // Sort stat จากน้อยไปมาก
+      dataArray.sort((a, b) => a.stat - b.stat);
+
       // หรือใช้ spread operator เพื่อเพิ่มข้อมูลใน array
       console.log(dataArray);
       if (dataArray.length > 0) {
@@ -31,7 +34,7 @@ function getFlashcard() {
         const Item = dataArray[i];
         console.log(i);
         // ให้แสดงข้อมูลในArray
-        console.log(Item);
+        // console.log(Item);
         // หรือให้แสดงข้อมูลบนหน้าเว็บ
         const decks = document.getElementById("innerhtmlflashcard");
         decks.innerHTML = '';

@@ -55,6 +55,7 @@ deckRouter.get('/getById/:id', (req, res, next) => {
 deckRouter.get('/getByIdQuiz/:id', (req, res, next) => {
   Deck.findById(req.params.id)
     .populate('quizzes') // ใช้ method populate() เพื่อดึงข้อมูลจาก collection อื่นมาแสดง
+    .populate('flashcards')
     .then((decks) => {
       res.json(decks);
     })

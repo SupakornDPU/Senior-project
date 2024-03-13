@@ -39,7 +39,10 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
         data.quizzes.forEach(each => {
             dataArray.push(each);
         });
-
+        
+        console.log(dataArray);
+        // Sort dataArray by stat
+        dataArray.sort((a, b) => a.stat - b.stat);
         // if (playcard < dataArray.length) {
         //     dataArray.splice(playcard); // ตัดตำแหน่งที่มากกว่า playcard ออก
         // }
@@ -818,14 +821,14 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
     // wrongQuiz
     function displayNextQuiz3(wrongQuiz3) {
-        if (play >= playcard) {
-            console.log('Finish');
-            console.log(point);
-            alert('Finish');
-            displayScore(point, countCorrect, countWrong);
-            return;
-        }
-        else if (q2 >= wrongQuiz3.length) {
+        // if (play >= playcard) {
+        //     console.log('Finish');
+        //     console.log(point);
+        //     alert('Finish');
+        //     displayScore(point, countCorrect, countWrong);
+        //     return;
+        // }
+        if (q2 >= wrongQuiz3.length) {
             console.log('Finish');
             console.log(point);
             alert('Finish');
@@ -996,7 +999,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
-                play++;
+                // play++;
 
                 // Answer Stat
                 if (answerStats[data.flashcard_id] === undefined) {
