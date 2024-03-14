@@ -274,7 +274,7 @@ editFlashcard.addEventListener('submit', (e) => {
 const selectElement = document.getElementById("questionInput");
 selectElement.innerHTML = '<option selected value="">Select...</option>';
 
-fetch('/api/deck/getById/' + deckId, {
+fetch('/api/deck/findId/' + deckId, {
    method: 'get',
    headers: {
       'Content-Type': 'application/json'
@@ -283,8 +283,8 @@ fetch('/api/deck/getById/' + deckId, {
    .then(response => response.json())
    .then(data => {
       const flashcards = data.flashcards;
-
-      flashcards.forEach(flashcard => {
+      console.log(data);
+      data.forEach(flashcard => {
          // console.log(flashcard);
          const option = document.createElement('option');
          option.value = flashcard.card_question;
@@ -292,7 +292,7 @@ fetch('/api/deck/getById/' + deckId, {
          selectElement.appendChild(option);
       });
 
-      if (flashcards.length === 0) {
+      if (data.length === 0) {
          console.log('ไม่มีข้อมูลใน dataArray');
       }
 

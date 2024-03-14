@@ -28,6 +28,24 @@ deckRouter.get('/ById/:id', (req, res, next) => {
     });
 });
 
+deckRouter.get('/findId/:id', async (req, res, next) => {
+  try {
+    // ดึง id ของ flashcard ทั้งหมดที่อยู่ในเอกสาร quiz
+    const quizFlashcardIds = await Quiz.distinct('flashcard_id', { deck_id: req.params.id });
+
+    // ดึง flashcard ที่ไม่ถูกอ้างอิงโดยเอกสาร quiz ใด ๆ เฉพาะ _id
+    const flashcardsNotInQuiz = await Flashcard.find({
+      deck_id: req.params.id,
+      _id: { $nin: quizFlashcardIds } // $nin หมายถึง "not in"
+    })
+
+    res.json(flashcardsNotInQuiz);
+  } catch (err) {
+    next(err);
+  }
+});
+
+
 // Get Router สำหรับค้นหา Deck ตาม classroom_id
 deckRouter.get('/:classroom_id', (req, res, next) => {
   Deck.find({ classroom_id: req.params.classroom_id })
