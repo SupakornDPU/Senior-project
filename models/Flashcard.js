@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 const FlashcardSchema = new mongoose.Schema({
    card_question: String,
    card_answer: String,
-   deck_id: String,
+   deck_id: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Deck'
+   },
    stat: Number,
    // quiz_id: [{
    //    type: mongoose.Schema.Types.ObjectId, // กำหนดชนิดข้อมูลเป็น ObjectId

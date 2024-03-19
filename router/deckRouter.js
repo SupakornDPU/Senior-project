@@ -120,6 +120,7 @@ deckRouter.put('/:id', (req, res, next) => {
 // Get Flashcard ด้วย Deck ID
 deckRouter.get('/flashcard/:deck_id', (req, res, next) => {
   Flashcard.find({ deck_id: req.params.deck_id })
+    .populate('deck_id')
     .then((flashcards) => {
       res.json(flashcards);
     })
@@ -164,6 +165,7 @@ deckRouter.delete('/flashcard/:id', (req, res, next) => {
 // Get Quiz With DeckId
 deckRouter.get('/quiz/:deck_id', (req, res, next) => {
   Quiz.find({ deck_id: req.params.deck_id })
+    .populate('deck_id')
     .then((quizzes) => {
       res.json(quizzes);
     })
@@ -205,5 +207,22 @@ deckRouter.delete('/quiz/del/:id', (req, res, next) => {
     });
 });
 
+// Get Compare Flashcard and Quiz
+deckRouter.get('/compareflashcardAndQuiz/:deck_id', async (req, res, next) => {
+  try {
+    const flashcards = await Flashcard.find({ deck_id: req.params.deck_id });
+    const quizzes = await Quiz.find({ deck_id: req.params.deck_id });
+
+    if (!flashcards || !quizzes) {
+      res.status(404).json({ message: 'Flashcards หรือ Quizzes ไม่พบใน database' });
+    } else if (flashcards.length === quizzes.length) {
+      res.json({ message: 'Success' });
+    } else {
+      res.json({ message: 'กรุณาสร้าง Quiz ให้เท่ากับจำนวนของ Flashcard' });
+    }
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = deckRouter;

@@ -44,13 +44,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
             dataArray.splice(playcard); // ตัดตำแหน่งที่มากกว่า playcard ออก
         }
         console.log(dataArray);
-        
-        console.log(dataArray);
-        // Sort dataArray by stat
         dataArray.sort((a, b) => a.stat - b.stat);
-        // if (playcard < dataArray.length) {
-        //     dataArray.splice(playcard); // ตัดตำแหน่งที่มากกว่า playcard ออก
-        // }
 
         if (dataArray.length > 0) {
             const Item = dataArray[i];
@@ -205,10 +199,7 @@ function callbackwrongAnswers(wrongAnswers) {
     let currentIndex = 0; // เพิ่มตัวแปรเพื่อเก็บ index ปัจจุบันของ wrongAnswers
     let currentIndexQuiz = 0;
     const decks = document.getElementById("innerhtmlQuiz");
-
-
-
-    console.log(wrongFlashcardIds);
+    // console.log(wrongFlashcardIds);
 
     function displayNextFlashcard() {
         if (currentIndex < wrongFlashcardIds.length) {
@@ -402,6 +393,14 @@ function checkAnswer(buttonId) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+
+                if (answerStats[item.flashcard_id] === undefined) {
+                    answerStats[item.flashcard_id] = 1;
+                } else {
+                    answerStats[item.flashcard_id]++;
+                }
+                console.log(answerStats);
+
                 correctAnswersArr.push(item);
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
                 document.getElementById(buttonId).classList.add('btn-success');
@@ -416,6 +415,14 @@ function checkAnswer(buttonId) {
                 console.log('คำตอบผิด!');
                 point--;
                 countWrong++;
+
+                if (answerStats[item.flashcard_id] === undefined) {
+                    answerStats[item.flashcard_id] = -1;
+                } else {
+                    answerStats[item.flashcard_id]--;
+                }
+                console.log(answerStats);
+
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
                 // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
@@ -458,6 +465,14 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = 1;
+                } else {
+                    answerStats[data.flashcard_id]++;
+                }
+                console.log(answerStats);
+
                 correctAnswersArr1.push(data);
                 // console.log('correctAnswersArr : ', correctAnswersArr);
                 document.getElementById(buttonId).classList.add('btn-success');
@@ -472,6 +487,14 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
+
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = -1;
+                } else {
+                    answerStats[data.flashcard_id]--;
+                }
+                console.log(answerStats);
+
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
                 // เพิ่มคลาส 'btn-success' ให้กับปุ่มที่เป็นคำตอบที่ถูกต้อง
@@ -758,6 +781,12 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = 1;
+                } else {
+                    answerStats[data.flashcard_id]++;
+                }
+
                 // ทำอะไรก็ตามที่ต้องการเมื่อเลือกคำตอบถูกต้อง
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
@@ -770,6 +799,12 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
+                if (answerStats[data.flashcard_id] === undefined) {
+                    answerStats[data.flashcard_id] = -1;
+                } else {
+                    answerStats[data.flashcard_id]--;
+                }
+
                 wrongAnswers2.push(data);
                 document.getElementById(buttonId).classList.add('btn-danger');
                 document.getElementById(buttonId).classList.add('active');
@@ -992,7 +1027,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 } else {
                     answerStats[data.flashcard_id]++;
                 }
-                
+
                 document.getElementById(buttonId).classList.add('btn-success');
                 document.getElementById(buttonId).classList.add('active');
                 for (let i = 1; i <= 4; i++) {

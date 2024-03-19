@@ -4,6 +4,43 @@ console.log(classroomID);
 const deckID = urlParams.get('deck')
 console.log(deckID);
 
+// SweetAlert Success
+function showToast(titleText) {
+  const ToastTrue = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  ToastTrue.fire({
+    icon: "success",
+    title: titleText
+  })
+}
+
+// SweetAlert Error
+function showToastError(err) {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "error",
+    title: err
+  })
+}
 // ! Deck
 
 // GET DATA CLASSROOM
@@ -29,7 +66,7 @@ fetch('/api/deck/' + classroomID, {
                 <div class="ag-courses-item_date-box">
                     <div class="row mb-2">
                       <div class="col-md-12">
-                          <a class="btn btn-primary font-poppin" href="flashcard?deck=${each._id}" role="button" style="font-weight: bold;">Learning</a>
+                          <a class="btn btn-primary font-poppin" role="button" style="font-weight: bold;" onclick="compareFlashcardAndQuiz('${each._id}')">Learning</a>
                       </div>
                     </div>
                     <div class="row mb-2 btnManageFlashcard">
@@ -80,6 +117,29 @@ fetch('/api/deck/' + classroomID, {
       });
   })
   .catch(err => console.log(err))
+
+// Function Check Flashcard == Quiz หรือเปล่า
+function compareFlashcardAndQuiz(deckId) {
+  fetch('/api/deck/compareflashcardAndQuiz/' + deckId, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      const msg = data.message;
+      if (msg == "Success") {
+        window.location = "flashcard?deck=" + deckId;
+      } else if (msg == "กรุณาสร้าง Quiz ให้เท่ากับจำนวนของ Flashcard") {
+        Swal.fire({
+          title: msg,
+          icon: "warning",
+        })
+      }
+    })
+    .catch(err => console.log(err))
+}
 
 
 function btncreatedeck(id) {

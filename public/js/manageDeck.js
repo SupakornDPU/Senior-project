@@ -132,7 +132,7 @@ fetch('/api/deck/flashcard/' + deckId, {
                <td>${item._id}</td>
                <td class="questionColumn">${item.card_question}</td>
                <td class="answerColumn">${item.card_answer}</td>
-               <td>${item.deck_id}</td>
+               <td>${item.deck_id.deck_name}</td>
                <td>
                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editFlashcard"
                      onclick="getDetailEditFlashcard('${item._id}')">
@@ -171,20 +171,76 @@ function getDetailEditFlashcard(flashcardId) {
          console.log(err);
       })
 }
-
-// Funtion Delete Flashcard
-function deleteFlashcard(flashcardId) {
-   fetch('/api/deck/flashcard/' + flashcardId, {
-      method: 'DELETE',
+function reloadTabManageFlashcard() {
+   fetch('/api/deck/flashcard/' + deckId, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json'
+      },
    })
       .then(response => response.json())
       .then(data => {
-         console.log(data);
-         const deletedRow = document.getElementById('flashcardRow_' + flashcardId);
-         if (deletedRow) {
-            deletedRow.remove();
-         }
+         // console.log(data);
+         let html = '';
+         data.forEach((item, index) => {
+            // console.log(item);
+            html += `
+               <tr id="flashcardRow_${item._id}">
+                  <td>${index + 1}</td>
+                  <td>${item._id}</td>
+                  <td class="questionColumn">${item.card_question}</td>
+                  <td class="answerColumn">${item.card_answer}</td>
+                  <td>${item.deck_id.deck_name}</td>
+                  <td>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editFlashcard"
+                        onclick="getDetailEditFlashcard('${item._id}')">
+                           Edit
+                        </button>
+                  </td>
+                  <td>
+                        <button type="button" class="btn btn-danger" onclick="deleteFlashcard('${item._id}')">
+                           Delete
+                        </button>
+                  </td>
+               </tr>
+            `;
+         })
+         document.getElementById('flashcardTableBody').innerHTML = html;
+         $(document).ready(function () {
+            $('#dataTable').DataTable();
+         });
       })
+}
+
+
+// Funtion Delete Flashcard
+function deleteFlashcard(flashcardId) {
+   Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+      if (result.isConfirmed) {
+         fetch('/api/deck/flashcard/' + flashcardId, {
+            method: 'DELETE',
+         })
+            .then(response => response.json())
+            .then(() => {
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 900,
+               }).then(() => {
+                  reloadTabManageFlashcard();
+               });
+            }).catch((err) => console.log(err));
+      }
+   });
 }
 
 // Function Api Edit Flashcard
@@ -283,7 +339,7 @@ fetch('/api/deck/findId/' + deckId, {
    .then(response => response.json())
    .then(data => {
       const flashcards = data.flashcards;
-      console.log(data);
+      // console.log(data);
       data.forEach(flashcard => {
          // console.log(flashcard);
          const option = document.createElement('option');
@@ -486,7 +542,7 @@ fetch('/api/deck/quiz/' + deckId, {
                <td class="quizChoice3">${item.quiz_choice[2]}</td>
                <td class="quizChoice4">${item.quiz_choice[3]}</td>
                <td class="quizAnsCorrect">${item.quiz_answerCorrect}</td>
-               <td>${item.deck_id}</td>
+               <td>${item.deck_id.deck_name}</td>
                <td>
                   <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editQuiz"
                   onclick="getDetailEditQuiz('${item._id}')">
@@ -574,20 +630,79 @@ function getDetailEditQuiz(quizId) {
       });
 }
 
-
-// Funtion Delete Flashcard
-function deleteQuiz(quizId) {
-   fetch('/api/deck/quiz/del/' + quizId, {
-      method: 'DELETE',
+function reloadTabManageQuiz() {
+   fetch('/api/deck/quiz/' + deckId, {
+      method: 'GET',
+      headers: {
+         'Content-Type': 'application/json'
+      },
    })
       .then(response => response.json())
       .then(data => {
-         console.log(data);
-         const deletedRow = document.getElementById('quizRow_' + quizId);
-         if (deletedRow) {
-            deletedRow.remove();
-         }
+         // console.log(data);
+         let html = '';
+         data.forEach((item, index) => {
+            // console.log(item);
+            html += `
+               <tr id="quizRow_${item._id}">
+                  <td>${index + 1}</td>
+                  <td>${item._id}</td>
+                  <td class="quizQuestion">${item.quiz_question}</td>
+                  <td class="quizChoice1">${item.quiz_choice[0]}</td>
+                  <td class="quizChoice2">${item.quiz_choice[1]}</td>
+                  <td class="quizChoice3">${item.quiz_choice[2]}</td>
+                  <td class="quizChoice4">${item.quiz_choice[3]}</td>
+                  <td class="quizAnsCorrect">${item.quiz_answerCorrect}</td>
+                  <td>${item.deck_id.deck_name}</td>
+                  <td>
+                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editQuiz"
+                     onclick="getDetailEditQuiz('${item._id}')">
+                        Edit
+                     </button>
+                  </td>
+                  <td>
+                     <button type="button" class="btn btn-danger" onclick="deleteQuiz('${item._id}')">
+                        Delete
+                     </button>
+                  </td>
+               </tr>
+            `;
+         })
+         document.getElementById('quizTableBody').innerHTML = html;
+         $(document).ready(function () {
+            $('#dataTableQuiz').DataTable();
+         });
       })
+}
+
+// Funtion Delete Flashcard
+function deleteQuiz(quizId) {
+   Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+   }).then((result) => {
+      if (result.isConfirmed) {
+         fetch('/api/deck/quiz/del/' + quizId, {
+            method: 'DELETE',
+         })
+            .then(response => response.json())
+            .then(() => {
+               Swal.fire({
+                  title: "Deleted!",
+                  text: "Your file has been deleted.",
+                  icon: "success",
+                  showConfirmButton: false,
+                  timer: 900,
+               }).then(() => {
+                  reloadTabManageQuiz()
+               });
+            }).catch((err) => console.log(err));
+      }
+   });
 }
 
 const formModalAddQuiz = document.getElementById('formModalAddQuiz');
@@ -664,22 +779,22 @@ formModalAddQuiz.addEventListener('submit', async (e) => {
             editedRow.querySelector('.quizChoice4').textContent = quiz_choice[3];
             editedRow.querySelector('.quizAnsCorrect').textContent = quiz_answerCorrect;
          }
-            const Toast = Swal.mixin({
-               toast: true,
-               position: "top-end",
-               showConfirmButton: false,
-               timer: 1200,
-               timerProgressBar: true,
-               didOpen: (toast) => {
-                  toast.onmouseenter = Swal.stopTimer;
-                  toast.onmouseleave = Swal.resumeTimer;
-               }
-            });
-            Toast.fire({
-               icon: "success",
-               title: "Update Quiz successfully"
-            })
+         const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 1200,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+               toast.onmouseenter = Swal.stopTimer;
+               toast.onmouseleave = Swal.resumeTimer;
+            }
+         });
+         Toast.fire({
+            icon: "success",
+            title: "Update Quiz successfully"
          })
+      })
       .catch(err => {
          console.error('Error update quiz:', err.message);
       });
