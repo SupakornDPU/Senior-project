@@ -485,7 +485,7 @@ formAddQuiz.addEventListener('submit', async (e) => {
    // ถ้ามีค่าว่างหรือค่าที่เลือกซ้ำกัน ให้แจ้งเตือน
 
    if (checkDuplicateValues) {
-      alert('มีคำถามที่เลือกซ้ำกัน');
+      alert('There are duplicate questions selected.');
       return;
    }
 
@@ -493,7 +493,7 @@ formAddQuiz.addEventListener('submit', async (e) => {
       alert('Please fill in all fields.');
       return;
    }
-
+   
    try {
       fetch('/projectsenior/quiz/' + deckId, {
          method: 'POST',
