@@ -2,6 +2,7 @@ const urlParams = new URLSearchParams(window.location.search);
 const deckId = urlParams.get('deck')
 console.log(deckId);
 
+let countquestionselect = 0;
 // ! Manage Flashcard
 function btn_manageFlashcard(id) {
    // inputShowClassroomID = document.getElementById("deckID");
@@ -340,6 +341,7 @@ fetch('/api/deck/findId/' + deckId, {
    .then(data => {
       const flashcards = data.flashcards;
       // console.log(data);
+      console.log(data);
       data.forEach(flashcard => {
          // console.log(flashcard);
          const option = document.createElement('option');
@@ -364,7 +366,7 @@ function addFormQuiz() {
       <div class="row mb-3">
       <label for="inputText" class="col-sm-2 col-form-label">Question</label>
       <div class="col-sm-10">
-         <select id="questionInput" name="quizQuestion" class="form-select">
+         <select id="questionInput" name="quizQuestion" class="form-select" >
             <option selected="" value="">Select...</option>
          </select>
       </div>
@@ -414,10 +416,11 @@ function addFormQuiz() {
       </div>
       <hr class="my-4" style="border: 2px solid black;border-radius: 2px;">
       `;
+
    blockQuiz.appendChild(div);
 
    // Fetch data and populate the newly created select element
-   fetch('/api/deck/getById/' + deckId, {
+   fetch('/api/deck/findId/' + deckId, {
       method: 'get',
       headers: {
          'Content-Type': 'application/json'
@@ -426,22 +429,65 @@ function addFormQuiz() {
       .then(response => response.json())
       .then(data => {
          const selectElement = div.querySelector('#questionInput');
-         const flashcards = data.flashcards;
-
-         flashcards.forEach(flashcard => {
+         data.forEach(flashcard => {
+            // console.log(flashcard);
             const option = document.createElement('option');
             option.value = flashcard.card_question;
             option.text = flashcard.card_question;
             selectElement.appendChild(option);
          });
-
-         if (flashcards.length === 0) {
+   
+         if (data.length === 0) {
             console.log('ไม่มีข้อมูลใน dataArray');
          }
+
+         // Disable selected option in all select elements
+         const selectedQuestions = document.querySelectorAll("#questionInput");
+
+         selectedQuestions.forEach(selectedQuestion => {
+            const allSelectElements = document.querySelectorAll('.form-select');
+            allSelectElements.forEach(selectElement => {
+               const options = selectElement.options;
+               for (let i = 0; i < options.length; i++) {
+                  if (options[i].value === selectedQuestion.value) {
+                     options[i].disabled = true;
+                  }
+               }
+            });
+         });
+
       })
       .catch(err => console.log(err));
+   // Disable the selected option in the newly added select element
+   const selectedQuestion = document.querySelectorAll("#questionInput");
+   const allSelectElements = document.querySelectorAll('.form-select');
+   allSelectElements.forEach(selectElement => {
+      const options = selectElement.options;
+      for (let i = 0; i < options.length; i++) {
+         if (options[i].value === selectedQuestion) {
+            options[i].disabled = true;
+         }
+      }
+   });
 }
 
+
+// function updateDropdownQuestion() {
+//    // // เมื่อมีการเปลี่ยนแปลงใน dropdown ของคำถามในฟอร์มแรก
+//    // const selectedQuestion = document.getElementById('questionInput').value; // หาค่าที่ถูกเลือกใน dropdown ของคำถามในฟอร์มแรก
+//    // const allDropdowns = document.querySelectorAll('.form-select'); // เลือกทุก dropdown ในฟอร์ม
+//    // allDropdowns.forEach(dropdown => {
+//    //    const options = dropdown.querySelectorAll('option'); // เลือกทุก option ใน dropdown
+//    //    options.forEach(option => {
+//    //       // ตรวจสอบว่า option นั้นมีค่าเท่ากับคำถามที่ถูกเลือกหรือไม่
+//    //       if (option.value === selectedQuestion) {
+//    //          option.disabled = true; // ถ้าใช่ ให้ทำให้ option นั้นไม่สามารถเลือกได้
+//    //       } else {
+//    //          option.disabled = false; // ถ้าไม่ใช่ ให้เปิดให้ option นั้นสามารถเลือกได้
+//    //       }
+//    //    });
+//    // });
+// }
 
 const formAddQuiz = document.getElementById('formAddQuiz');
 formAddQuiz.addEventListener('submit', async (e) => {
@@ -457,6 +503,9 @@ formAddQuiz.addEventListener('submit', async (e) => {
    const data = [];
 
    let checkEmptyField = false;
+   let checkDuplicateValues = false; // เพิ่มตัวแปรเพื่อตรวจสอบค่าที่ซ้ำกัน
+
+   const selectedQuestions = new Set();
 
    quizQuestion.forEach((quizQuestion, index) => {
       const quizChoice1 = quizchoices1[index].value.trim();
@@ -465,6 +514,18 @@ formAddQuiz.addEventListener('submit', async (e) => {
       const quizChoice4 = quizchoices4[index].value.trim();
       const selectedOptionElement = selectedOptions[index];
       const selectedOption = selectedOptionElement.value.trim();
+
+      // ตรวจสอบว่ามีค่าที่เลือกซ้ำกันหรือไม่
+      const currentQuestionValue = quizQuestion.value.trim();
+
+      // ถ้าคำถามปัจจุบันอยู่ใน Set แสดงว่ามีคำถามที่ซ้ำกัน
+      if (selectedQuestions.has(currentQuestionValue)) {
+         checkDuplicateValues = true;
+         return;
+      }
+
+      // เพิ่มคำถามปัจจุบันเข้าไปใน Set
+      selectedQuestions.add(currentQuestionValue);
 
       if (quizQuestion.value.trim() === '' || quizChoice1 === '' || quizChoice2 === '' || quizChoice3 === '' || quizChoice4 === '' || selectedOption === '') {
          checkEmptyField = true;
@@ -479,11 +540,18 @@ formAddQuiz.addEventListener('submit', async (e) => {
       });
    });
 
+   // ถ้ามีค่าว่างหรือค่าที่เลือกซ้ำกัน ให้แจ้งเตือน
+
+   if (checkDuplicateValues) {
+      alert('There are duplicate questions selected.');
+      return;
+   }
+
    if (checkEmptyField) {
       alert('Please fill in all fields.');
       return;
    }
-
+   
    try {
       fetch('/projectsenior/quiz/' + deckId, {
          method: 'POST',

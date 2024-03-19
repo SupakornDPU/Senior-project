@@ -21,6 +21,7 @@ let wrongAnswers = [];
 let wrongAnswers1 = [];
 let wrongAnswers2 = [];
 let answerStats = {};
+let selectedAnswer = null;
 
 var playcard = localStorage.getItem('selectedPlay');
 console.log(playcard);
@@ -44,6 +45,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
             dataArray.splice(playcard); // ตัดตำแหน่งที่มากกว่า playcard ออก
         }
         console.log(dataArray);
+        // Sort dataArray by stat
         dataArray.sort((a, b) => a.stat - b.stat);
 
         if (dataArray.length > 0) {
@@ -113,6 +115,10 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
 
             const btnquiz = document.getElementById("btnnextquiz");
             btnquiz.addEventListener("click", () => {
+                if (selectedAnswer === null) {
+                    alert('กรุณาเลือกคำตอบก่อนกด "Next"');
+                    return; // ไม่ต้องดำเนินการต่อไปหากยังไม่มีการเลือกคำตอบ
+                }
                 if (i >= dataArray.length - 1) {
                     // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
                     if (wrongAnswers.length > 0) {
@@ -185,6 +191,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                     }
 
                 }
+                selectedAnswer = null;
             });
         } else {
             console.log('ไม่มีข้อมูลใน dataArray');
@@ -228,7 +235,6 @@ function callbackwrongAnswers(wrongAnswers) {
 
     // wrongQuiz
     function displayNextQuiz(wrongQuiz) {
-
         if (q >= wrongQuiz.length) {
             // หากถึงจุดสิ้นสุดของ array ข้อความที่ตอบผิดจะถูกแสดง
             if (wrongAnswers1.length > 0) {
@@ -242,8 +248,6 @@ function callbackwrongAnswers(wrongAnswers) {
                 displayScore(point, countCorrect, countWrong);
                 return;
             }
-
-
         } else {
             const Item = wrongQuiz[q];
             console.log(q);
@@ -255,6 +259,7 @@ function callbackwrongAnswers(wrongAnswers) {
 
     // wrongQuiz
     function displayQuiz(Quizdata) {
+        let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -317,11 +322,28 @@ function callbackwrongAnswers(wrongAnswers) {
         hljs.highlightAll();
         const btnquiz = document.getElementById("btnnextquiz");
         btnquiz.addEventListener("click", () => {
-            q++;
-            displayNextQuiz(wrongAnswers);
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            if (checkAnswerSelected()) {
+                q++;
+                displayNextQuiz(wrongAnswers);
+            } else {
+                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+            }
         });
-
-
+    
+        // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        const choices = document.querySelectorAll(".answer-block button");
+        choices.forEach(choice => {
+            choice.addEventListener("click", () => {
+                selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
+            });
+        });
+    
+        // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        function checkAnswerSelected() {
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            return selectedAnswer;
+        }
     }
 
     function displayFlashcard(flashcardData) {
@@ -374,7 +396,7 @@ function callbackwrongAnswers(wrongAnswers) {
 }
 
 function checkAnswer(buttonId) {
-
+    selectedAnswer = buttonId;
     fetch('/api/deck/getByIdQuiz/' + deckID, {
         method: 'get',
         headers: {
@@ -447,7 +469,7 @@ function checkAnswer(buttonId) {
 }
 
 function checkAnswersWrongAnswer(buttonId, Quizdata) {
-
+    selectedAnswer = buttonId;
     fetch('/projectsenior/quiz/getById/' + Quizdata, {
         method: 'get',
         headers: {
@@ -644,7 +666,7 @@ function callbackwrongAnswers2(wrongAnswers1) {
 
     // wrongQuiz
     function displayQuiz2(Quizdata2) {
-        // console.log(Quizdata2);
+        let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -707,9 +729,28 @@ function callbackwrongAnswers2(wrongAnswers1) {
         hljs.highlightAll();
         const btnquiz = document.getElementById("btnnextquiz");
         btnquiz.addEventListener("click", () => {
-            q1++;
-            displayNextQuiz2(wrongAnswers1);
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            if (checkAnswerSelected()) {
+                q1++;
+                displayNextQuiz2(wrongAnswers1);
+            } else {
+                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+            }
         });
+    
+        // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        const choices = document.querySelectorAll(".answer-block button");
+        choices.forEach(choice => {
+            choice.addEventListener("click", () => {
+                selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
+            });
+        });
+    
+        // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        function checkAnswerSelected() {
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            return selectedAnswer;
+        }
     }
 
     function displayFlashcard2(flashcardData) {
@@ -885,7 +926,7 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
     // wrongQuiz
     function displayQuiz3(Quizdata3) {
-        // console.log(Quizdata3);
+        let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
@@ -948,9 +989,28 @@ function callbackwrongAnswers3(wrongAnswers2) {
         hljs.highlightAll();
         const btnquiz = document.getElementById("btnnextquiz");
         btnquiz.addEventListener("click", () => {
-            q2++;
-            displayNextFlashcard3();
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            if (checkAnswerSelected()) {
+                q2++;
+                displayNextFlashcard3();
+            } else {
+                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+            }
         });
+    
+        // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        const choices = document.querySelectorAll(".answer-block button");
+        choices.forEach(choice => {
+            choice.addEventListener("click", () => {
+                selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
+            });
+        });
+    
+        // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+        function checkAnswerSelected() {
+            // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
+            return selectedAnswer;
+        }
     }
 
     function displayFlashcard3(flashcardData2) {
