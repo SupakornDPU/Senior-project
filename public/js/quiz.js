@@ -3,23 +3,8 @@ const deckID = urlParams.get('deck')
 console.log(deckID);
 
 // Get the deck ID from the URL
-let counter = 0;
-let play = 0;
-let i = 0;
-let q = 0;
-let q1 = 0;
-let q2 = 0;
-let point = 0;
-let countCorrect = 0;
-let countWrong = 0;
-let correctAnswer = 0;
-let correctAnswer1 = 0;
-let correctAnswer2 = 0;
-let correctAnswersArr = [];
-let correctAnswersArr1 = [];
-let wrongAnswers = [];
-let wrongAnswers1 = [];
-let wrongAnswers2 = [];
+let counter = 0, play = 0, i = 0, q = 0, q1 = 0, q2 = 0, point = 0, countCorrect = 0, countWrong = 0, correctAnswer = 0, correctAnswer1 = 0, correctAnswer2 = 0;
+let correctAnswersArr = [], correctAnswersArr1 = [], wrongAnswers = [], wrongAnswers1 = [], wrongAnswers2 = [];
 let answerStats = {};
 let selectedAnswer = null;
 
@@ -116,7 +101,18 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
             const btnquiz = document.getElementById("btnnextquiz");
             btnquiz.addEventListener("click", () => {
                 if (selectedAnswer === null) {
-                    alert('กรุณาเลือกคำตอบก่อนกด "Next"');
+                    // ถ้ายังไม่ได้เลือกคำตอบให้เพิ่ม Animation ให้กับปุ่มที่ไม่ได้เลือก 
+                    const btnWrappers = document.getElementsByClassName('btn-wrapper');
+                    for (let i = 0; i < btnWrappers.length; i++) {
+                        const btnWrapper = btnWrappers[i];
+                        const button = btnWrapper.querySelector('button');
+                        if (!button.classList.contains('btn-success') && !button.classList.contains('btn-danger')) {
+                            btnWrapper.classList.add('animate__bounceIn');
+                            setTimeout(() => {
+                                btnWrapper.classList.remove('animate__bounceIn');
+                            }, 500);
+                        }
+                    }
                     return; // ไม่ต้องดำเนินการต่อไปหากยังไม่มีการเลือกคำตอบ
                 }
                 if (i >= dataArray.length - 1) {
@@ -327,10 +323,20 @@ function callbackwrongAnswers(wrongAnswers) {
                 q++;
                 displayNextQuiz(wrongAnswers);
             } else {
-                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+                const btnWrappers = document.getElementsByClassName('btn-wrapper');
+                for (let i = 0; i < btnWrappers.length; i++) {
+                    const btnWrapper = btnWrappers[i];
+                    const button = btnWrapper.querySelector('button');
+                    if (!button.classList.contains('btn-success') && !button.classList.contains('btn-danger')) {
+                        btnWrapper.classList.add('animate__bounceIn');
+                        setTimeout(() => {
+                            btnWrapper.classList.remove('animate__bounceIn');
+                        }, 500);
+                    }
+                }
             }
         });
-    
+
         // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         const choices = document.querySelectorAll(".answer-block button");
         choices.forEach(choice => {
@@ -338,7 +344,7 @@ function callbackwrongAnswers(wrongAnswers) {
                 selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
             });
         });
-    
+
         // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         function checkAnswerSelected() {
             // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
@@ -734,10 +740,20 @@ function callbackwrongAnswers2(wrongAnswers1) {
                 q1++;
                 displayNextQuiz2(wrongAnswers1);
             } else {
-                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+                const btnWrappers = document.getElementsByClassName('btn-wrapper');
+                for (let i = 0; i < btnWrappers.length; i++) {
+                    const btnWrapper = btnWrappers[i];
+                    const button = btnWrapper.querySelector('button');
+                    if (!button.classList.contains('btn-success') && !button.classList.contains('btn-danger')) {
+                        btnWrapper.classList.add('animate__bounceIn');
+                        setTimeout(() => {
+                            btnWrapper.classList.remove('animate__bounceIn');
+                        }, 500);
+                    }
+                }
             }
         });
-    
+
         // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         const choices = document.querySelectorAll(".answer-block button");
         choices.forEach(choice => {
@@ -745,7 +761,7 @@ function callbackwrongAnswers2(wrongAnswers1) {
                 selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
             });
         });
-    
+
         // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         function checkAnswerSelected() {
             // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
@@ -902,13 +918,6 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
     // wrongQuiz
     function displayNextQuiz3(wrongQuiz3) {
-        // if (play >= playcard) {
-        //     console.log('Finish');
-        //     console.log(point);
-        //     alert('Finish');
-        //     displayScore(point, countCorrect, countWrong);
-        //     return;
-        // }
         if (q2 >= wrongQuiz3.length) {
             console.log('Finish');
             console.log(point);
@@ -994,10 +1003,20 @@ function callbackwrongAnswers3(wrongAnswers2) {
                 q2++;
                 displayNextFlashcard3();
             } else {
-                alert("โปรดเลือกคำตอบก่อนกดปุ่ม Next");
+                const btnWrappers = document.getElementsByClassName('btn-wrapper');
+                for (let i = 0; i < btnWrappers.length; i++) {
+                    const btnWrapper = btnWrappers[i];
+                    const button = btnWrapper.querySelector('button');
+                    if (!button.classList.contains('btn-success') && !button.classList.contains('btn-danger')) {
+                        btnWrapper.classList.add('animate__bounceIn');
+                        setTimeout(() => {
+                            btnWrapper.classList.remove('animate__bounceIn');
+                        }, 500);
+                    }
+                }
             }
         });
-    
+
         // เพิ่ม event listener ให้กับปุ่ม Choice เพื่อตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         const choices = document.querySelectorAll(".answer-block button");
         choices.forEach(choice => {
@@ -1005,7 +1024,7 @@ function callbackwrongAnswers3(wrongAnswers2) {
                 selectedAnswer = true; // เมื่อผู้ใช้เลือกคำตอบแล้วกำหนดค่า selectedAnswer เป็น true
             });
         });
-    
+
         // เพิ่มฟังก์ชันตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
         function checkAnswerSelected() {
             // ตรวจสอบว่าผู้ใช้เลือกคำตอบหรือไม่
