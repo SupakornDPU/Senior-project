@@ -78,10 +78,10 @@ quizRouter.post('/:deckId', async (req, res) => {
       const savedQuiz = await newQuiz.save();
       newQuizIds.push(savedQuiz._id);
 
-      const checkFlashcard = await Flashcard.findOne({ card_question: item.quiz_question });
+      const checkFlashcard = await Flashcard.findOne({ card_question: item.quiz_question, deck_id: item.deck_id });
       if (checkFlashcard) {
-        await Quiz.findByIdAndUpdate(savedQuiz._id, { $set: { flashcard_id: checkFlashcard._id } });
-      }
+        await Quiz.findByIdAndUpdate(savedQuiz._id, { $set: { flashcard_id: checkFlashcard._id } }) 
+      } 
     }
 
     await Deck.findOneAndUpdate(

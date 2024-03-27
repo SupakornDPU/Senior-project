@@ -7,9 +7,163 @@ let counter = 0, play = 0, i = 0, q = 0, q1 = 0, q2 = 0, point = 0, countCorrect
 let correctAnswersArr = [], correctAnswersArr1 = [], wrongAnswers = [], wrongAnswers1 = [], wrongAnswers2 = [];
 let answerStats = {};
 let selectedAnswer = null;
+let sec = 30;
 
 var playcard = localStorage.getItem('selectedPlay');
 console.log(playcard);
+
+$step = 1;
+$loops = Math.round(100 / $step);
+$increment = 360 / $loops;
+$half = Math.round($loops / 2);
+$barColor = '#343583';
+$backColor = '#eff0fe';
+
+var clock = {
+    interval: null,
+    init: function () {
+        $('.input-btn').click(function () {
+            switch ($(this).data('action')) {
+                case 'start':
+                    clock.stop();
+                    clock.start();
+                    break;
+                case 'stop':
+                    clock.stop();
+                    break;
+            }
+        });
+    },
+    start: function (dataArray) {
+        var pie = 0;
+        var num = 0;
+        var min = 0.5; // กำหนดให้นับถอยหลังเริ่มต้นทันทีและใช้ค่าเวลานับถอยหลังเป็น 1 นาที
+        var sec = min * 60;
+        var lop = sec;
+        $('.count').text(min);
+        if (min > 0) {
+            $('.count').addClass('min')
+        } else {
+            $('.count').addClass('sec')
+        }
+        clock.interval = setInterval(function () {
+            sec = sec - 1;
+            if (min > 1) {
+                pie = pie + (100 / (lop / min));
+            } else {
+                pie = pie + (100 / (lop));
+            }
+            if (pie >= 101) {
+                pie = 1;
+            }
+            num = (sec / 60).toFixed(2).slice(0, -3);
+            if (num == 0) {
+                $('.count').removeClass('min').addClass('sec').text(sec);
+            } else {
+                $('.count').removeClass('sec').addClass('min').text(num);
+            }
+            //$('.clock').attr('class','clock pro-'+pie.toFixed(2).slice(0,-3));
+            //console.log(pie+'__'+sec);
+            $i = (pie.toFixed(2).slice(0, -3)) - 1;
+            if ($i < $half) {
+                $nextdeg = (90 + ($increment * $i)) + 'deg';
+                $('.clock').css({ 'background-image': 'linear-gradient(90deg,' + $backColor + ' 50%,transparent 50%,transparent),linear-gradient(' + $nextdeg + ',' + $barColor + ' 50%,' + $backColor + ' 50%,' + $backColor + ')' });
+            } else {
+                $nextdeg = (-90 + ($increment * ($i - $half))) + 'deg';
+                $('.clock').css({ 'background-image': 'linear-gradient(' + $nextdeg + ',' + $barColor + ' 50%,transparent 50%,transparent),linear-gradient(270deg,' + $barColor + ' 50%,' + $backColor + ' 50%,' + $backColor + ')' });
+            }
+            if (sec == 0) {
+                clearInterval(clock.interval);
+                $('.count').text(0);
+                //$('.clock').removeAttr('class','clock pro-100');
+                $('.clock').removeAttr('style');
+
+                console.log(dataArray.quiz_answerCorrect
+                );
+                wrongAnswers.push(dataArray);
+                console.log('คำตอบผิด!');
+                point--;
+                countWrong++;
+                if (answerStats[dataArray.flashcard_id] === undefined) {
+                    answerStats[dataArray.flashcard_id] = -1;
+                } else {
+                    answerStats[dataArray.flashcard_id]--;
+                }
+                console.log(answerStats);
+            }
+        }, 1000);
+    },
+    stop: function () {
+        clearInterval(clock.interval);
+        $('.count').text(0);
+        $('.clock').removeAttr('style');
+    }
+};
+
+function startCountdown(dataArray) {
+    console.log(dataArray)
+    if (sec > 0) {
+        console.log(dataArray)
+        clock.start(dataArray);
+    } else {
+        if (selectedAnswer === null) {
+            // ถ้าไม่มีการเลือกคำตอบใด ๆ ให้ถือว่าเป็นการตอบผิด
+            timeUpAction(dataArray);
+        } else {
+            alert('Time Up!'); // แจ้งเตือนเมื่อเวลาหมด
+            // ทำสิ่งที่ต้องการหลังจากเวลาหมดตามที่คุณต้องการ
+            clock.stop(); // เริ่มการนับถอยหลังใหม่
+        }
+    }
+}
+
+// // เวลาที่กำหนดไว้ (หน่วยเป็นวินาที)
+// const totalTimeInSeconds = 5; // 5 นาที
+
+// let timeLeft = totalTimeInSeconds;
+
+// // แสดงเวลานับถอยหลัง
+// function displayTime() {
+//     console.log(timeLeft);
+//     const minutes = Math.floor(timeLeft / 60);
+//     const seconds = timeLeft % 60;
+//     const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+//     document.getElementById("timer").textContent = formattedTime;
+// }
+
+// function updateTime(dataArray) {
+//     timeLeft--; // ลดเวลาที่เหลือลงทุกๆ 1 วินาที
+//     if (timeLeft >= 0) {
+//         displayTime(); // แสดงเวลาที่เหลือ
+//     } else {
+//         clearInterval(countdownInterval); // หยุดการนับถอยหลังเมื่อเวลาหมด
+//         if (selectedAnswer === null) {
+//             // ถ้าไม่มีการเลือกคำตอบใด ๆ ให้ถือว่าเป็นการตอบผิด
+//             timeUpAction(dataArray);
+//         } else {
+//             alert('Time Up!'); // แจ้งเตือนเมื่อเวลาหมด
+//             // ทำสิ่งที่ต้องการหลังจากเวลาหมดตามที่คุณต้องการ
+//             startCountdown(); // เริ่มการนับถอยหลังใหม่
+//         }
+//     }
+// }
+
+// function startCountdown(dataArray) {
+//     let initialTime = 0 ;
+//     initialTime = timeLeft; // กำหนดค่าเวลาเริ่มต้นใหม่
+//     displayTime(initialTime); 
+//     countdownInterval = setInterval(() => {
+//         updateTime(dataArray);
+//     }, 1000);
+// }
+
+function timeUpAction(dataArray) {
+    // เพิ่มโค้ดเพื่อจัดการกรณีที่เวลาหมดแล้วไม่มีการเลือกคำตอบ
+    wrongAnswers.push(dataArray[correctAnswer]);
+    console.log('คำตอบผิด!');
+    point--;
+    countWrong++;
+}
 
 fetch('/api/deck/getByIdQuiz/' + deckID, {
     method: 'get',
@@ -33,6 +187,8 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
         // Sort dataArray by stat
         dataArray.sort((a, b) => a.stat - b.stat);
 
+        startCountdown(dataArray[i]);
+
         if (dataArray.length > 0) {
             const Item = dataArray[i];
             const Choice = Item.quiz_choice;
@@ -42,6 +198,13 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
             const deckCol = document.createElement('div');
             deckCol.className = 'row justify-content-end';
             deckCol.innerHTML = `
+            <div class="col-3" style="width: fit-content;" ">
+                <div class="clock-wrap">
+                    <div class="clock pro-0">
+                         <span class="count" style="color: #000000;">0</span>
+                    </div>
+                 </div>
+                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -130,7 +293,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                 } else {
                     i++;
                     correctAnswer++;
-
+                    clock.start();
                     const newItem = dataArray[i];
                     const Choice = newItem.quiz_choice;
 
@@ -185,7 +348,6 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                         }
 
                     }
-
                 }
                 selectedAnswer = null;
             });
@@ -421,7 +583,7 @@ function checkAnswer(buttonId) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
-
+                clock.stop();
                 if (answerStats[item.flashcard_id] === undefined) {
                     answerStats[item.flashcard_id] = 1;
                 } else {
@@ -440,10 +602,11 @@ function checkAnswer(buttonId) {
 
             } else {
                 wrongAnswers.push(item);
+                console.log(item);
                 console.log('คำตอบผิด!');
                 point--;
                 countWrong++;
-
+                clock.stop();
                 if (answerStats[item.flashcard_id] === undefined) {
                     answerStats[item.flashcard_id] = -1;
                 } else {
