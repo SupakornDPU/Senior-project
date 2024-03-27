@@ -24,6 +24,7 @@
   <!-- Style -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/background.css">
 
   <!-- Hiligh.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
@@ -37,22 +38,6 @@
 
     .btn-next:hover {
       background-color: #8298b2;
-    }
-
-    .w3-bar {
-      background-color: #272829;
-      color: white;
-    }
-
-    .backgound-ex {
-      background-color: #000000;
-      background-image: url('https://static.wixstatic.com/media/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png/v1/fill/w_1344,h_948,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png');
-      background-position: left bottom;
-      background-size: cover;
-      background-repeat: no-repeat;
-      padding-bottom: 225px;
-      margin-top: -260px;
-      padding-top: 300px;
     }
 
     hr.style {
@@ -73,7 +58,13 @@
       font-family: 'Poppins', sans-serif !important;
       font-size: 18px;
       font-weight: 700;
+      white-space: pre-line;
     }
+
+    p {
+      overflow-wrap: break-word;
+    }
+
     .code {
       margin: 0 auto;
     }
@@ -108,6 +99,8 @@
     }
 
     .btn {
+      font-weight: 700;
+      font-family: 'Kanit', sans-serif !important;
       border: 2px solid black;
       background-color: white;
       color: #000000;
@@ -126,53 +119,65 @@
     .hljs {
       background: none;
     }
+
+    .flash-card {
+      width: 1500px;
+      height: 700px;
+      z-index: 1;
+      box-shadow: rgba(240, 46, 170, 0.5) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.1) 15px 15px;
+    }
+
+    .btnChoicePlay {
+      width: calc(100vw / 6.5);
+      /* This will set the width of the button to be a quarter of the viewport width */
+      height: calc(100vh / 6.5);
+      /* This will set the height of the button to be a quarter of the viewport height */
+      font-size: calc(1vw + 1vh);
+      /* This will set the font size to be the sum of 1% of the viewport width and 1% of the viewport height */
+      box-shadow: #496989 4px 4px, #58A399 8px 8px;
+
+      &:hover {
+        background-color: #ffab7b;
+        color: #000000;
+        font-size: calc(1.5vw + 1vh);
+      }
+    }
   </style>
 </head>
 
 <body>
-  <!-- !Navbar -->
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg sticky-top font-poppin navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="index">PyFlash</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="linkPage">
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="index">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#" id="menuClassroom">Classroom</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="about">About</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Navbar -->`;
-
   <!-- !Content -->
-  <div class="container-fluid backgound-ex">
-    <div class="container" style="padding-top: 200px; margin-top: -60px; padding-left: 0px;padding-right: 0px;">
-      <div style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
-        <!-- Flash Card -->
-        <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlflashcard">
-          
-        </div>
-        <!-- Flash Card -->
+  <div class="context">
+    <div class="container-fluid backgound-ex">
+      <div class="container d-flex justify-content-center align-items-center min-vh-100"
+        style="padding-left: 0px;padding-right: 0px;">
+        <div class="row flash-card" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
+          <!-- Flash Card -->
+          <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlflashcard">
+          </div>
+          <!-- Flash Card -->
 
+        </div>
       </div>
     </div>
   </div>
-  <!-- !Content -->
 
-  <!-- !Footer -->
-  <footer-component></footer-component>
+
+  <div class="area">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+  <!-- !Content -->
 
   <!-- Script -->
   <script src="js/script.js"></script>
@@ -186,71 +191,54 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-    <script>
-      function displaySelectQuiz() {
+  <script>
+    function displaySelectQuiz() {
       const decks = document.getElementById("innerhtmlflashcard");
       decks.innerHTML = '';
       const deckCol = document.createElement('div');
       deckCol.className = 'row justify-content-end';
       deckCol.innerHTML = `
       <div class="row">
-      <div class="col-12 mb-5">
-        <p id="quiz" class="hljs" style="font-size: 35px; font-weight: bolder;">Please select the amount to play.</p>
+        <div class="col-12 text-center mb-5">
+          <p id="quiz" style="font-size: 35px; font-weight: bolder;">Please select the amount to play.</p>
+        </div>
       </div>
-    </div>
-    <div class="row mb-5">
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay1"
+    <div class="row mb-5" style="z-index: 1;">
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay1"
             onclick="selectplayCard(10)">
-            <pre class="d-flex justify-content-start text-start">
-          <code id="btnChoicePlay1" class="hljs" style="font-size: 70px;">10</code>
-          </pre>
+            10
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay2"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay2"
             onclick="selectplayCard(20)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay2" class="hljs" style="font-size: 70px;">20</code>
-          </pre>
+            20
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay3"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay3"
             onclick="selectplayCard(30)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay3" class="hljs" style="font-size: 70px;">30</code>
-          </pre>
+            30
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay4"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay4"
             onclick="selectplayCard(40)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay4" class="hljs" style="font-size: 70px;">40</code>
-          </pre>
+            40
           </button>
-        </div>
       </div>
     </div>
           `;
       decks.appendChild(deckCol);
-      hljs.highlightAll();
-  
-  }
-  function selectplayCard(selectplay) {
-    localStorage.setItem('selectedPlay', selectplay);
-    getFlashcard(selectplay)
-  }
-  displaySelectQuiz()
-    </script>
+      // hljs.highlightAll();
+    }
+    function selectplayCard(selectplay) {
+      localStorage.setItem('selectedPlay', selectplay);
+      getFlashcard(selectplay)
+    }
+    displaySelectQuiz()
+  </script>
 </body>
 
 </html>
