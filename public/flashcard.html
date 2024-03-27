@@ -58,6 +58,11 @@
       font-family: 'Poppins', sans-serif !important;
       font-size: 18px;
       font-weight: 700;
+      white-space: pre-line;
+    }
+
+    p {
+      overflow-wrap: break-word;
     }
 
     .code {
@@ -94,6 +99,8 @@
     }
 
     .btn {
+      font-weight: 700;
+      font-family: 'Kanit', sans-serif !important;
       border: 2px solid black;
       background-color: white;
       color: #000000;
@@ -118,6 +125,22 @@
       height: 700px;
       z-index: 1;
       box-shadow: rgba(240, 46, 170, 0.5) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.1) 15px 15px;
+    }
+
+    .btnChoicePlay {
+      width: calc(100vw / 6.5);
+      /* This will set the width of the button to be a quarter of the viewport width */
+      height: calc(100vh / 6.5);
+      /* This will set the height of the button to be a quarter of the viewport height */
+      font-size: calc(1vw + 1vh);
+      /* This will set the font size to be the sum of 1% of the viewport width and 1% of the viewport height */
+      box-shadow: #496989 4px 4px, #58A399 8px 8px;
+
+      &:hover {
+        background-color: #ffab7b;
+        color: #000000;
+        font-size: calc(1.5vw + 1vh);
+      }
     }
   </style>
 </head>
@@ -176,50 +199,34 @@
       deckCol.className = 'row justify-content-end';
       deckCol.innerHTML = `
       <div class="row">
-      <div class="col-12 mb-5">
-        <p id="quiz" class="hljs" style="font-size: 35px; font-weight: bolder;">Please select the amount to play.</p>
+        <div class="col-12 text-center mb-5">
+          <p id="quiz" style="font-size: 35px; font-weight: bolder;">Please select the amount to play.</p>
+        </div>
       </div>
-    </div>
     <div class="row mb-5" style="z-index: 1;">
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay1"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay1"
             onclick="selectplayCard(10)">
-            <pre class="d-flex justify-content-start text-start">
-          <code id="btnChoicePlay1" class="hljs" style="font-size: 70px;">10</code>
-          </pre>
+            10
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay2"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay2"
             onclick="selectplayCard(20)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay2" class="hljs" style="font-size: 70px;">20</code>
-          </pre>
+            20
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay3"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay3"
             onclick="selectplayCard(30)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay3" class="hljs" style="font-size: 70px;">30</code>
-          </pre>
+            30
           </button>
-        </div>
       </div>
-      <div class="col-3 answer-block">
-        <div class="btn-wrapper">
-          <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay4"
+      <div class="col-3">
+          <button type="button" class="btn btn-secondary text-center btnChoicePlay" id="btnChoicePlay4"
             onclick="selectplayCard(40)">
-            <pre class="d-flex justify-content-start text-start">
-            <code id="btnChoicePlay4" class="hljs" style="font-size: 70px;">40</code>
-          </pre>
+            40
           </button>
-        </div>
       </div>
     </div>
           `;
