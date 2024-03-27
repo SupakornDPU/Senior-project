@@ -52,7 +52,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                 </div>
             <div class = "row">
                 <div class="col-12 mb-5">
-                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Item.quiz_question}</p>
+                    <code id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Item.quiz_question}</code>
                 </div>
             </div>
             <div class="row mb-5">
@@ -135,6 +135,7 @@ fetch('/api/deck/getByIdQuiz/' + deckID, {
                     const Choice = newItem.quiz_choice;
 
                     const newQuizElement = document.createElement('code');
+                    newQuizElement.style = 'font-size: 25px; font-weight: bolder;';
                     newQuizElement.id = 'quiz';
                     newQuizElement.innerHTML = newItem.quiz_question;
 
@@ -271,7 +272,7 @@ function callbackwrongAnswers(wrongAnswers) {
                 </div>
             <div class = "row">
                 <div class="col-12 mb-5">
-                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata.quiz_question}</p>
+                    <code id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata.quiz_question}</code>
                 </div>
             </div>
             <div class="row mb-5">
@@ -688,7 +689,7 @@ function callbackwrongAnswers2(wrongAnswers1) {
                 </div>
             <div class = "row">
                 <div class="col-12 mb-5">
-                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata2.quiz_question}</p>
+                    <code id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata2.quiz_question}</code>
                 </div>
             </div>
             <div class="row mb-5">
@@ -951,7 +952,7 @@ function callbackwrongAnswers3(wrongAnswers2) {
                 </div>
             <div class = "row">
                 <div class="col-12 mb-5">
-                    <p id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata3.quiz_question}</p>
+                    <code id="quiz" class="hljs" style="font-size: 25px; font-weight: bolder;">${Quizdata3.quiz_question}</code>
                 </div>
             </div>
             <div class="row mb-5">

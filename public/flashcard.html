@@ -24,6 +24,7 @@
   <!-- Style -->
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/background.css">
 
   <!-- Hiligh.js -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
@@ -37,19 +38,6 @@
 
     .btn-next:hover {
       background-color: #8298b2;
-    }
-
-    .w3-bar {
-      background-color: #272829;
-      color: white;
-    }
-
-    .backgound-ex {
-      background-color: #000000;
-      background-image: url('https://static.wixstatic.com/media/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png/v1/fill/w_1344,h_948,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png');
-      background-position: left bottom;
-      background-size: cover;
-      background-repeat: no-repeat;
     }
 
     hr.style {
@@ -71,6 +59,7 @@
       font-size: 18px;
       font-weight: 700;
     }
+
     .code {
       margin: 0 auto;
     }
@@ -126,24 +115,44 @@
 
     .flash-card {
       width: 1500px;
-      height: 635px;
+      height: 700px;
+      z-index: 1;
+      box-shadow: rgba(240, 46, 170, 0.5) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.1) 15px 15px;
     }
   </style>
 </head>
 
 <body>
   <!-- !Content -->
-  <div class="container-fluid backgound-ex">
-    <div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 0px;padding-right: 0px;">
-      <div class="row flash-card" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
-        <!-- Flash Card -->
-        <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlflashcard">
-          
-        </div>
-        <!-- Flash Card -->
+  <div class="context">
+    <div class="container-fluid backgound-ex">
+      <div class="container d-flex justify-content-center align-items-center min-vh-100"
+        style="padding-left: 0px;padding-right: 0px;">
+        <div class="row flash-card" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
+          <!-- Flash Card -->
+          <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlflashcard">
+          </div>
+          <!-- Flash Card -->
 
+        </div>
       </div>
     </div>
+  </div>
+
+
+  <div class="area">
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
   </div>
   <!-- !Content -->
 
@@ -159,8 +168,8 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
 
-    <script>
-      function displaySelectQuiz() {
+  <script>
+    function displaySelectQuiz() {
       const decks = document.getElementById("innerhtmlflashcard");
       decks.innerHTML = '';
       const deckCol = document.createElement('div');
@@ -171,7 +180,7 @@
         <p id="quiz" class="hljs" style="font-size: 35px; font-weight: bolder;">Please select the amount to play.</p>
       </div>
     </div>
-    <div class="row mb-5">
+    <div class="row mb-5" style="z-index: 1;">
       <div class="col-3 answer-block">
         <div class="btn-wrapper">
           <button type="button" class="btn btn-secondary text-start" id="btnChoicePlay1"
@@ -215,15 +224,14 @@
     </div>
           `;
       decks.appendChild(deckCol);
-      hljs.highlightAll();
-  
-  }
-  function selectplayCard(selectplay) {
-    localStorage.setItem('selectedPlay', selectplay);
-    getFlashcard(selectplay)
-  }
-  displaySelectQuiz()
-    </script>
+      // hljs.highlightAll();
+    }
+    function selectplayCard(selectplay) {
+      localStorage.setItem('selectedPlay', selectplay);
+      getFlashcard(selectplay)
+    }
+    displaySelectQuiz()
+  </script>
 </body>
 
 </html>
