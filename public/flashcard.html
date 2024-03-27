@@ -50,9 +50,6 @@
       background-position: left bottom;
       background-size: cover;
       background-repeat: no-repeat;
-      padding-bottom: 225px;
-      margin-top: -260px;
-      padding-top: 300px;
     }
 
     hr.style {
@@ -126,40 +123,19 @@
     .hljs {
       background: none;
     }
+
+    .flash-card {
+      width: 1500px;
+      height: 635px;
+    }
   </style>
 </head>
 
 <body>
-  <!-- !Navbar -->
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg sticky-top font-poppin navbar-dark bg-dark">
-    <div class="container">
-      <a class="navbar-brand" href="index">PyFlash</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
-        aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarColor01">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" id="linkPage">
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="index">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="#" id="menuClassroom">Classroom</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="about">About</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <!-- Navbar -->`;
-
   <!-- !Content -->
   <div class="container-fluid backgound-ex">
-    <div class="container" style="padding-top: 200px; margin-top: -60px; padding-left: 0px;padding-right: 0px;">
-      <div style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
+    <div class="container d-flex justify-content-center align-items-center min-vh-100" style="padding-left: 0px;padding-right: 0px;">
+      <div class="row flash-card" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5;">
         <!-- Flash Card -->
         <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlflashcard">
           
@@ -170,9 +146,6 @@
     </div>
   </div>
   <!-- !Content -->
-
-  <!-- !Footer -->
-  <footer-component></footer-component>
 
   <!-- Script -->
   <script src="js/script.js"></script>
