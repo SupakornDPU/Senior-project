@@ -150,22 +150,24 @@
     }
 
     /*  */
-    body {
-      min-height: 100vh;
+    .btn-next {
+      background-color: #40C7C0;
+      color: rgb(0, 0, 0);
     }
 
-    .backgound-ex {
-      background-color: #000000;
-      background-image: url('https://static.wixstatic.com/media/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png/v1/fill/w_1344,h_948,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/82fcd3_ed016384df3f43baa1d65cd00a0069cf~mv2.png');
-      background-position: left bottom;
-      background-size: cover;
-      background-repeat: no-repeat;
-      padding-bottom: 225px;
-      min-height: 100vh;
+    .btn-next:hover {
+      background-color: #8298b2;
+    }
+
+    hr.style {
+      border-top: 5px solid #030303;
+      align-items: center;
+      width: 100%;
+      margin-top: 40px;
     }
 
     .footer-59391 {
-      margin-top: 0px
+      margin-top: 0px;
     }
 
     pre,
@@ -176,6 +178,10 @@
       font-size: 18px;
       font-weight: 700;
       white-space: pre-line;
+    }
+
+    p {
+      overflow-wrap: break-word;
     }
 
     .code {
@@ -212,6 +218,8 @@
     }
 
     .btn {
+      font-weight: 700;
+      font-family: 'Kanit', sans-serif !important;
       border: 2px solid black;
       background-color: white;
       color: #000000;
@@ -234,7 +242,24 @@
     .flash-card {
       width: 1500px;
       height: 700px;
+      z-index: 1;
       box-shadow: rgba(240, 46, 170, 0.5) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.1) 15px 15px;
+    }
+
+    .btnChoicePlay {
+      width: calc(100vw / 6.5);
+      /* This will set the width of the button to be a quarter of the viewport width */
+      height: calc(100vh / 6.5);
+      /* This will set the height of the button to be a quarter of the viewport height */
+      font-size: calc(1vw + 1vh);
+      /* This will set the font size to be the sum of 1% of the viewport width and 1% of the viewport height */
+      box-shadow: #496989 4px 4px, #58A399 8px 8px;
+
+      &:hover {
+        background-color: #ffab7b;
+        color: #000000;
+        font-size: calc(1.5vw + 1vh);
+      }
     }
   </style>
 </head>
@@ -256,7 +281,7 @@
         <div class="row flash-card" style="border-radius: 15px; padding: 2rem;background-color: #f5f5f5; z-index: 3;">
           <!-- Quiz -->
           <div class="row  d-flex justify-content-center align-items-center text-center inline" id="innerhtmlQuiz">
-            
+
           </div>
         </div>
         <!-- End Quiz -->

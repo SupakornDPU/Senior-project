@@ -37,7 +37,7 @@ var clock = {
     start: function (dataArray) {
         var pie = 0;
         var num = 0;
-        var min = 0.5; // กำหนดให้นับถอยหลังเริ่มต้นทันทีและใช้ค่าเวลานับถอยหลังเป็น 1 นาที
+        var min = 0.25; // กำหนดให้นับถอยหลังเริ่มต้นทันทีและใช้ค่าเวลานับถอยหลังเป็น 1 นาที
         var sec = min * 60;
         var lop = sec;
         $('.count').text(min);
@@ -77,7 +77,7 @@ var clock = {
                 $('.count').text(0);
                 //$('.clock').removeAttr('class','clock pro-100');
                 $('.clock').removeAttr('style');
-
+                
                 console.log(dataArray.quiz_answerCorrect
                 );
                 wrongAnswers.push(dataArray);
@@ -418,12 +418,20 @@ function callbackwrongAnswers(wrongAnswers) {
 
     // wrongQuiz
     function displayQuiz(Quizdata) {
+        startCountdown(Quizdata);
         let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
         deckCol.className = 'row justify-content-end';
         deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <div class="clock-wrap">
+                        <div class="clock pro-0">
+                            <span class="count" style="color: #000000;">0</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -657,7 +665,7 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
-
+                clock.stop();
                 if (answerStats[data.flashcard_id] === undefined) {
                     answerStats[data.flashcard_id] = 1;
                 } else {
@@ -679,7 +687,7 @@ function checkAnswersWrongAnswer(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
-
+                clock.stop();
                 if (answerStats[data.flashcard_id] === undefined) {
                     answerStats[data.flashcard_id] = -1;
                 } else {
@@ -836,12 +844,20 @@ function callbackwrongAnswers2(wrongAnswers1) {
 
     // wrongQuiz
     function displayQuiz2(Quizdata2) {
+        startCountdown(Quizdata2);
         let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
         deckCol.className = 'row justify-content-end';
         deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <div class="clock-wrap">
+                        <div class="clock pro-0">
+                            <span class="count" style="color: #000000;">0</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -1002,6 +1018,7 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+                clock.stop();
                 if (answerStats[data.flashcard_id] === undefined) {
                     answerStats[data.flashcard_id] = 1;
                 } else {
@@ -1020,6 +1037,7 @@ function checkAnswersWrongAnswer1(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
+                clock.stop();
                 if (answerStats[data.flashcard_id] === undefined) {
                     answerStats[data.flashcard_id] = -1;
                 } else {
@@ -1099,12 +1117,20 @@ function callbackwrongAnswers3(wrongAnswers2) {
 
     // wrongQuiz
     function displayQuiz3(Quizdata3) {
+        startCountdown(Quizdata3);
         let selectedAnswer = false;
         const decks = document.getElementById("innerhtmlQuiz");
         decks.innerHTML = '';
         const deckCol = document.createElement('div');
         deckCol.className = 'row justify-content-end';
         deckCol.innerHTML = `
+                <div class="col-3" style="width: fit-content;" ">
+                    <div class="clock-wrap">
+                        <div class="clock pro-0">
+                            <span class="count" style="color: #000000;">0</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-3" style="width: fit-content;" ">
                     <a id="btnnextquiz" class="button btn btn-lg btn-next">
                     <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 320 512">
@@ -1264,6 +1290,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 console.log('คำตอบถูกต้อง!');
                 point += 3;
                 countCorrect++;
+                clock.stop();
                 // Answer Stat
                 if (answerStats[data.flashcard_id] === undefined) {
                     answerStats[data.flashcard_id] = 1;
@@ -1282,6 +1309,7 @@ function checkAnswersWrongAnswer2(buttonId, Quizdata) {
                 console.log('คำตอบผิด!');
                 point -= 0.5;
                 countWrong++;
+                clock.stop();
                 // play++;
 
                 // Answer Stat
